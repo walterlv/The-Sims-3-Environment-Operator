@@ -1,9 +1,10 @@
-﻿<Window xmlns:WindowParts="clr-namespace:Seo.WindowParts"
-        x:Class="Seo.SimsDirWindow"
+﻿<Window x:Class="Seo.SimsDirWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:WindowParts="clr-namespace:Seo.WindowParts"
         Title="Sims Folder" SizeToContent="Height" Width="440"
-        WindowStartupLocation="CenterScreen" Icon="icon.ico" ResizeMode="NoResize" ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen" Icon="icon.ico"
+        ResizeMode="NoResize" ShowInTaskbar="False"
         Loaded="Window_Loaded" KeyDown="Window_KeyDown">
     <Grid Margin="10">
         <Grid.RowDefinitions>

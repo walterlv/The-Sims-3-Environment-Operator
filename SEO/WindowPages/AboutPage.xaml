@@ -34,7 +34,7 @@
             <TextBlock Grid.Row="1" Grid.Column="0" Margin="4" TextWrapping="WrapWithOverflow">
                 <Run Foreground="{DynamicResource ForeBrush}" FontSize="24" Text="Sims Environment Operator" />
                 <LineBreak />
-                <Run Foreground="Red" FontSize="16" Text="Version：2.0.51.42" />
+                <Run Foreground="Red" FontSize="16" Text="Version：2.0.52.42" />
                 <Image Margin="4,0,0,0" Width="16" Height="16" Source="/SEO;component/icon.ico">
                     <Image.ToolTip>
                         <TextBlock>

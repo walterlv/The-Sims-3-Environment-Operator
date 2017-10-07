@@ -6,23 +6,23 @@
              mc:Ignorable="d">
     <ComboBox x:Name="WeatherBox" SelectedIndex="0" Padding="0" Height="38" VerticalAlignment="Top" SelectionChanged="WeatherBox_SelectionChanged">
         <StackPanel x:Name="Clear" Width="200" Height="32" Margin="10,4" Orientation="Horizontal">
-            <Rectangle Width="16" Height="16" Margin="0,0,4,0" Fill="Gray" />
+            <Rectangle Width="16" Height="16" Margin="0,0,4,0" Fill="#FFFF5F00" />
             <TextBlock x:Name="ClearText" Text="Clear" VerticalAlignment="Center"/>
         </StackPanel>
         <StackPanel x:Name="PartlyCloudy" Width="200" Height="32" Margin="10,4" Orientation="Horizontal">
-            <Rectangle Width="16" Height="16" Margin="0,0,4,0" Fill="Gray" />
+            <Rectangle Width="16" Height="16" Margin="0,0,4,0" Fill="#FF00AFFF" />
             <TextBlock x:Name="PartlyCloudyText" Text="PartlyCloudy" Margin="0,0,40,0" VerticalAlignment="Center"/>
         </StackPanel>
         <StackPanel x:Name="Overcast" Width="200" Height="32" Margin="10,4" Orientation="Horizontal">
-            <Rectangle Width="16" Height="16" Margin="0,0,4,0" Fill="Gray" />
+            <Rectangle Width="16" Height="16" Margin="0,0,4,0" Fill="#FF343434" />
             <TextBlock x:Name="OvercastText" Text="Overcast" Margin="0,0,40,0" VerticalAlignment="Center"/>
         </StackPanel>
         <StackPanel x:Name="Storm" Width="200" Height="32" Margin="10,4" Orientation="Horizontal">
-            <Rectangle Width="16" Height="16" Margin="0,0,4,0" Fill="Gray" />
+            <Rectangle Width="16" Height="16" Margin="0,0,4,0" Fill="#FF043464" />
             <TextBlock x:Name="StormText" Text="Stormy" Margin="0,0,40,0" VerticalAlignment="Center"/>
         </StackPanel>
         <StackPanel x:Name="Custom" Width="200" Height="32" Margin="10,4" Orientation="Horizontal">
-            <Rectangle Width="16" Height="16" Margin="0,0,4,0" Fill="Gray" />
+            <Rectangle Width="16" Height="16" Margin="0,0,4,0" Fill="#FF3FFF9F" />
             <TextBlock x:Name="CustomText" Text="Custom" Margin="0,0,40,0" VerticalAlignment="Center"/>
         </StackPanel>
     </ComboBox>

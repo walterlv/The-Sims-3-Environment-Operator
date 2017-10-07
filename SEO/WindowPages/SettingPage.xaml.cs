@@ -34,9 +34,10 @@ namespace Seo.WindowPages
                 i++;
             }
             if (Configs.ForeColor != null) CustomColorCheckBox.IsChecked = true;
-            else CustomColorCheckBox.Visibility = System.Windows.Visibility.Collapsed;
+            else CustomColorCheckBox.IsChecked = false;
             AutoUpdateCheckBox.IsChecked = Configs.AutoUpdate;
-            AeroGlassCheckBox.IsChecked = Configs.GlassWindow;
+            if (Configs.IsAeroEnabled) AeroGlassCheckBox.IsChecked = Configs.GlassWindow;
+            else AeroGlassCheckBox.Visibility = System.Windows.Visibility.Collapsed;
             BackgroundImageCheckBox.IsChecked = Configs.UseBackgroundImage;
             isLoaded = true;
         }

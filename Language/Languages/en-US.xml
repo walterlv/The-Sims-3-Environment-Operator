@@ -2,37 +2,37 @@
 <root>
   <Language>
     <Name>English</Name>
-    <Version>2.0.51.42</Version>
+    <Version>2.0.52.42</Version>
   </Language>
 
   <Window>
     <ReadonlyMode>
-      <Name>Readonly Mode</Name>
-      <Tip>Another program is using the Environment files. So this program run in readonly mode.</Tip>
+      <Name>Read Mode</Name>
+      <Tip>Another program is editing The Sims 3 Environment. So this program will only run on read mode.</Tip>
     </ReadonlyMode>
     <Navigation>
       <FrontPage>Front Page</FrontPage>
-      <EnvironmentPage>Front Page</EnvironmentPage>
+      <EnvironmentPage>Choose Environment</EnvironmentPage>
       <OperatorPage>Edit Environment</OperatorPage>
       <SettingsPage>Preference</SettingsPage>
       <AboutPage>About</AboutPage>
     </Navigation>
     <Update>
       <NewVersion>
-        <Title>New Version</Title>
-        <Content>New version is now available for Sims Environment Operator. Click on Update Button to update.</Content>
-        <Button>Update</Button>
+        <Title>Newer Version Found</Title>
+        <Content>New version is now available for Sims Environment Operator. Click on download Button to download.</Content>
+        <Button>download</Button>
       </NewVersion>
     </Update>
     <Front>
-      <Description>Colorful worlds come form my hands!</Description>
+      <Description>I have the power to edit the seasons!</Description>
     </Front>
     <Worlds>
       <List>These are all the worlds this program can work with:</List>
       <Crack>Crack</Crack>
       <Restore>Restore</Restore>
       <NotExisted>Not Existed</NotExisted>
-      <Existed>Need Cracking</Existed>
+      <Existed>Need to be cracked</Existed>
       <Cracking>Cracking</Cracking>
       <Cracked>Available</Cracked>
       <Restoring>Restoring</Restoring>
@@ -40,29 +40,29 @@
       <Unknow>Fetching</Unknow>
     </Worlds>
     <Environment>
-      <Select>All Installed Environment</Select>
-      <NotSelectedTip>You didn't select any environment.</NotSelectedTip>
-      <Apply>Apply...</Apply>
-      <Delete>Delete...</Delete>
-      <ProtectedTip>It's a protected environment, please do not delete it!</ProtectedTip>
-      <Import>Add...</Import>
+      <Select>Installed Environment Files</Select>
+      <NotSelectedTip>You haven't select any environment yet.</NotSelectedTip>
+      <Apply>Applying...</Apply>
+      <Delete>Deleting...</Delete>
+      <ProtectedTip>This is a protected environment, please do not delete it!</ProtectedTip>
+      <Import>Adding...</Import>
       <Download>Download</Download>
-      <Export>Share</Export>
-      <ExportTitle>Share My Environment</ExportTitle>
+      <Export>Export</Export>
+      <ExportTitle>Export My Environment</ExportTitle>
       <ExportName>Name:</ExportName>
       <ExportCreator>Creator:</ExportCreator>
       <ExportImage>Image:</ExportImage>
       <ExportDescription>Description:</ExportDescription>
-      <ExportSaveTo>Share Here:</ExportSaveTo>
-      <RestartForLanguage>You need to restart this program to show these environments in new language.</RestartForLanguage>
+      <ExportSaveTo>Export Here:</ExportSaveTo>
+      <RestartForLanguage>You need to restart this program to change the language.</RestartForLanguage>
     </Environment>
     <Operator>
       <WeatherExpander>Advance Edit</WeatherExpander>
       <ChangeWeather>Choose a weather</ChangeWeather>
-      <WeatherDescription>All Weathers has the instances of Fogy, Rainy, Snowy...</WeatherDescription>
-      <SetWeatherWeight>Set the weather weights</SetWeatherWeight>
-      <LockWeatherWeight>Lock the weather weights</LockWeatherWeight>
-      <Save>Apply...</Save>
+      <WeatherDescription>All Weathers has its frequency of Fogy, Rainy, Snowy...</WeatherDescription>
+      <SetWeatherWeight>Changing the weather ratio</SetWeatherWeight>
+      <LockWeatherWeight>Lock in the weather ratio</LockWeatherWeight>
+      <Save>Applying...</Save>
       <Default>Default...</Default>
       <Undo>Undo</Undo>
       <Redo>Redo</Redo>
@@ -70,10 +70,10 @@
     <Settings>
       <SelectLanguage>Choose a Language:</SelectLanguage>
       <Program>Program</Program>
-      <AutoUpdate>Automatic Update Check</AutoUpdate>
-      <Visual>Visual Style</Visual>
+      <AutoUpdate>Checking for update</AutoUpdate>
+      <Visual>Visual Effect</Visual>
       <CustomForeColor>Use custom foreground color...</CustomForeColor>
-      <AeroGlass>Aero Glass Window（Windows Vista/7 only）</AeroGlass>
+      <AeroGlass>Aero Glass Window</AeroGlass>
       <Background>Set Background with an Image...</Background>
     </Settings>
     <Dialog>
@@ -83,25 +83,23 @@
         <Yes>Yes</Yes>
         <No>No</No>
       </Basic>
-      <MultiDocuments>
-        <Title>Documents</Title>
-        <Content>More than one saves are in your document. Choose the one you are playing:</Content>
-      </MultiDocuments>
       <SimsDir>
         <Title>Sims Folder</Title>
-        <Content>Sorry but we could not get The Sims 3 folder. You may have to set it manually.<br/>Please Select the root folder of The Sims 3:</Content>
+        <Content>
+          Sorry but we could not find The Sims 3 folder. You may have to set it manually.<br/>Please Select the root folder of The Sims 3:
+        </Content>
         <Invalid>It is not the correct folder of The Sims 3.</Invalid>
       </SimsDir>
       <OpenImage>
-        <Title>Select Preview Image</Title>
-        <AllPicture>All Image Format</AllPicture>
-        <AllFile>All File Format</AllFile>
+        <Title>Choose a image</Title>
+        <AllPicture>All Image</AllPicture>
+        <AllFile>All File</AllFile>
       </OpenImage>
       <ExportEnvironment>
-        <Title>Share My Environment Here</Title>
+        <Title>Export Environment</Title>
       </ExportEnvironment>
       <OpenEnvironment>
-        <Title>Select Environment files</Title>
+        <Title>Select an Environment files</Title>
       </OpenEnvironment>
     </Dialog>
   </Window>
@@ -109,13 +107,16 @@
   <Information>
     <CloseSave>
       <Title>Save Changes</Title>
-      <Content>You have changed the environment. Would you like to save them?</Content>
+      <Content>You have changed the environment. Would you like to save it?</Content>
     </CloseSave>
     <Worlds>
+      <RunningTip>The Sims 3 is running, the world will not be restored or cracked.</RunningTip>
       <Cracking>Cracking {0}...</Cracking>
       <Cracked>{0} Cracked.</Cracked>
+      <CrackFailed>There  is a problem, the process could not be done.</CrackFailed>
       <Restoring>Restoring {0}...</Restoring>
       <Restored>{0} Restored.</Restored>
+      <RestoreFailed>There  is a problem, the process could not be done.</RestoreFailed>
     </Worlds>
     <ReadEnvironment>
       <Reading>Reading installed environment...</Reading>
@@ -124,7 +125,7 @@
     <ReadEnvironmentError>
       <Title>Adding Failed</Title>
       <Content>One or more environments are not been added:</Content>
-      <ExistedError>A same environment has been installed, we cannot install it again.</ExistedError>
+      <ExistedError>A same environment has been installed.</ExistedError>
       <InvalidError>It's not a valid environment file.</InvalidError>
       <UnknownError>Sorry, we could not read this file correctly. Installation is canceled.</UnknownError>
     </ReadEnvironmentError>
@@ -184,7 +185,9 @@
     <Backup>
       <Name>Backup</Name>
       <Creator>this program</Creator>
-      <Description>This is a backup environment, and it is created in {0}. <br/>It will be auto-deleted when the program close.</Description>
+      <Description>
+        This is a backup environment, and it is created in {0}. <br/>It will be auto-deleted when the program close.
+      </Description>
     </Backup>
   </Environment>
 

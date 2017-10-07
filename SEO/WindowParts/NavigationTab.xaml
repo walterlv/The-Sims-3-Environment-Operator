@@ -20,7 +20,7 @@
         </Storyboard>
         <Storyboard x:Key="HoverEnterStory">
             <ColorAnimation Storyboard.TargetName="BackgroundEle" Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
-                            To="{DynamicResource ForeColor}" Duration="0:0:0.3" />
+                            To="{DynamicResource ForeTransColor}" Duration="0:0:0.3" />
         </Storyboard>
         <Storyboard x:Key="HoverLeaveStory">
             <ColorAnimation Storyboard.TargetName="BackgroundEle" Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"

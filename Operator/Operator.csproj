@@ -58,10 +58,6 @@
       <Project>{67562995-3f80-442c-ae4c-53224da60358}</Project>
       <Name>Language</Name>
     </ProjectReference>
-    <ProjectReference Include="..\m3i\m3i.csproj">
-      <Project>{50559087-bf06-4b18-8270-8c5b5ba0a96c}</Project>
-      <Name>m3i</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Package\Package.csproj">
       <Project>{2e672ccd-5333-46fb-8329-054631ef6431}</Project>
       <Name>Package</Name>

@@ -8,7 +8,7 @@
     <UserControl.Resources>
         <Storyboard x:Key="SelectStory">
             <ColorAnimation Storyboard.TargetName="BackgroundEle" Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
-                            To="#AF007FFF" Duration="0:0:0.3" />
+                            To="{DynamicResource ForeColor}" Duration="0:0:0.3" />
         </Storyboard>
         <Storyboard x:Key="UnselectStory">
             <ColorAnimation Storyboard.TargetName="BackgroundEle" Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
@@ -16,7 +16,7 @@
         </Storyboard>
         <Storyboard x:Key="HoverEnterStory">
             <ColorAnimation Storyboard.TargetName="BackgroundEle" Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
-                            To="#7F007FFF" Duration="0:0:0.25" />
+                            To="{DynamicResource ForeTransColor}" Duration="0:0:0.25" />
         </Storyboard>
         <Storyboard x:Key="HoverLeaveStory">
             <ColorAnimation Storyboard.TargetName="BackgroundEle" Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"

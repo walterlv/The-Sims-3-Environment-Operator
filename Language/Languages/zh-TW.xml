@@ -2,7 +2,7 @@
 <root>
   <Language>
     <Name>繁體中文 (台灣)</Name>
-    <Version>2.0.51.42</Version>
+    <Version>2.0.52.42</Version>
   </Language>
 
   <Window>
@@ -73,7 +73,7 @@
       <AutoUpdate>自動檢查更新</AutoUpdate>
       <Visual>視覺效果</Visual>
       <CustomForeColor>使用自定義的前景色...</CustomForeColor>
-      <AeroGlass>開啟毛玻璃效果（僅支持 Windows Vista/7）</AeroGlass>
+      <AeroGlass>開啟毛玻璃效果（僅支援 Windows Vista/7）</AeroGlass>
       <Background>使用背景圖片...</Background>
     </Settings>
     <Dialog>
@@ -83,10 +83,6 @@
         <Yes>是</Yes>
         <No>否</No>
       </Basic>
-      <MultiDocuments>
-        <Title>多個存檔</Title>
-        <Content>你的文檔中包含多個存檔，請選擇你正在使用的一個：</Content>
-      </MultiDocuments>
       <SimsDir>
         <Title>獲取安裝路徑</Title>
         <Content>

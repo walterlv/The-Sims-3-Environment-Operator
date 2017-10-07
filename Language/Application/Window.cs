@@ -26,9 +26,6 @@
         public static string WorldSupported = null;
         public static string WorldUnknow = null;
 
-        public static string MultiDocTitle = null;
-        public static string MultiDocContent = null;
-
         public static string WeatherDescription = null;
         public static string WeatherExpander = null;
         public static string ChangeWeather = null;
@@ -105,9 +102,6 @@
             WorldRestoring = reader.TryRead(WorldRestoring, Node, "Worlds/Restoring");
             WorldSupported = reader.TryRead(WorldSupported, Node, "Worlds/Supported");
             WorldUnknow = reader.TryRead(WorldUnknow, Node, "Worlds/Unknow");
-
-            MultiDocTitle = reader.TryRead(MultiDocTitle, Node, "Dialog/MultiDocuments/Title");
-            MultiDocContent = reader.TryRead(MultiDocContent, Node, "Dialog/MultiDocuments/Content");
 
             SelectEnvironment = reader.TryRead(SelectEnvironment, Node, "Environment/Select");
             EnvironmentNotSelectedTip = reader.TryRead(EnvironmentNotSelectedTip, Node, "Environment/NotSelectedTip");

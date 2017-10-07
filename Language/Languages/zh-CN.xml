@@ -2,7 +2,7 @@
 <root>
   <Language>
     <Name>简体中文</Name>
-    <Version>2.0.51.42</Version>
+    <Version>2.0.52.42</Version>
   </Language>
   
   <Window>
@@ -73,7 +73,7 @@
       <AutoUpdate>自动检查更新</AutoUpdate>
       <Visual>视觉效果</Visual>
       <CustomForeColor>使用自定义的前景颜色...</CustomForeColor>
-      <AeroGlass>开启毛玻璃效果（仅支持 Windows Vista/7）</AeroGlass>
+      <AeroGlass>开启界面毛玻璃效果</AeroGlass>
       <Background>使用背景图片...</Background>
     </Settings>
     <Dialog>
@@ -83,10 +83,6 @@
         <Yes>是</Yes>
         <No>否</No>
       </Basic>
-      <MultiDocuments>
-        <Title>多个存档</Title>
-        <Content>你的文档中包含多个存档，请选择你正在使用的一个：</Content>
-      </MultiDocuments>
       <SimsDir>
         <Title>获取安装路径</Title>
         <Content>我们无法获取到《模拟人生3》原版的安装路径，你可能需要手动来指定它。<br/>请选择《模拟人生3》原版的根目录：</Content>
