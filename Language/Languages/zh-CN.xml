@@ -2,7 +2,7 @@
 <root>
   <Language>
     <Name>简体中文</Name>
-    <Version>2.0.54.42</Version>
+    <Version>2.0.56.42</Version>
   </Language>
   
   <Window>
@@ -73,7 +73,7 @@
       <AutoUpdate>自动检查更新</AutoUpdate>
       <Visual>视觉效果</Visual>
       <CustomForeColor>使用自定义的前景颜色...</CustomForeColor>
-      <AeroGlass>开启界面毛玻璃效果</AeroGlass>
+      <AeroGlass>开启 Aero 效果 (在 Windows 8 中仅打开纯色背景)</AeroGlass>
       <Background>使用背景图片...</Background>
     </Settings>
     <Dialog>

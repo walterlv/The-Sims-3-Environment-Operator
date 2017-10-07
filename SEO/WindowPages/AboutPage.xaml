@@ -8,7 +8,7 @@
       d:DesignHeight="540" d:DesignWidth="530"
 	  Title="About us" Background="White">
 
-    <Grid Margin="4" Background="{DynamicResource ForeBrush}">
+    <Grid Background="{DynamicResource ForeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         <TextBlock Foreground="White" HorizontalAlignment="Center"
                        FontSize="32" Margin="0,20,0,20" Text="The Sims 3: Environment Operator" />
-        <Grid Grid.Row="1" Margin="1" Background="White">
+        <Grid Grid.Row="1" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -34,7 +34,7 @@
             <TextBlock Grid.Row="1" Grid.Column="0" Margin="4" TextWrapping="WrapWithOverflow">
                 <Run Foreground="{DynamicResource ForeBrush}" FontSize="24" Text="Sims Environment Operator" />
                 <LineBreak />
-                <Run Foreground="Red" FontSize="16" Text="Version：2.0.54.42" />
+                <Run Foreground="Red" FontSize="16" Text="Version：2.0.56.42" />
                 <Image Margin="4,0,0,0" Width="16" Height="16" Source="/SEO;component/icon.ico">
                     <Image.ToolTip>
                         <TextBlock>

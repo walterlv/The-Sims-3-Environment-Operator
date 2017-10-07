@@ -37,9 +37,9 @@ namespace Seo
         #region 默认语言
         public static string ApplicationName = null;
         public static string ApplicationTitle = null;
-        public static string Version = "2.0.54.42";
+        public static string Version = "2.0.56.42";
         public static string VersionShortText = "2.0";
-        public static string VersionLongText = "2.0 build 54 for 1.42";
+        public static string VersionLongText = "2.0 build 56 for 1.42";
         public static string OriginalPublishSite = "http://bbs.3dmgame.com/thread-3433574-1-1.html";
         public static string PublishSite = null;
         public static string UpdateSite = null;

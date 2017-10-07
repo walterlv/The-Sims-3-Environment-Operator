@@ -2,7 +2,7 @@
 <root>
   <Language>
     <Name>繁體中文 (台灣)</Name>
-    <Version>2.0.54.42</Version>
+    <Version>2.0.56.42</Version>
   </Language>
 
   <Window>
@@ -73,7 +73,7 @@
       <AutoUpdate>自動檢查更新</AutoUpdate>
       <Visual>視覺效果</Visual>
       <CustomForeColor>使用自定義的前景色...</CustomForeColor>
-      <AeroGlass>開啟毛玻璃效果（僅支援 Windows Vista/7）</AeroGlass>
+      <AeroGlass>開啟 Aero 效果 (在 Windows 8 中使用純色背景)</AeroGlass>
       <Background>使用背景圖片...</Background>
     </Settings>
     <Dialog>

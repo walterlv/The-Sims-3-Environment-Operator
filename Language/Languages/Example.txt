@@ -3,7 +3,7 @@
   <!--An example of your translation.-->
   <Language>
     <Name>My Language</Name>
-    <Version>2.0.54.42</Version>
+    <Version>2.0.56.42</Version>
   </Language>
 
   <Window>
@@ -12,7 +12,7 @@
       <Tip>Another program is editing The Sims 3 Environment. So this program will only run on read mode.</Tip>
     </ReadonlyMode>
     <Navigation>
-      <FrontPage>Front Page</FrontPage>
+      <FrontPage>Sims World</FrontPage>
       <EnvironmentPage>Choose Environment</EnvironmentPage>
       <OperatorPage>Edit Environment</OperatorPage>
       <SettingsPage>Preference</SettingsPage>
@@ -71,10 +71,10 @@
     <Settings>
       <SelectLanguage>Choose a Language:</SelectLanguage>
       <Program>Program</Program>
-      <AutoUpdate>Checking for update</AutoUpdate>
+      <AutoUpdate>Checking for Update</AutoUpdate>
       <Visual>Visual Effect</Visual>
-      <CustomForeColor>Use custom foreground color...</CustomForeColor>
-      <AeroGlass>Aero Glass Window</AeroGlass>
+      <CustomForeColor>Use Custom Foreground Color...</CustomForeColor>
+      <AeroGlass>Aero Glass Window (Pure Color in Windows 8)</AeroGlass>
       <Background>Set Background with an Image...</Background>
     </Settings>
     <Dialog>

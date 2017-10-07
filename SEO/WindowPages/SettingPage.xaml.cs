@@ -33,7 +33,7 @@ namespace Seo.WindowPages
                 if (pair.Key == Seo.Language.Local) LanguageBox.SelectedIndex = i;
                 i++;
             }
-            if (Configs.ForeColor != null) CustomColorCheckBox.IsChecked = true;
+            if (Configs.UseForeColor && Configs.ForeColor != null) CustomColorCheckBox.IsChecked = true;
             else CustomColorCheckBox.IsChecked = false;
             AutoUpdateCheckBox.IsChecked = Configs.AutoUpdate;
             if (Configs.IsAeroEnabled) AeroGlassCheckBox.IsChecked = Configs.GlassWindow;
@@ -142,7 +142,12 @@ namespace Seo.WindowPages
                         Color c = Color.FromArgb(cd.Color.A, cd.Color.R, cd.Color.G, cd.Color.B);
                         App.This.UpdateColors(c);
                         Configs.SetForeColor(c.A, c.R, c.G, c.B);
+                        Configs.UseForeColor = true;
                     }
+                }
+                else
+                {
+                    Configs.UseForeColor = false;
                 }
             }
         }

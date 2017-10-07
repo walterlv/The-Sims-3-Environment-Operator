@@ -130,7 +130,7 @@ namespace Seo
         {
             get
             {
-                if (Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor < 2) return true;
+                if (Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor < 3) return true;
                 else return false;
             }
         }
@@ -159,6 +159,13 @@ namespace Seo
         {
             public byte A,R,G,B;
             public Color(byte a, byte r, byte g, byte b) { this.A = a; this.R = r; this.G = g; this.B = b; }
+        }
+        private static bool? useForeColor = null;
+        private static bool useForeColorModified = false;
+        public static bool UseForeColor
+        {
+            get { return useForeColor == true; }
+            set { useForeColorModified = true; useForeColor = value; }
         }
         private static Color foreColor = null;
         private static bool foreColorModified = false;
@@ -236,6 +243,7 @@ namespace Seo
             lockWeights = reader.ReadBool(userNode, "LockWeights");
             local = reader.Read(userNode, "Local");
             autoUpdate = reader.ReadBool(programNode, "AutoUpdate");
+            useForeColor = reader.ReadBool(userNode, "ForeColor/Use");
             int? a = reader.ReadInt(userNode, "ForeColor/A");
             int? r = reader.ReadInt(userNode, "ForeColor/R");
             int? g = reader.ReadInt(userNode, "ForeColor/G");
@@ -261,6 +269,7 @@ namespace Seo
             if (lockWeightsModified) writer.Write(lockWeights == true, userNode, "LockWeights");
             if (localModified) writer.Write(Local, userNode, "Local");
             if (autoUpdateModified) writer.Write(autoUpdate == true, programNode, "AutoUpdate");
+            if (useForeColorModified) writer.Write(useForeColor == true, userNode, "ForeColor", "Use");
             if (foreColorModified)
             {
                 writer.Write((int)foreColor.A, userNode, "ForeColor", "A");
