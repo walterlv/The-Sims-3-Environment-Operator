@@ -7,20 +7,20 @@ namespace TS3Sky.Language
 {
     public class Sky_ClearSky
     {
-        public static string DayColorName = "天空";
-        public static string DayColorDescription = "改变天空的颜色：太阳、天空、地平线。";
-        public static string SunColorName = "太阳 - 基础颜色";
-        public static string SunColorDescription = "太阳光包括两个部分，一个是太阳自己，一个是它的光晕。";
-        public static string HaloColorName = "太阳 - 光晕颜色";
-        public static string HaloColorDescription = "这里是设置太阳光光晕的颜色。";
-        public static string SkyDarkName = "天空 - 暗色";
-        public static string SkyDarkDescription = "未被太阳照射的半个天空颜色。";
-        public static string SkyLightName = "天空 - 亮色";
-        public static string SkyLightDescription = "被太阳照射的半个天空颜色。";
-        public static string HorizonLightName = "地平线 - 亮色";
-        public static string HorizonLightDescription = "有阳光照射的地平线部分颜色。";
-        public static string HorizonDarkName = "地平线 - 暗色";
-        public static string HorizonDarkDescription = "无阳光照射的地平线部分颜色。";
+        public static string DayColorName = "Sky";
+        public static string DayColorDescription = "You can change the color of the sun, sky, and horizon here.";
+        public static string SunColorName = "Sun Color";
+        public static string SunColorDescription = "The color of sun contains two parts: the sun itself, and the halo.";
+        public static string HaloColorName = "Halo Color";
+        public static string HaloColorDescription = "You can cahnge the color of halo here.";
+        public static string SkyDarkName = "Sky - Dark";
+        public static string SkyDarkDescription = "Semisphere without Light";
+        public static string SkyLightName = "Sky - Light";
+        public static string SkyLightDescription = "Semisphere with Light";
+        public static string HorizonLightName = "Horizon - Light";
+        public static string HorizonLightDescription = "Horizon with Light";
+        public static string HorizonDarkName = "Horizon - Dark";
+        public static string HorizonDarkDescription = "Horizon without Light";
 
         private const string Section = "Sky_ClearSky";
         public static void Initialize(LanguageReader lr)

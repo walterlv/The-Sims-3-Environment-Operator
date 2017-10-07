@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Diagnostics;
 
 namespace TS3Sky
 {
@@ -32,18 +33,12 @@ namespace TS3Sky
         public MainWindow()
         {
             InitializeComponent();
-
-            #region 最原始的初始化 (语言)
-            // 初始化语言 (如果要读取外部语言,填写true,如果读取内置语言,填写false)
-            try { TS3Sky.Language.LanguageManager.Initialize(true); }
-            catch { }
-            #endregion
         }
 
         /// <summary>
         /// 所有可使用的环境配置包
         /// </summary>
-        List<Package> Packages;
+        private List<Package> Packages;
 
         #region 初始化应用程序
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -54,6 +49,15 @@ namespace TS3Sky
             #endregion
 
             #region 初始化应用程序界面风格
+            string local = TS3Sky.Language.LanguageManager.LocalLanguage;
+            if (local.Equals("zh-cn") || local.Equals("zh-tw"))
+            {
+                // Logo
+                logoImage.Source = new BitmapImage(new Uri(String.Format("/Images/Logo-{0}.png", local), UriKind.Relative));
+                // 关于背景
+                AboutBackground.Source = new BitmapImage(new Uri(String.Format("/Images/AboutBackground-{0}.jpg", local), UriKind.Relative));
+            }
+            // 背景图片
             try
             {
                 if (File.Exists(BackgroundPath))
@@ -76,28 +80,11 @@ namespace TS3Sky
             OtherInfoLabel.Content = TS3Sky.Language.Navigation.OtherInfoLabel;
             SkyColorWelcome.Content = TS3Sky.Language.Navigation.Welcome;
             SkyColorAbout.Content = TS3Sky.Language.Navigation.About;
-            try
-            {
-                SkyColor Sky_Clear1 = SkyColor.FromColorAssembly(ColorAssembly.Sky_Clear1);
-                SkyColor Sky_Clear2 = SkyColor.FromColorAssembly(ColorAssembly.Sky_Clear2);
-                SkyColor Sky_ClearLight = SkyColor.FromColorAssembly(ColorAssembly.Sky_ClearLight);
-                SkyColor Sky_ClearSky = SkyColor.FromColorAssembly(ColorAssembly.Sky_ClearSky);
-                SkyColor Sky_ClearSea = SkyColor.FromColorAssembly(ColorAssembly.Sky_ClearSea);
-                //SkyColorList.Add(Sky_Clear1);
-                //SkyColorList.Add(Sky_Clear2);
-                //SkyColorList.Add(Sky_ClearLight);
-                //SkyColorList.Add(Sky_ClearSky);
-                //SkyColorList.Add(Sky_ClearSea);
-                SkyColorButton0.Content = SkyColor.AllSkyColors[0].ColorName;
-                SkyColorButton1.Content = SkyColor.AllSkyColors[1].ColorName;
-                SkyColorButton2.Content = SkyColor.AllSkyColors[2].ColorName;
-                SkyColorButton3.Content = SkyColor.AllSkyColors[3].ColorName;
-                SkyColorButton4.Content = SkyColor.AllSkyColors[4].ColorName;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(String.Format(TS3Sky.Language.Dialog.InitialFailedContent, ex.Message), TS3Sky.Language.Dialog.InitialFailedTitle, MessageBoxButton.OK, MessageBoxImage.Stop);
-            }
+            SkyColorButton0.Content = SkyColor.AllSkyColors[0].ColorName;
+            SkyColorButton1.Content = SkyColor.AllSkyColors[1].ColorName;
+            SkyColorButton2.Content = SkyColor.AllSkyColors[2].ColorName;
+            SkyColorButton3.Content = SkyColor.AllSkyColors[3].ColorName;
+            SkyColorButton4.Content = SkyColor.AllSkyColors[4].ColorName;
             // 初始化欢迎页面
             WelcomeTitle.Text = TS3Sky.Language.Application.Name;
             WelcomeDescription.Text = TS3Sky.Language.Application.Description;
@@ -106,40 +93,36 @@ namespace TS3Sky
             ApplyPackageButton.Content = TS3Sky.Language.Operation.ApplyPackage;
             DeletePackageButton.Content = TS3Sky.Language.Operation.DeletePackage;
             ImportPackageButton.Content = TS3Sky.Language.Operation.ImportPackage;
+            DownloadPackageButton.Content = TS3Sky.Language.Operation.DownloadPackage;
             ExportPackageButton.Content = TS3Sky.Language.Operation.ExportPackage;
             // 初始化操作按钮
             DownloadWorldButton.Content = TS3Sky.Language.Operation.DownloadWorld;
             SaveButton.Content = TS3Sky.Language.Operation.Save;
-            RevokeButton.Content = TS3Sky.Language.Operation.Revoke;
+            UndoButton.Content = TS3Sky.Language.Operation.Undo;
             SetToDefaultButton.Content = TS3Sky.Language.Operation.SetToDefault;
-            // 初始化导航标签文字
-            //LabelText.Text = TS3Sky.Language.Navigation.Label;
             // 初始化关于画面
             AboutInfomation.Text = String.Format("{0}:\n{1}\n\n{2}: {3}\n\n{4}: {5}\n{6}",
                                     TS3Sky.Language.About.Author,
-                                    TS3Sky.Language.About.AuthorName,
+                                    TS3Sky.Language.Application.Developer,
                                     TS3Sky.Language.About.Version,
-                                    TS3Sky.Language.About.VersionText,
+                                    TS3Sky.Language.Application.Version,
                                     TS3Sky.Language.About.Publish,
                                     TS3Sky.Language.About.PublishText,
                                     TS3Sky.Language.About.Contact);
             ContactUsButton.Content = TS3Sky.Language.About.ContactUs;
+            WorldDescription.Text = TS3Sky.Language.About.DownloadWorldsDescription;
+            DownloadWorldButton.Content = TS3Sky.Language.About.DownloadWorlds;
             CopyrightInfomation.Text = TS3Sky.Language.About.Copyright;
             #endregion
 
             #region 初始化预设方案列表
-            try
+            Packages = Package.Packages;
+            foreach (Package p in Packages)
             {
-                Packages = Package.OpenAll();
-                foreach (Package p in Packages)
-                {
-                    PackageListItem pli = new PackageListItem();
-                    pli.ShowPackage = p;
-                    PackageListBox.Items.Add(pli);
-                }
-                
+                PackageListItem pli = new PackageListItem();
+                pli.ShowPackage = p;
+                PackageListBox.Items.Add(pli);
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message + "\n\n" + ex.StackTrace, ex.Message); }
             #endregion
         }
         #endregion
@@ -162,15 +145,18 @@ namespace TS3Sky
                 {
                 }
             }
+            // 退出后保存设置
+            ColorPickBar.SaveCustomColors();
             // 退出后清除缓存
-            if (e.Cancel == false) Package.ClearTempAndCache();
+            if (e.Cancel == false) Package.ClearTempBackupAndCache();
         }
         #endregion
 
         #region 点击导航按钮按钮 (包括在欢迎页中的其它导航按钮)
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string name = (string)((Button)sender).Content;
+            Button button = (Button) sender;
+            string name = (string) button.Content;
             if (name.Equals(TS3Sky.Language.Navigation.Welcome))
             {
                 showPage(TS3SkyPage.Welcome);
@@ -179,25 +165,30 @@ namespace TS3Sky
             {
                 showPage(TS3SkyPage.About);
             }
-            else if (name.Equals(TS3Sky.Language.Sky_Clear1.DayColorName))
+            else if (name.StartsWith(TS3Sky.Language.Sky_Clear1.DayColorName))
             {
-                showPage(SkyColor.AllSkyColors[0]);
+                showPage(SkyColor.AllSkyColors[0], button);
+                UpdatePageState();
             }
-            else if (name.Equals(TS3Sky.Language.Sky_Clear2.DayColorName))
+            else if (name.StartsWith(TS3Sky.Language.Sky_Clear2.DayColorName))
             {
-                showPage(SkyColor.AllSkyColors[1]);
+                showPage(SkyColor.AllSkyColors[1], button);
+                UpdatePageState();
             }
-            else if (name.Equals(TS3Sky.Language.Sky_ClearLight.DayColorName))
+            else if (name.StartsWith(TS3Sky.Language.Sky_ClearLight.DayColorName))
             {
-                showPage(SkyColor.AllSkyColors[2]);
+                showPage(SkyColor.AllSkyColors[2], button);
+                UpdatePageState();
             }
-            else if (name.Equals(TS3Sky.Language.Sky_ClearSky.DayColorName))
+            else if (name.StartsWith(TS3Sky.Language.Sky_ClearSky.DayColorName))
             {
-                showPage(SkyColor.AllSkyColors[3]);
+                showPage(SkyColor.AllSkyColors[3], button);
+                UpdatePageState();
             }
-            else if (name.Equals(TS3Sky.Language.Sky_ClearSea.DayColorName))
+            else if (name.StartsWith(TS3Sky.Language.Sky_ClearSea.DayColorName))
             {
-                showPage(SkyColor.AllSkyColors[4]);
+                showPage(SkyColor.AllSkyColors[4], button);
+                UpdatePageState();
             }
             else
             {
@@ -206,53 +197,129 @@ namespace TS3Sky
         #endregion
 
         #region 点击功能按钮
-        // 保存, 撤销, 恢复
-        private void OperationButton_Click(object sender, RoutedEventArgs e)
+        // 下面四个方法是为了给SaveButton, UndoButton和RedoButton传递快捷键的
+        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            string name = (string)((Button)sender).Content;
-            if (name.Equals(TS3Sky.Language.Operation.Save))
+            e.CanExecute = true;
+        }
+        private void CommandBinding_SaveExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveButton_Click(this, null);
+        }
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (UndoButton.IsEnabled) UndoButton_Click(UndoButton, null);
+        }
+        private void CommandBinding_ReExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            RedoButton_Click(this, null);
+        }
+        // 保存
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            while (true)
             {
-                if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SaveSingleContent, currentShow.ColorName), TS3Sky.Language.Dialog.SaveSingleTitle, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                try
                 {
-                    while (true)
-                    {
-                        try { currentShow.Save(); break; }
-                        catch (Exception ex)
-                        {
-                            if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SaveRetryContent, ex.Message), TS3Sky.Language.Dialog.SaveRetryTitle,
-                                MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes) continue;
-                            else break;
-                        }
-                    }
+                    currentShow.Save();
+                    // 使保存按钮不可用
+                    SaveButton.IsEnabled = false;
+                    // 去掉导航按钮后面的星号
+                    int index = colorPickBarLink.SkyColorListAsIndex.IndexOf(currentShow);
+                    if (index >= 0) colorPickBarLink.SkyColorButton[index].Content = currentShow.ColorName;
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SaveRetryContent, ex.Message), TS3Sky.Language.Dialog.SaveRetryTitle,
+                        MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes) continue;
+                    else break;
                 }
             }
-            else if (name.Equals(TS3Sky.Language.Operation.Revoke))
+        }
+        // 撤消
+        private void UndoButton_Click(object sender, RoutedEventArgs e)
+        {
+            ColorChangeAction action = ColorChangeAction.GetUndoAction();
+            if (action != null)
             {
-                if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.RevokeContent, currentShow.ColorName), TS3Sky.Language.Dialog.RevokeTitle, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                action.ActionBar.Undo();
+                if (currentShow != action.ActionBar.ColorBarGroup) showPage(action.ActionBar.ColorBarGroup);
+            }
+            if (ColorChangeAction.GetUndoAction() == null)
+            {
+                UndoButton.IsEnabled = false;
+            }
+        }
+        // 重做
+        private void RedoButton_Click(object sender, RoutedEventArgs e)
+        {
+            ColorChangeAction action = ColorChangeAction.GetRedoAction();
+            if (action != null)
+            {
+                action.ActionBar.Redo();
+                if (currentShow != action.ActionBar.ColorBarGroup) showPage(action.ActionBar.ColorBarGroup);
+            }
+        }
+        // 重新读取文件
+        private void RevokeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.RevokeContent, currentShow.ColorName), TS3Sky.Language.Dialog.RevokeTitle, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                currentShow.Revoke();
+                RefreshPage(currentShow);
+            }
+        }
+        // 恢复默认
+        private void SetToDefaultButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SetToDefaultContent, currentShow.ColorName), TS3Sky.Language.Dialog.SetToDefaultTitle, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                try
                 {
+                    currentShow.SetToDefault();
+                    // 标记为已保存(未修改)
+                    currentShow.Modified = false;
+                    // 使保存按钮不可用
+                    SaveButton.IsEnabled = false;
+                    UndoButton.IsEnabled = false;
+                    // 使撤消失效
+                    ColorChangeAction.ClearActions();
+                    // 去掉导航按钮后面的星号
+                    int index = colorPickBarLink.SkyColorListAsIndex.IndexOf(currentShow);
+                    if (index >= 0) colorPickBarLink.SkyColorButton[index].Content = currentShow.ColorName;
+                    // 重新读取页面
                     currentShow.Revoke();
                     RefreshPage(currentShow);
+                    
                 }
-            }
-            else if (name.Equals(TS3Sky.Language.Operation.SetToDefault))
-            {
-                if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SetToDefaultContent, currentShow.ColorName), TS3Sky.Language.Dialog.SetToDefaultTitle, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                catch (Exception ex)
                 {
-                    try
-                    {
-                        currentShow.SetToDefault();
-                        currentShow.Revoke();
-                        RefreshPage(currentShow);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SetToDefaultFailedContent, ex.Message), TS3Sky.Language.Dialog.SetToDefaultFailedTitle, MessageBoxButton.OK, MessageBoxImage.Stop);
-                    }
+                    MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SetToDefaultFailedContent, ex.Message), TS3Sky.Language.Dialog.SetToDefaultFailedTitle, MessageBoxButton.OK, MessageBoxImage.Stop);
                 }
             }
-            else
+        }
+
+        // 接收颜色条控件传来的已经点击颜色事件
+        public void ColorPicked()
+        {
+            if (ColorChangeAction.GetUndoAction() == null) UndoButton.IsEnabled = false;
+            else UndoButton.IsEnabled = true;
+            if (currentShow.Modified) SaveButton.IsEnabled = true;
+            else SaveButton.IsEnabled = false;
+            foreach (SkyColor skyColor in SkyColor.AllSkyColors)
             {
+                Button button = FindButtonBySkyColor(skyColor);
+                if (skyColor.Modified)
+                {
+                    if (!button.Content.ToString().EndsWith("*")) button.Content += "*";
+                }
             }
+        }
+        // 用于更新页面按钮是否可用(与上面的方法接收颜色点击事件作用一致)
+        private void UpdatePageState()
+        {
+            ColorPicked();
         }
 
         // 执行操作后需要刷新颜色页
@@ -270,14 +337,18 @@ namespace TS3Sky
 
 
         // 访问帖子 - 联系我们
+        private void ProgramSiteButton_Click(object sender, RoutedEventArgs e)
+        {
+            VisitSite(TS3Sky.Language.Application.ProgramSite);
+        }
         private void ContactUsButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(TS3Sky.Language.About.ContactSite);
+            VisitSite(TS3Sky.Language.Application.ContactSite);
         }
         // 访问帖子 - 下载世界
         private void DownloadWorldButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(TS3Sky.Language.About.WorldDownload);
+            VisitSite(TS3Sky.Language.Application.WorldDownloadSite);
         }
         #endregion
 
@@ -287,6 +358,11 @@ namespace TS3Sky
         ColorPickBarLink colorPickBarLink = new ColorPickBarLink();
         SkyColor currentShow = null;
         private void showPage(SkyColor skyColor)
+        {
+            showPage(skyColor, null);
+        }
+        // 添加一个button参数是为了绑定导航按钮的
+        private void showPage(SkyColor skyColor, Button button)
         {
             try
             {
@@ -317,6 +393,7 @@ namespace TS3Sky
                     for (int i = 0; i < skyColor.DayColors.Count; i++)
                     {
                         colorPickBar = new ColorPickBar();
+                        colorPickBar.Owner = this;
                         colorPickBar.Width = 482;
                         colorPickBar.ColorBar = skyColor.DayColors[i];
                         colorPickBar.ColorBarGroup = skyColor;
@@ -330,6 +407,7 @@ namespace TS3Sky
                         }
                     }
                     colorPickBarLink.SkyColorListAsIndex.Add(skyColor);
+                    colorPickBarLink.SkyColorButton.Add(button);
                     colorPickBarLink.ColorPickBarList.Add(colorPickBarList);
                 }
             }
@@ -408,6 +486,7 @@ namespace TS3Sky
         }
         #endregion
         #region 应用方案
+        private bool isBackupExisted = false;
         private void ApplyPackageButton_Click(object sender, RoutedEventArgs e)
         {
             int index = PackageListBox.SelectedIndex;
@@ -415,12 +494,29 @@ namespace TS3Sky
             {
                 try
                 {
+                    // 尝试备份用户方案
+                    try
+                    {
+                        bool isModified = IsSkyColorModified;
+                        if (!isBackupExisted || IsSkyColorModified)
+                        {
+                            if (isModified) saveAll();
+                            string backupPackageFile = Package.TempPath + "\\Backup." + Package.Extension;
+                            Package.Create(backupPackageFile, TS3Sky.Language.Package.BackupPackageName, TS3Sky.Language.Package.BackupPackageCreator,
+                                String.Format(TS3Sky.Language.Package.BackupPackageDescription, DateTime.Now.ToLocalTime()), null, true);
+                            ImportPackage(backupPackageFile, false);
+                            isBackupExisted = true;
+                        }
+                    }
+                    catch { }
+                    // 开始应用方案
                     Package.Apply(Packages[index]);
                     foreach (SkyColor color in SkyColor.AllSkyColors)
                     {
                         color.Revoke();
                         RefreshPage(color);
                     }
+                    ColorChangeAction.ClearActions();
                     MessageBox.Show(String.Format(TS3Sky.Language.Dialog.ApplyPackageSuccessfullyContent, Packages[index].Name), TS3Sky.Language.Dialog.ApplyPackageSuccessfullyTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
@@ -436,18 +532,21 @@ namespace TS3Sky
             int index = PackageListBox.SelectedIndex;
             if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.DeletePackageContent, Packages[index].Name), TS3Sky.Language.Dialog.DeletePackageTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                ((PackageListItem)PackageListBox.Items[index]).PackageImage = null;
-                PackageListBox.Items.RemoveAt(index);
-                try
-                {
-                    Packages[index].Delete();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(String.Format(TS3Sky.Language.Dialog.DeletePackageFailedContent, ex.Message), TS3Sky.Language.Dialog.DeletePackageFailedTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                Packages.RemoveAt(index);
+                DeletePackage(index, true);
             }
+        }
+        private void DeletePackage(int index, bool showMessage)
+        {
+            PackageListBox.Items.RemoveAt(index);
+            try
+            {
+                Packages[index].Delete();
+            }
+            catch (Exception ex)
+            {
+                if (showMessage) MessageBox.Show(String.Format(TS3Sky.Language.Dialog.DeletePackageFailedContent, ex.Message), TS3Sky.Language.Dialog.DeletePackageFailedTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            Packages.RemoveAt(index);
         }
         #endregion
         #region 导入(添加)方案
@@ -460,19 +559,31 @@ namespace TS3Sky
             open.AutoUpgradeEnabled = true;
             if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                Package imp = Package.Import(open.FileName);
-                if (imp.IsValid)
-                {
-                    Packages.Add(imp);
-                    PackageListItem pli = new PackageListItem();
-                    pli.ShowPackage = imp;
-                    PackageListBox.Items.Add(pli);
-                }
-                else
-                {
-                    MessageBox.Show(String.Format(TS3Sky.Language.Dialog.ImportPackageFailedContent, imp.ErrorMessage), TS3Sky.Language.Dialog.ImportPackageFailedTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                ImportPackage(open.FileName, true);
             }
+        }
+        private bool ImportPackage(string file, bool showMessage)
+        {
+            Package imp = Package.Import(file);
+            if (imp.IsValid)
+            {
+                Packages.Add(imp);
+                PackageListItem pli = new PackageListItem();
+                pli.ShowPackage = imp;
+                PackageListBox.Items.Add(pli);
+                return true;
+            }
+            else
+            {
+                if (showMessage) MessageBox.Show(String.Format(TS3Sky.Language.Dialog.ImportPackageFailedContent, imp.ErrorMessage), TS3Sky.Language.Dialog.ImportPackageFailedTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+        }
+        #endregion
+        #region 下载方案
+        private void DownloadPackageButton_Click(object sender, RoutedEventArgs e)
+        {
+            VisitSite(TS3Sky.Language.Application.PackageDownloadSite);
         }
         #endregion
         #region 导出
@@ -493,7 +604,7 @@ namespace TS3Sky
                 // 如果已经保存过了, 则修改
                 ExportWindow ew = new ExportWindow();
                 ew.Owner = this;
-                ew.ShowDialog();
+                if (ew.ShowDialog() == true) ImportPackage(ew.ExportPath, false);
             }
             catch (Exception ex)
             {
@@ -522,18 +633,72 @@ namespace TS3Sky
         #region 保存所有方案
         private void saveAll()
         {
-            foreach (SkyColor color in SkyColor.AllSkyColors) color.Save();
+            foreach (SkyColor color in SkyColor.AllSkyColors)
+            {
+                color.Save();
+                try { FindButtonBySkyColor(color).Content = color.ColorName; }
+                catch { }
+            }
         }
         #endregion
         #endregion
 
+        private Button FindButtonBySkyColor(SkyColor color)
+        {
+            int index = colorPickBarLink.SkyColorListAsIndex.IndexOf(color);
+            if (index >= 0)
+            {
+                return colorPickBarLink.SkyColorButton[index];
+            }
+            else return null;
+        }
+
+        public static void VisitSite(string site)
+        {
+            System.Diagnostics.Process.Start(site);
+        }
     }
 
     #region 封装一个绑定后台颜色组和前台颜色条的类
     class ColorPickBarLink
     {
         public List<SkyColor> SkyColorListAsIndex = new List<SkyColor>();
+        public List<Button> SkyColorButton = new List<Button>();
         public List<List<ColorPickBar>> ColorPickBarList = new List<List<ColorPickBar>>();
     }
     #endregion
 }
+
+
+#region XAML 自定义滚动条
+/*
+<Style TargetType="{x:Type ScrollBar}">
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ScrollBar}">
+                <StackPanel>
+                    <!--上按钮-->
+                    <RepeatButton HorizontalAlignment="Center" VerticalAlignment="Top" Command="ScrollBar.LineUpCommand" Content="^"/>
+                    <Track  x:Name="PART_Track" IsDirectionReversed="True" Height="100">
+                        <Track.DecreaseRepeatButton>
+                            <!--上空白-->
+                            <RepeatButton Command="ScrollBar.PageUpCommand" />
+                        </Track.DecreaseRepeatButton>
+                        <Track.Thumb>
+                            <!--滑块-->
+                            <Thumb Background="SteelBlue"/>
+                        </Track.Thumb>
+                        <Track.IncreaseRepeatButton>
+                            <!--下空白-->
+                            <RepeatButton Command="ScrollBar.PageDownCommand" />
+                        </Track.IncreaseRepeatButton>
+                    </Track>
+                    <!--下按钮-->
+                    <RepeatButton HorizontalAlignment="Center" VerticalAlignment="Top" Command="ScrollBar.LineDownCommand" Content="v"/>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+*/
+#endregion

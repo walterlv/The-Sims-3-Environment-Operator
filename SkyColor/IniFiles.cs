@@ -31,7 +31,7 @@ namespace TS3Sky
                 System.IO.StreamWriter sw = new System.IO.StreamWriter(AFileName, false, System.Text.Encoding.Default);
                 try
                 {
-                    sw.Write("# Created by walterlv in 3DMGAME Forum");
+                    sw.Write("# Created by walterlv in M3 Group, 3DMGAME Forum");
                     sw.Close();
                 }
                 catch
@@ -45,7 +45,7 @@ namespace TS3Sky
         //写INI文件 
         public void WriteString(string Section, string Ident, string Value)
         {
-            if (!WritePrivateProfileString(Section, Ident, Value, FileName))
+            if (!WritePrivateProfileString(Section, Ident, Value.Trim().Replace(Environment.NewLine, "\\n").Replace("\n", "\\n"), FileName))
             {
                 // Todo:抛出自定义的异常 
                 throw (new ApplicationException(TS3Sky.Language.Dialog.WriteEnvironmentFileFailed));

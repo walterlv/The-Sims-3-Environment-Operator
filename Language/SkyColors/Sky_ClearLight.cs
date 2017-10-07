@@ -7,14 +7,14 @@ namespace TS3Sky.Language
 {
     public class Sky_ClearLight
     {
-        public static string DayColorName = "亮光";
-        public static string DayColorDescription = "改变游戏里太阳光和月光（同时改变）";
-        public static string SunMoonLightName = "光色";
-        public static string SunMoonLightDescription = "月光和太阳光的颜色";
-        public static string AmbientSkyTopName = "物体顶部反光颜色";
-        public static string AmbientSkyTopDescription = "物体顶部反光的颜色";
-        public static string AmbientSkyBottomName = "物体底部反光颜色";
-        public static string AmbientSkyBottomDescription = "物体底部反光的颜色";
+        public static string DayColorName = "Light";
+        public static string DayColorDescription = "The light's color of both sun and moon.";
+        public static string SunMoonLightName = "Sun and Moon Light";
+        public static string SunMoonLightDescription = "The color of sunlght and moonlight";
+        public static string AmbientSkyTopName = "Ambient Sky Top";
+        public static string AmbientSkyTopDescription = "The color of reflection on the top in night";
+        public static string AmbientSkyBottomName = "Ambient Sky Bottom";
+        public static string AmbientSkyBottomDescription = "The color of reflection at the bottom in night";
 
         private const string Section = "Sky_ClearLight";
         public static void Initialize(LanguageReader lr)

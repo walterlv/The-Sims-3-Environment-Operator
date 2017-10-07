@@ -7,11 +7,11 @@ namespace TS3Sky.Language
 {
     public class Navigation
     {
-        public static string WelcomeLabel = "欢迎使用";
-        public static string Welcome = "快速设置";
-        public static string SettingsLabel = "高级设置";
-        public static string OtherInfoLabel = "其它信息";
-        public static string About = "关于";
+        public static string WelcomeLabel = "Welcome";
+        public static string Welcome = "Start";
+        public static string SettingsLabel = "Advanced";
+        public static string OtherInfoLabel = "More Information";
+        public static string About = "About";
 
         private const string Section = "Navigation";
         public static void Initialize(LanguageReader lr)

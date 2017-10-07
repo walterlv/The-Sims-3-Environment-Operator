@@ -7,48 +7,60 @@ namespace TS3Sky.Language
 {
     public class Dialog
     {
+        // 未知错误
+        public static string UnknownErrorTitle = "Unknow Error";
+        public static string UnknownErrorContent = "An error occured but we don't know why it happened. You might know something from this message:\n\n{0}";
         // 初始化
-        public static string InitialFailedTitle = "模拟人生3：编辑环境工具";
-        public static string InitialFailedContent = "初始化“模拟人生3“的环境时出现了一些问题，导致程序不能正常运行。问题描述如下：\n\n{0}";  // {0} = 初始化出错的原因
-        public static string ReadEnvironmentFileFailedTitle = "读取配置文件时出现了问题";
-        public static string ReadEnvironmentFileFailedContent = "{0}";      // {0} = 读取出错的原因
+        public static string InitialFailedTitle = "The Sims 3: Environment Operator";
+        public static string InitialFailedContent = "Initial failed.\n\nDescriptions:\n{0}";
+        public static string ReadEnvironmentFileFailedTitle = "Program failed when reading config files";
+        public static string ReadEnvironmentFileFailedContent = "Descriptions:\n{0}";
         // 编辑配置文件
-        public static string EnvironmentFileNotFound = "无法找到《模拟人生3》的环境配置文件！";
-        public static string WriteEnvironmentFileFailed = "写入《模拟人生3》的环境配置文件失败，可能是这些文件正在被打开的游戏占用。";
-        public static string CannotDeleteColor = "保存时发现无法删除多余的颜色";
+        public static string EnvironmentFileNotFound = "Cannot find the environment files from The Sims files.";
+        public static string WriteEnvironmentFileFailed = "Cannot set the environment files. The files may be being used by The Sims game.";
+        public static string CannotDeleteColor = "Cannot Delete redundant color when saving your settings.";
         // 方案
-        public static string SaveClosingTitle = "保存方案";
-        public static string SaveClosingContent = "你已经修改了环境配置方案，是否保存？";
-        public static string ApplyPackageTitle = "应用方案";
-        public static string ApplyPackageContent = "应用 “{0}” 方案将会覆盖掉你现在正在使用的方案。\n\n是否继续？";  // {0} = 方案名
-        public static string ApplyPackageSuccessfullyTitle = "成功应用方案";
-        public static string ApplyPackageSuccessfullyContent = "已经成功应用 “{0}” 方案。";  // {0} = 方案名
-        public static string ApplyPackageFailedTitle = "应用选中方案时出现了问题";
-        public static string ApplyPackageFailedContent = "{0}";  // {0} = 错误原因
-        public static string DeletePackageTitle = "删除方案";
-        public static string DeletePackageContent = "要删除环境配置方案 “{0}” 吗？";  // {0} = 方案名
-        public static string DeletePackageFailedTitle = "删除不完全";
-        public static string DeletePackageFailedContent = "{0}";  // {0} = 错误原因
-        public static string ImportPackageTitle = "添加方案";
-        public static string ImportPackageFailedTitle = "添加方案错误";
-        public static string ImportPackageFailedContent = "{0}";  // {0} = 错误原因
-        public static string ExportPackageButNotSavedTitle = "你已经修改了你的方案，但是没有保存。而只有保存后才能导出你的配置。\n\n保存后继续吗？";
-        public static string ExportPackageButNotSavedContent = "需要保存才能继续";
-        
+        public static string SaveClosingTitle = "Save";
+        public static string SaveClosingContent = "Your Environment has been modified. Would you like to save it?";
+        public static string ApplyPackageTitle = "Apply";
+        public static string ApplyPackageContent = "Applying {0} will cover your environment. Continue?";
+        public static string ApplyPackageSuccessfullyTitle = "Applied Successfully";
+        public static string ApplyPackageSuccessfullyContent = "{0} has been successfully applied";
+        public static string ApplyPackageFailedTitle = "Failed to Apply";
+        public static string ApplyPackageFailedContent = "Desciption:\n{0}";
+        public static string DeletePackageTitle = "Delete";
+        public static string DeletePackageContent = "Delete {0}? If it's down, you cannot retrive it.";
+        public static string DeletePackageFailedTitle = "Cannot Delete";
+        public static string DeletePackageFailedContent = "Desciption:\n{0}";
+        public static string ImportPackageTitle = "Open an Environment File";
+        public static string ImportPackageFailedTitle = "Import Error";
+        public static string ImportPackageFailedContent = "Desciption:\n{0}";
+        public static string ExportPackageButNotSavedTitle = "Save";
+        public static string ExportPackageButNotSavedContent = "You need to save your environment first to share it. Continue?";
+        // 导出
+        public static string ChooseExportPreview = "Choose Preview Image";
+        public static string AllImageFiles = "All Images";
+        public static string AllFiles = "All Files";
+        public static string OpenPreviewImageFailedTitle = "Preview image";
+        public static string OpenPreviewImageFailedDescription = "Cannot verify the image:\n\n";
+        public static string InvalidCharInName = "Name cannot contain {0}";
+        public static string InvalidCharInCreator = "Creator's name cannot contain (0}";
+        public static string TooManyLinesInDescription = "Please do not enter a description with mroe than three lines";
+        public static string ExportToCustomForbidden = "Cannot export to this folder!";
+        public static string ExportPackageTitle = "Save Export File";
+        public static string ExportPackageFailedTitle = "Export Failed";
+        public static string ExportPackageFailedContent = "{0}";
         // 保存, 恢复文件
-        public static string SaveSingleTitle = "保存";
-        public static string SaveSingleContent = "保存对 “{0}” 的更改？";        // {0} = 要保存的颜色组名称
-        public static string SaveRetryTitle = "保存失败";
-        public static string SaveRetryContent = "{0}\n\n要再次尝试保存吗？"; // {0} = 保存出错的原因
-        public static string RevokeTitle = "撤销";
-        public static string RevokeContent = "您确定要放弃自上次保存后对 “{0}” 所作的任何修改吗？";   // {0} = 要撤销的颜色组名称
-        public static string SetToDefaultTitle = "默认";
-        public static string SetToDefaultContent = "把 “{0}” 恢复成 “模拟人生3” 的默认方案吗？";   // {0} = 要恢复的颜色组名称
-        public static string SetToDefaultFailedTitle = "无法恢复";
-        public static string SetToDefaultFailedContent = "无法恢复到默认的颜色配置！可能是备份的颜色方案丢失，也可能是《模拟人生3》正在使用需要恢复的文件。\n\n如果是后者，你可以尝试再次恢复。\n\n{0}";   // {0} = 恢复出错的原因
-        // 其它
-        public static string UnknownErrorTitle = "出现了未知错误";
-        public static string UnknownErrorContent = "应用程序运行期间出现了未知错误，错误描述如下：\n\n{0}"; // {0} = 错误原因
+        public static string SaveSingleTitle = "Save";
+        public static string SaveSingleContent = "Save all changes of {0}?";
+        public static string SaveRetryTitle = "Save failed";
+        public static string SaveRetryContent = "{0}\n\nRetry？";
+        public static string RevokeTitle = "Undo";
+        public static string RevokeContent = "All your changes of {0} will be discarded, Continue?";
+        public static string SetToDefaultTitle = "Set to Default";
+        public static string SetToDefaultContent = "Set the color of {0} to EA default?";
+        public static string SetToDefaultFailedTitle = "Set to Default Failed";
+        public static string SetToDefaultFailedContent = "The backup files might be lost, or The Sims game is using the files we are trying to recover.\nIf it is because of latter, you can retry it later.\n{0}";
 
 
         // 读取语言文件
@@ -82,6 +94,19 @@ namespace TS3Sky.Language
             ImportPackageFailedContent = lr.Read(Section, "ImportPackageFailedContent", ImportPackageFailedContent);
             ExportPackageButNotSavedTitle = lr.Read(Section, "ExportPackageButNotSavedTitle", ExportPackageButNotSavedTitle);
             ExportPackageButNotSavedContent = lr.Read(Section, "ExportPackageButNotSavedContent", ExportPackageButNotSavedContent);
+            // 导出
+            ChooseExportPreview = lr.Read(Section, "ChooseExportPreview", ChooseExportPreview);
+            AllImageFiles = lr.Read(Section, "AllImageFiles", AllImageFiles);
+            AllFiles = lr.Read(Section, "AllFiles", AllFiles);
+            OpenPreviewImageFailedTitle = lr.Read(Section, "OpenPreviewImageFailedTitle", OpenPreviewImageFailedTitle);
+            OpenPreviewImageFailedDescription = lr.Read(Section, "OpenPreviewImageFailedDescription", OpenPreviewImageFailedDescription);
+            InvalidCharInName = lr.Read(Section, "InvalidCharInName", InvalidCharInName);
+            InvalidCharInCreator = lr.Read(Section, "InvalidCharInCreator", InvalidCharInCreator);
+            TooManyLinesInDescription = lr.Read(Section, "TooManyLinesInDescription", TooManyLinesInDescription);
+            ExportToCustomForbidden = lr.Read(Section, "ExportToCustomForbidden", ExportToCustomForbidden);
+            ExportPackageTitle = lr.Read(Section, "ExportPackageTitle", ExportPackageTitle);
+            ExportPackageFailedTitle = lr.Read(Section, "ExportPackageFailedTitle", ExportPackageFailedTitle);
+            ExportPackageFailedContent = lr.Read(Section, "ExportPackageFailedContent", ExportPackageFailedContent);
             // 保存, 恢复文件
             SaveSingleTitle = lr.Read(Section, "SaveSingleTitle", SaveSingleTitle);
             SaveSingleContent = lr.Read(Section, "SaveSingleContent", SaveSingleContent);

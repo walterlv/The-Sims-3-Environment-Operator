@@ -7,43 +7,48 @@ namespace TS3Sky.Language
 {
     public class Operation
     {
-        public static string DownloadWorld = "下载世界（城镇）";
-
-        public static string Save = "保存颜色设置";
-        public static string Revoke = "撤销所有改变";
-        public static string SetToDefault = "恢复默认设置";
-
-        public static string ApplyPackage = "应用";
-        public static string DeletePackage = "删除";
-        public static string ImportPackage = "添加";
-        public static string ExportPackage = "导出";
-
-        public static string ExportTitle = "导出方案";
-        public static string ExportName = "方案名字：";
-        public static string ExportCreator = "作者：";
-        public static string ExportPreview = "预览图（100×100）：";
-        public static string ExportDescription = "方案描述：";
-        public static string ExportTo = "导出到：";
-        public static string ExportOK = "导出";
-        public static string ExportCancel = "取消";
+        public static string DownloadWorld = "Download World";
+        public static string Save = "Save(Ctrl+S)";
+        public static string Undo = "Undo(Ctrl+Z)";
+        public static string Revoke = "Revoke";
+        public static string SetToDefault = "Default";
+        public static string ApplyPackage = "Apply";
+        public static string DeletePackage = "Delete";
+        public static string ImportPackage = "Import";
+        public static string DownloadPackage = "Download";
+        public static string ExportPackage = "Share";
+        public static string ExportTitle = "Share My Environment Configration";
+        public static string ExportName = "Configration's Name:";
+        public static string ExportCreator = "Creator's Name:";
+        public static string ExportPreview = "Preview Image:";
+        public static string ExportPreviewTitle = "Choose a Preview Image";
+        public static string ExportDescription = "Description:";
+        public static string ExportTo = "Save to";
+        public static string ExportToTitle = "Environment Package";
+        public static string ExportOK = "Share";
+        public static string ExportCancel = "Cancel";
 
         private const string Section = "Operation";
         public static void Initialize(LanguageReader lr)
         {
             DownloadWorld = lr.Read(Section, "DownloadWorld", DownloadWorld);
             Save = lr.Read(Section, "Save", Save);
+            Undo = lr.Read(Section, "Undo", Undo);
             Revoke = lr.Read(Section, "Revoke", Revoke);
             SetToDefault = lr.Read(Section, "SetToDefault", SetToDefault);
             ApplyPackage = lr.Read(Section, "ApplyPackage", ApplyPackage);
             DeletePackage = lr.Read(Section, "DeletePackage", DeletePackage);
             ImportPackage = lr.Read(Section, "ImportPackage", ImportPackage);
+            DownloadPackage = lr.Read(Section, "DownloadPackage", DownloadPackage);
             ExportPackage = lr.Read(Section, "ExportPackage", ExportPackage);
             ExportTitle = lr.Read(Section, "ExportTitle", ExportTitle);
             ExportName = lr.Read(Section, "ExportName", ExportName);
             ExportCreator = lr.Read(Section, "ExportCreator", ExportCreator);
             ExportPreview = lr.Read(Section, "ExportPreview", ExportPreview);
+            ExportPreviewTitle = lr.Read(Section, "ExportPreviewTitle", ExportPreviewTitle);
             ExportDescription = lr.Read(Section, "ExportDescription", ExportDescription);
             ExportTo = lr.Read(Section, "ExportTo", ExportTo);
+            ExportToTitle = lr.Read(Section, "ExportToTitle", ExportToTitle);
             ExportOK = lr.Read(Section, "ExportOK", ExportOK);
             ExportCancel = lr.Read(Section, "ExportCancel", ExportCancel);
         }

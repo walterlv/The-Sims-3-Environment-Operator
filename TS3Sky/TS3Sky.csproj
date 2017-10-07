@@ -84,6 +84,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="LanguageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoadingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -92,11 +100,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ColorChangeAction.cs" />
     <Compile Include="ColorPickBar.xaml.cs">
       <DependentUpon>ColorPickBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExportWindow.xaml.cs">
       <DependentUpon>ExportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LanguageWindow.xaml.cs">
+      <DependentUpon>LanguageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoadingWindow.xaml.cs">
+      <DependentUpon>LoadingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -139,15 +154,10 @@
     <Resource Include="Images\MainFrame.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\DefaultBackground.jpg" />
+    <Resource Include="Images\Background.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\DefaultLogo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\NaviButton_normal.png" />
-    <Resource Include="Images\NaviButton_pressed.png" />
-    <Resource Include="Images\NaviButton_rollover.png" />
+    <Resource Include="Images\Logo-zh-cn.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Language\Language.csproj">
@@ -158,9 +168,6 @@
       <Project>{D064B238-8217-48F8-AA2F-60B8FD253CBD}</Project>
       <Name>SkyColor</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\AboutBackground.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icon.ico" />
@@ -184,6 +191,21 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DefaultPackage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Splash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Logo.png" />
+    <Resource Include="Images\Logo-zh-tw.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\AboutBackground.jpg" />
+    <Resource Include="Images\AboutBackground-zh-tw.jpg" />
+    <Resource Include="Images\AboutBackground-zh-cn.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

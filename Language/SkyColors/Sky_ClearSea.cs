@@ -7,12 +7,12 @@ namespace TS3Sky.Language
 {
     public class Sky_ClearSea
     {
-        public static string DayColorName = "海洋";
-        public static string DayColorDescription = "改变水（包括海洋、河流、湖泊、池塘）的颜色。";
-        public static string WaterColorName = "基础颜色";
-        public static string WaterColorDescription = String.Empty;
-        public static string SunMoonColorName = "倒影颜色";
-        public static string SunMoonColorDescription = String.Empty;
+        public static string DayColorName = "Sea";
+        public static string DayColorDescription = "You can change the color of water (sea, river,lake and pool) here.";
+        public static string WaterColorName = "Water Color";
+        public static string WaterColorDescription = "The basic color of water";
+        public static string SunMoonColorName = "Water Reflection Color";
+        public static string SunMoonColorDescription = "Water color reflected from the light from the sun and moon";
 
         private const string Section = "Sky_ClearSea";
         public static void Initialize(LanguageReader lr)

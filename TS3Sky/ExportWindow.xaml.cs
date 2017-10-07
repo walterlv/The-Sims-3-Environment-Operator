@@ -25,6 +25,19 @@ namespace TS3Sky
             InitializeComponent();
         }
 
+        private string exportPath = String.Empty;
+        public string ExportPath
+        {
+            get
+            {
+                return exportPath;
+            }
+            set
+            {
+                exportPath = value;
+            }
+        }
+
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -45,8 +58,8 @@ namespace TS3Sky
         private void ImagePathButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog open = new OpenFileDialog();
-            open.Title = "选择预览图";
-            open.Filter = "所有图片|*.png;*.bmp;*.jpg|PNG|*.png|BMP|*.bmp|JPG|*.jpg|所有文件|*.*";
+            open.Title = TS3Sky.Language.Operation.ExportPreviewTitle;
+            open.Filter = String.Format("{0}|*.png;*.bmp;*.jpg|PNG|*.png|BMP|*.bmp|JPG|*.jpg|{1}|*.*", TS3Sky.Language.Dialog.AllImageFiles, TS3Sky.Language.Dialog.AllFiles);
             open.AddExtension = true;
             open.AutoUpgradeEnabled = true;
             if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -60,7 +73,7 @@ namespace TS3Sky
                 }
                 catch
                 {
-                    System.Windows.MessageBox.Show(String.Format("无法识别的图片：{0}", open.FileName), "预览图", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    System.Windows.MessageBox.Show(String.Format(TS3Sky.Language.Dialog.OpenPreviewImageFailedDescription, open.FileName), TS3Sky.Language.Dialog.OpenPreviewImageFailedTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
@@ -69,17 +82,22 @@ namespace TS3Sky
         {
             string name = NameText.Text.Trim();
             string creator = CreatorText.Text.Trim();
+            string description = DescriptionText.Text.Trim();
             string savePath = SaveToText.Text.Trim();
 
             ExportButton.IsEnabled = false;
             if (name.Contains("\\") || name.Contains("/") || name.Contains(":") || name.Contains("*")
                 || name.Contains("?") || name.Contains("\"") || name.Contains("<") || name.Contains(">") || name.Contains("|"))
             {
-                ErrorText.Content = "方案名不能包含这些字符：“\\/:*?\"<>|”";
+                ErrorText.Content = String.Format(TS3Sky.Language.Dialog.InvalidCharInName, "\\/:*?\"<>|");
             }
             else if (creator.Contains(@"\n"))
             {
-                ErrorText.Content = @"作者名字不能包含“\n”";
+                ErrorText.Content = String.Format(TS3Sky.Language.Dialog.InvalidCharInCreator, "\\n");
+            }
+            else if (DescriptionText.LineCount > 3)
+            {
+                ErrorText.Content = TS3Sky.Language.Dialog.TooManyLinesInDescription;
             }
             else
             {
@@ -92,7 +110,7 @@ namespace TS3Sky
         private void SaveToButton_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog save = new SaveFileDialog();
-            save.Title = "导出环境配置包";
+            save.Title = TS3Sky.Language.Operation.ExportToTitle;
             save.Filter = String.Format("{1}|*.{0}", Package.Extension, Package.ExtensionDescription);
             save.AddExtension = true;
             save.AutoUpgradeEnabled = true;
@@ -102,6 +120,15 @@ namespace TS3Sky
             if (save.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 SaveToText.Text = save.FileName;
+                if (save.FileName.StartsWith(Package.CustomPath))
+                {
+                    ErrorText.Content = TS3Sky.Language.Dialog.ExportToCustomForbidden;
+                    ExportButton.IsEnabled = false;
+                }
+                else
+                {
+                    TextBox_TextChanged(null, null);
+                }
             }
         }
 
@@ -116,16 +143,19 @@ namespace TS3Sky
             try
             {
                 Package.Create(savePath, name, creator, description, imagePath);
+                ExportPath = savePath;
+                this.DialogResult = true;
                 this.Close();
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message, "导出失败", MessageBoxButton.OK, MessageBoxImage.Warning);
+                System.Windows.MessageBox.Show(String.Format(TS3Sky.Language.Dialog.ExportPackageFailedContent, ex.Message), TS3Sky.Language.Dialog.ExportPackageFailedTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = false;
             this.Close();
         }
     }

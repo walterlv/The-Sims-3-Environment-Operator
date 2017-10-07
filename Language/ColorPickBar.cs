@@ -7,9 +7,9 @@ namespace TS3Sky.Language
 {
     public class ColorPickBar
     {
-        public static string TheNextDay = "次日凌晨";
-        public static string TimeInterval = "时间段";
-        public static string ColorValue = "颜色值";
+        public static string TheNextDay = "0:00 a.m.";
+        public static string TimeInterval = "Time";
+        public static string ColorValue = "Color";
 
         private const string Section = "ColorBar";
         public static void Initialize(LanguageReader lr)

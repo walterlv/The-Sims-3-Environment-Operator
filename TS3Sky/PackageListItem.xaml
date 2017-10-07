@@ -17,7 +17,8 @@
         </Grid.ColumnDefinitions>
         
         <Image Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"
-               x:Name="PreviewImage" Width="100" Height="100" />
+               x:Name="PreviewImage" Width="100" Height="100" Source="Images/DefaultPackage.png" >
+        </Image>
         <TextBlock Grid.Row="0" Grid.Column="1"
                    x:Name="PackageNameText" Foreground="Black"
                    FontSize="20" Margin="10,0" />
@@ -26,7 +27,8 @@
                    FontSize="14" Margin="10,0" />
         <TextBlock Grid.Row="2" Grid.Column="1"
                    x:Name="PackageDescriptionText" Foreground="Black"
-                   FontSize="12" Margin="10,0" VerticalAlignment="Center"
-                   TextWrapping="WrapWithOverflow" />
+                   FontSize="12" Margin="10,0"
+                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                   TextWrapping="WrapWithOverflow" Width="386" />
     </Grid>
 </UserControl>

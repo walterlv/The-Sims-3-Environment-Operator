@@ -67,6 +67,21 @@ namespace TS3Sky
         }
         #endregion
 
+        #region 设置此颜色条的拥有者 (为了反向传递信息(如选中了颜色))
+        private MainWindow owner;
+        public MainWindow Owner
+        {
+            get
+            {
+                return owner;
+            }
+            set
+            {
+                owner = value;
+            }
+        }
+        #endregion
+
         #region 设置标题
         private string title;
         public string Title
@@ -97,6 +112,52 @@ namespace TS3Sky
                 descriptionText.Text = value;
                 if (value.Equals(String.Empty)) descriptionText.Visibility = Visibility.Collapsed;
             }
+        }
+        #endregion
+
+        #region 读取或设置用户自定义颜色
+        private static string customColorConfigFile = Environment.CurrentDirectory + "\\Config.ini";
+        private const string customColorSection = "CustomColors";
+        private static int[] customColors;
+        private static int[] CustomColors
+        {
+            get
+            {
+                if (customColors == null) ReadCustomColors();
+                return customColors;
+            }
+            set
+            {
+                customColors = value;
+            }
+        }
+        public static void ReadCustomColors()
+        {
+            IniFiles ccf = new IniFiles(customColorConfigFile);
+            List<int> cca = new List<int>();
+            int temp = 0;
+            for (int i = 0; ; i++)
+            {
+                if (ccf.ValueExists(customColorSection, i.ToString()))
+                {
+                    temp = ccf.ReadInteger(customColorSection, i.ToString(), 16777215);
+                    cca.Add(temp);
+                }
+                else break;
+            }
+            ccf.UpdateFile();
+            customColors = cca.ToArray();
+        }
+        public static void SaveCustomColors()
+        {
+            if (customColors == null) return;
+            IniFiles ccf = new IniFiles(customColorConfigFile);
+            ccf.EraseSection(customColorSection);
+            for (int i = 0; i < customColors.Length; i++)
+            {
+                ccf.WriteInteger(customColorSection, i.ToString(), customColors[i]);
+            }
+            ccf.UpdateFile();
         }
         #endregion
 
@@ -133,13 +194,14 @@ namespace TS3Sky
             FrameworkElement element = sender as FrameworkElement;
             Point mousePosition = e.GetPosition(element);
             double time = mousePosition.X / 20;
-            double pickTime = 0.0;
+            double pickTime = -1.0;
             int pickIndex = 0;
             for (int i = 0; i < colorBar.ColorList.Count; i++)
             {
                 if (colorBar.ColorList[i].TimeValue <= time) pickTime = colorBar.ColorList[i].TimeValue;
                 else { pickIndex = i; break; }
             }
+            if (pickTime < 0) pickTime = colorBar.ColorList[colorBar.ColorList.Count - 1].TimeValue;
             if (CurrentPickIndex == pickIndex) PickIndexChanged = false;
             else { CurrentPickIndex = pickIndex; PickIndexChanged = true; }
             pickColorRect.Fill = colorRectList[pickIndex].Fill;
@@ -197,27 +259,59 @@ namespace TS3Sky
             System.Windows.Forms.ColorDialog cd = new System.Windows.Forms.ColorDialog();
             System.Windows.Interop.HwndSource source = PresentationSource.FromVisual(this) as System.Windows.Interop.HwndSource;
             System.Windows.Forms.IWin32Window win = new OldWindow(source.Handle);
-            cd.Color = colorBar.ColorList[CurrentPickIndex].ColorValue;
+            cd.AnyColor = true;
+            cd.FullOpen = true;
+            cd.AllowFullOpen = true;
+            cd.CustomColors = CustomColors;
+            if (CurrentPickIndex == 0) cd.Color = colorBar.ColorList[colorBar.ColorList.Count - 1].ColorValue;
+            else cd.Color = colorBar.ColorList[CurrentPickIndex - 1].ColorValue;
             if (cd.ShowDialog(win) == System.Windows.Forms.DialogResult.OK)
             {
-                if (CurrentPickIndex == 0)
-                {
-                    colorBar.ColorList[colorBar.ColorList.Count - 1].ColorValue = cd.Color;
-                    colorRectList[0].Fill = new SolidColorBrush(Color.FromArgb(colorBar.ColorList[colorBar.ColorList.Count - 1].A,
-                        colorBar.ColorList[colorBar.ColorList.Count - 1].R, colorBar.ColorList[colorBar.ColorList.Count - 1].G,
-                        colorBar.ColorList[colorBar.ColorList.Count - 1].B));
-                    colorRectList[colorRectList.Count - 1].Fill = colorRectList[0].Fill;
-                }
-                else
-                {
-                    colorBar.ColorList[CurrentPickIndex - 1].ColorValue = cd.Color;
-                    colorRectList[CurrentPickIndex].Fill = new SolidColorBrush(Color.FromArgb(colorBar.ColorList[CurrentPickIndex - 1].A,
-                        colorBar.ColorList[CurrentPickIndex - 1].R, colorBar.ColorList[CurrentPickIndex - 1].G, colorBar.ColorList[CurrentPickIndex - 1].B));
-                }
-                pickColorRect.Fill = Brushes.Transparent;
-                colorBarGroup.Modified = true;
+                // 保存当前动作以便撤消
+                System.Drawing.Color oldColor;
+                if (CurrentPickIndex == 0) oldColor = colorBar.ColorList[colorBar.ColorList.Count - 1].ColorValue;
+                else oldColor = colorBar.ColorList[CurrentPickIndex - 1].ColorValue;
+                ColorChangeAction.PerformAction(this, CurrentPickIndex, oldColor, cd.Color);
+                // 设置颜色
+                setColor(CurrentPickIndex, cd.Color);
             }
+            CustomColors = cd.CustomColors;
         }
+
+        public void Undo()
+        {
+            ColorChangeAction action = ColorChangeAction.UndoAction();
+            setColor(action.PickIndex, action.OldColor);
+        }
+        public void Redo()
+        {
+            ColorChangeAction action = ColorChangeAction.RedoAction();
+            setColor(action.PickIndex, action.NewColor);
+        }
+
+        // 把一个颜色设置进颜色条
+        private void setColor(int index, System.Drawing.Color color)
+        {
+            if (index == 0)
+            {
+                colorBar.ColorList[colorBar.ColorList.Count - 1].ColorValue = color;
+                colorRectList[0].Fill = new SolidColorBrush(Color.FromArgb(colorBar.ColorList[colorBar.ColorList.Count - 1].A,
+                    colorBar.ColorList[colorBar.ColorList.Count - 1].R, colorBar.ColorList[colorBar.ColorList.Count - 1].G,
+                    colorBar.ColorList[colorBar.ColorList.Count - 1].B));
+                colorRectList[colorRectList.Count - 1].Fill = colorRectList[0].Fill;
+            }
+            else
+            {
+                colorBar.ColorList[index - 1].ColorValue = color;
+                colorRectList[index].Fill = new SolidColorBrush(Color.FromArgb(colorBar.ColorList[index - 1].A,
+                    colorBar.ColorList[index - 1].R, colorBar.ColorList[index - 1].G, colorBar.ColorList[index - 1].B));
+            }
+            pickColorRect.Fill = Brushes.Transparent;
+            colorBarGroup.Modified = true;
+            owner.ColorPicked();
+            owner.Focus();
+        }
+
         private string doubleToTime(double time)
         {
             string timeString;

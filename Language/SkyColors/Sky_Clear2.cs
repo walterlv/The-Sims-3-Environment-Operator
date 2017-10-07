@@ -7,18 +7,18 @@ namespace TS3Sky.Language
 {
     public class Sky_Clear2
     {
-        public static string DayColorName = "云2";
-        public static string DayColorDescription = "改变云的颜色";
-        public static string ColorWRTSunDarkName = "云-未照射";
-        public static string ColorWRTSunDarkDescription = "未被太阳照射的云的颜色。";
-        public static string ColorWRTSunLightName = "云-照射";
-        public static string ColorWRTSunLightDescription = "被太阳照射的云的颜色。";
-        public static string ColorWRTHorizonDarkName = "云-地平线-暗色";
-        public static string ColorWRTHorizonDarkDescription = "无阳光照射的地平线云部分颜色。";
-        public static string ColorWRTHorizonLightName = "云-地平线-亮色";
-        public static string ColorWRTHorizonLightDescription = "阳光照射的地平线云部分颜色。";
-        public static string ColorWRTShadowName = "云影";
-        public static string ColorWRTShadowDescription = "云的阴影颜色";
+        public static string DayColorName = "Cloud 2";
+        public static string DayColorDescription = "You can change the color of Cloud2 here.";
+        public static string ColorWRTSunDarkName = "Cloud2 without Sunlight";
+        public static string ColorWRTSunDarkDescription = "The the color of cloud2 without sunlight";
+        public static string ColorWRTSunLightName = "Cloud2 with Sunlight";
+        public static string ColorWRTSunLightDescription = "The the color of cloud1 with sunlight";
+        public static string ColorWRTHorizonDarkName = "Cloud2 at Horizon without Sunlight";
+        public static string ColorWRTHorizonDarkDescription = "The color of cloud1 at horizon without sunlight";
+        public static string ColorWRTHorizonLightName = "Cloud2 at Horizon with Sunlight";
+        public static string ColorWRTHorizonLightDescription = "The color of cloud1 at horizon with sunlight";
+        public static string ColorWRTShadowName = "Cloud2 Shadow";
+        public static string ColorWRTShadowDescription = "The color of the cloud1's shadow";
 
         private const string Section = "Sky_Clear2";
         public static void Initialize(LanguageReader lr)

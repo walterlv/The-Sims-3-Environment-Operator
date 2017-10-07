@@ -7,25 +7,79 @@ namespace TS3Sky.Language
 {
     public class Application
     {
-        public static string Name = "模拟人生3：编辑环境工具";
-        public static string Description = "想让你的世界充满梦幻般的色彩吗？从这里开始。\n软件由 walterlv 开发，解决方案由 Kuree 提供。（3DMGAME M3 小组）";
+        // 程序基本信息
+        public static string Name = "The Sims 3: Environment Operator";
+        public static string Description = "Enter an iridescent game-world from this program!\nProgram by Waterlv; Solutions by Kuree. 3DM-M3 groups.";
+        public static string Version = "1.1.1.34";
+        public static string ShowVersion = "1.1 (34)";
+        public static string Developer = "walterlv (UI Designer, Developer)\nKuree (Solution Provider)";
+
+        // 程序加载过程语句
+        public static string ChooseLanguage = "This is your first time to run this program, please choose the language you want to use:";
+        public static string OK = "OK";
+        public static string LoadStart = "The Sims 3: Environment Operator";
+        public static string LoadLanguage = "Loading language";
+        public static string LoadEnvironment = "Reading sims3 language settings";
+        public static string LoadPackage = "Loading seo files";
+        public static string LoadCompleted = "Starting";
+
+        // 网址
+        public static string ProgramSite = "http://bbs.3dmgame.com/thread-3433574-1-1.html";
+        public static string ContactSite = "http://www.modthesims.info/download.php?t=488621";
+        public static string WorldDownloadSite = "http://www.modthesims.info/download.php?t=488621";
+        public static string PackageDownloadSite = "http://bbs.3dmgame.com/thread-3448055-1-1.html";
 
         public static void Initialize(string local)
         {
             if (local.Equals("zh-cn"))
             {
                 Name = "模拟人生3：编辑环境工具";
-                Description = "想让你的世界充满梦幻般的色彩吗？从这里开始。";
+                Description = "想让你的世界充满梦幻般的色彩吗？从这里开始。\n软件由 walterlv 开发，解决方案由 Kuree 提供。（3DMGAME M3 小组）";
+                Developer = "walterlv（视觉设计、开发程序）\nKuree（研究解决方案、提供界面语言）";
+
+                ChooseLanguage = String.Format("这是您第一次使用“{0}”，请选择您想要显示的语言：", Name);
+                OK = "确定";
+                LoadStart = Name;
+                LoadLanguage = "加载语言";
+                LoadEnvironment = "正在读取模拟人生3环境";
+                LoadPackage = "正在读取您的方案";
+                LoadCompleted = "准备中";
+
+                ContactSite = "http://bbs.3dmgame.com/thread-3433574-1-1.html";
+                WorldDownloadSite = "http://bbs.3dmgame.com/forum.php?mod=redirect&goto=findpost&ptid=3433574&pid=66576405&fromuid=2474653";
+                PackageDownloadSite = "http://bbs.3dmgame.com/thread-3448055-1-1.html";
             }
             else if (local.Equals("zh-tw"))
             {
                 Name = "模擬市民3：編輯環境工具";
                 Description = "模擬世界的色彩，從這裡開始！\n（軟體由 walterlv 開發，方案由 Kuree 提供。來自 3DMGAME M3 小組。）";
+                Developer = "walterlv（視覺設計、開發程式）\nKuree（研究解決方案、提供介面語言）";
+
+                ChooseLanguage = String.Format("這是您第一次使用“{0}”，請選擇您想要顯示的語言：", Name);
+                OK = "確定";
+                LoadStart = Name;
+                LoadLanguage = "裝載語言文件";
+                LoadEnvironment = "正在讀取模擬市民3的環境";
+                LoadPackage = "正在讀取您的方案";
+                LoadCompleted = "準備中";
+
+                ContactSite = "http://bbs.3dmgame.com/thread-3433574-1-1.html";
+                WorldDownloadSite = "http://bbs.3dmgame.com/forum.php?mod=redirect&goto=findpost&ptid=3433574&pid=66576405&fromuid=2474653";
+                PackageDownloadSite = "http://bbs.3dmgame.com/thread-3448055-1-1.html";
             }
-            else if (local.Equals("en-us"))
+            else
             {
                 Name = "The Sims 3: Environment Operator";
-                Description = "Let your imagination fly. Fantastic worlds come from here!\n(Developed: walterlv. Solution provider: Kuree. From M3 in 3DMGAME.)";
+                Description = "Enter an iridescent game-world from this program!\nProgram by Waterlv; Solutions by Kuree. 3DM-M3 groups.";
+                Developer = "walterlv (UI Designer, Developer)\nKuree (Solution Provider)";
+
+                ChooseLanguage = "This is your first time to run this program, please choose the language you want to use:";
+                OK = "OK";
+                LoadStart = "The Sims 3: Environment Operator";
+                LoadLanguage = "Loading language";
+                LoadEnvironment = "Reading sims3 language settings";
+                LoadPackage = "Loading seo files";
+                LoadCompleted = "Starting";
             }
         }
     }

@@ -50,8 +50,9 @@
 
         <Label Grid.Row="6" Grid.ColumnSpan="2" x:Name="DescriptionLabel" />
         <TextBox Grid.Row="7" Grid.ColumnSpan="2"
-                 x:Name="DescriptionText"
-                 TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" MaxLength="200" MaxLines="10" />
+                 x:Name="DescriptionText" TextChanged="TextBox_TextChanged"
+                 TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                 MaxLength="140" UndoLimit="10" MaxLines="3" />
 
         <Label Grid.Row="8" Grid.ColumnSpan="2" x:Name="SaveToLabel" />
         <Grid Grid.Row="9" Grid.ColumnSpan="2" Margin="0,0,0,10">

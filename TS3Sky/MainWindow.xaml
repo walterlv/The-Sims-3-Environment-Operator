@@ -3,60 +3,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="clr-namespace:TS3Sky"
         Title="TS3Sky"
-        SizeToContent="WidthAndHeight" FontSize="11" WindowStartupLocation="CenterScreen"
-        Loaded="Window_Loaded" FontFamily="Microsoft YaHei" Icon="/TS3Sky;component/Images/icon.ico" Closing="Window_Closing">
+        SizeToContent="WidthAndHeight" FontSize="12" WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded" Icon="/TS3Sky;component/Images/icon.ico" Closing="Window_Closing">
     <Window.Background>
-        <ImageBrush ImageSource="/TS3Sky;component/Images/DefaultBackground.jpg" />
+        <ImageBrush ImageSource="/TS3Sky;component/Images/Background.jpg" />
     </Window.Background>
     <Window.Resources>
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="Background">
-                <Setter.Value>
-                    <ImageBrush ImageSource="/TS3Sky;component/Images/NaviButton_normal.png" />
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="border" Background="{TemplateBinding Background}">
-                            <ContentPresenter Name="content" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                              RecognizesAccessKey="True" 
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background">
-                                    <Setter.Value>
-                                        <ImageBrush ImageSource="/TS3Sky;component/Images/NaviButton_rollover.png" />
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background">
-                                    <Setter.Value>
-                                        <ImageBrush ImageSource="/TS3Sky;component/Images/NaviButton_pressed.png" />
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="border" Property="Opacity" Value="0.6" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="ListBoxItem">
-            <Style.Resources>
-                <!--SelectedItem with focus-->
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="White" Opacity=".4"/>
-                <!--SelectedItem without focus-->
-                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="White" Opacity=".4"/>
-            </Style.Resources>
-        </Style>
+        <RoutedUICommand x:Key="SbtnClick" Text="SaveButton_Click"/>
+        <RoutedUICommand x:Key="UbtnClick" Text="UndoButton_Click"/>
+        <RoutedUICommand x:Key="RbtnClick" Text="RedoButton_Click"/>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+S" Key="S" Command="{StaticResource SbtnClick}"/>
+        <KeyBinding Gesture="Ctrl+Z" Key="Z" Command="{StaticResource UbtnClick}"/>
+        <KeyBinding Gesture="Ctrl+Y" Key="Y" Command="{StaticResource RbtnClick}"/>
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="{StaticResource SbtnClick}"
+                        CanExecute="CommandBinding_CanExecute"
+                        Executed="CommandBinding_SaveExecuted"/>
+        <CommandBinding Command="{StaticResource UbtnClick}"
+                        CanExecute="CommandBinding_CanExecute"
+                        Executed="CommandBinding_Executed"/>
+        <CommandBinding Command="{StaticResource RbtnClick}"
+                        CanExecute="CommandBinding_CanExecute"
+                        Executed="CommandBinding_ReExecuted"/>
+    </Window.CommandBindings>
     
     <!--这里开始定义界面-->
     <Grid Width="800" Height="600">
@@ -64,7 +36,10 @@
         <Grid.Background>
             <ImageBrush ImageSource="/TS3Sky;component/Images/MainFrame.png" />
         </Grid.Background>
-        <Image Height="160" HorizontalAlignment="Left" Margin="30,50,0,0" Name="logoImage" Stretch="Fill" VerticalAlignment="Top" Width="160" Source="/TS3Sky;component/Images/DefaultLogo.png" />
+        <Image x:Name="logoImage" MouseLeftButtonUp="ProgramSiteButton_Click"
+               Height="160" Width="160" Margin="30,50,0,0" Cursor="Hand"
+               HorizontalAlignment="Left" VerticalAlignment="Top"
+               Stretch="Fill" Source="/TS3Sky;component/Images/Logo.png" />
         <StackPanel HorizontalAlignment="Left" Margin="30,0,0,30" Name="grid1" VerticalAlignment="Bottom" Width="160">
             <Label x:Name="WelcomeLabel" FontSize="16" Foreground="DarkBlue" />
             <Button x:Name="SkyColorWelcome" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
@@ -94,44 +69,75 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             
-            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4"
                        x:Name="WelcomeTitle"
                        HorizontalAlignment="Center" Margin="0,10,0,0"
                        FontSize="30" Foreground="DarkBlue" />
-            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
                        x:Name="WelcomeDescription"
                        HorizontalAlignment="Center" Margin="0,0,0,10"
                        FontSize="14" Foreground="SteelBlue" TextWrapping="WrapWithOverflow" TextAlignment="Center" />
-            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"
                        x:Name="PackageListBoxTitle"
                        FontSize="14" TextWrapping="WrapWithOverflow" />
-            <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
+            <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4"
                      x:Name="PackageListBox"
                      Height="311" Background="Transparent"
                      SelectionChanged="PackageListBox_SelectionChanged">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <!-- 设置控件模板 -->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                 TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+                        <!-- 设置触发器 -->
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter Property="Background" Value="#60FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" Value="#90FFFFFF"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.ItemContainerStyle>
             </ListBox>
             <Button Grid.Row="4" Grid.Column="0"
                     x:Name="ApplyPackageButton" IsEnabled="False"
-                    Width="150" Height="32" Margin="5,3"
+                    Width="110" Height="32" Margin="5,3"
                     Click="ApplyPackageButton_Click"/>
             <Button Grid.Row="4" Grid.Column="1"
                     x:Name="DeletePackageButton" IsEnabled="False"
-                    Width="150" Height="32" Margin="5,3"
+                    Width="110" Height="32" Margin="5,3"
                     Click="DeletePackageButton_Click"/>
             <Button Grid.Row="4" Grid.Column="2"
                     x:Name="ImportPackageButton"
-                    Width="150" Height="32" Margin="5,3"
+                    Width="110" Height="32" Margin="5,3"
                     Click="ImportPackageButton_Click"/>
-            <Rectangle Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"
+            <Button Grid.Row="4" Grid.Column="3"
+                    x:Name="DownloadPackageButton"
+                    Width="110" Height="32" Margin="5,3"
+                    Click="DownloadPackageButton_Click"/>
+            <Rectangle Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4"
                        Height="1" Margin="0,7,0,0" Fill="SteelBlue" />
-            <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3"
+            <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4"
                        x:Name="PackageExportTitle" Margin="0,10,0,0"
                        FontSize="14" TextWrapping="WrapWithOverflow" />
             <Button Grid.Row="7" Grid.Column="0"
                     x:Name="ExportPackageButton"
-                    Width="150" Height="32" Margin="5,3" VerticalAlignment="Top"
+                    Width="110" Height="32" Margin="5,3" VerticalAlignment="Top"
                     Click="ExportPackageButton_Click"/>
         </Grid>
         <!--这里是内容-->
@@ -141,19 +147,20 @@
                 <TextBlock x:Name="SkyTitleDescription" HorizontalAlignment="Center" FontSize="14" Foreground="SteelBlue" TextWrapping="WrapWithOverflow">
                 </TextBlock>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 8, 0, 8">
-                    <Button x:Name="SaveButton" Margin="10,0" Width="140" Height="32" Click="OperationButton_Click" />
-                    <Button x:Name="RevokeButton" Margin="10,0" Width="140" Height="32" Click="OperationButton_Click" />
-                    <Button x:Name="SetToDefaultButton" Margin="10,0" Width="140" Height="32" Click="OperationButton_Click" />
+                    <Button x:Name="SaveButton" Margin="10,0" Width="140" Height="32" IsEnabled="False" Click="SaveButton_Click" />
+                    <Button x:Name="UndoButton" Margin="10,0" Width="140" Height="32" IsEnabled="False" Click="UndoButton_Click" />
+                    <Button x:Name="SetToDefaultButton" Margin="10,0" Width="140" Height="32" Click="SetToDefaultButton_Click" />
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
         <!--这里是关于信息-->
         <Grid x:Name="SkyAbout" Height="540" Width="530" Margin="240,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
-            <Image Stretch="None" Source="/TS3Sky;component/Images/AboutBackground.png" />
+            <Image x:Name="AboutBackground" Stretch="None" Source="/TS3Sky;component/Images/AboutBackground.jpg" />
             <StackPanel Margin="60,140,60,50" VerticalAlignment="Bottom">
                 <TextBlock x:Name="AboutInfomation" FontSize="12" TextWrapping="WrapWithOverflow" />
                 <Button x:Name="ContactUsButton" HorizontalAlignment="Left" Width="160" Height="32" Margin="0, 0, 0, 20" Click="ContactUsButton_Click" />
-                <Button Visibility="Collapsed" x:Name="DownloadWorldButton" HorizontalAlignment="Left" Width="160" Height="32" Margin="0, 0, 0, 20" Click="DownloadWorldButton_Click" />
+                <TextBlock x:Name="WorldDescription" FontSize="12" TextWrapping="WrapWithOverflow"/>
+                <Button x:Name="DownloadWorldButton" HorizontalAlignment="Left" Width="160" Height="32" Margin="0, 0, 0, 20" Click="DownloadWorldButton_Click" />
                 <TextBlock x:Name="CopyrightInfomation" FontSize="12" VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" />
             </StackPanel>
         </Grid>

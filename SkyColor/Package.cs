@@ -10,7 +10,9 @@ namespace TS3Sky
     {
         // 包扩展名
         public const string Extension = "seo";
-        public const string ExtensionDescription = "模拟人生3环境配置包";
+        public static string ExtensionDescription = TS3Sky.Language.Package.Extention;
+        // 包ID
+        public const string DefaultPackageId = "0000-0000-0000-0000";
         // 包路径
         public static string CustomPath = Environment.CurrentDirectory + @"\Custom";
         // 临时路径
@@ -26,13 +28,13 @@ namespace TS3Sky
 
         // 以下储存一个一般包的信息
         public string PackagePath { get; private set; }
-        public string PackageDirectory { get; private set; }
         public string Id { get; private set; }
         public string Name { get; private set; }
         public string Version { get; private set; }
         public string Creator { get; private set; }
         public string Description { get; private set; }
         public string ImageFile { get; private set; }
+        public bool IsTemp { get; private set; }
         public bool IsProtected { get; private set; }
         public string ProtectedReason { get; private set; }
         public List<string> Files { get; private set; }
@@ -72,6 +74,10 @@ namespace TS3Sky
         /// <param name="image">预览图完全限定路径</param>
         public static void Create(string path, string name, string creator, string description, string image)
         {
+            Create(path, name, creator, description, image, false);
+        }
+        public static void Create(string path, string name, string creator, string description, string image, bool isTemp)
+        {
             // 生成ID
             string id;
             while (true)
@@ -79,9 +85,10 @@ namespace TS3Sky
                 Random ram = new Random(unchecked((int)DateTime.Now.Ticks));
                 Int32 idNum1 = ram.Next();
                 Int32 idNum2 = ram.Next();
-                id = String.Format("{0:X00000000}{1:X00000000}", idNum1, idNum2).ToUpper();
-                id = String.Format("{0}-{1}-{2}-{3}", id.Substring(0, 4), id.Substring(4, 4), id.Substring(8, 4), id.Substring(12, 4));
-                if (id.Substring(0, 4).StartsWith("0000-")) continue;
+                string id1 = String.Format("{0:X}", idNum1).ToString().PadLeft(8, '0').ToUpper();
+                string id2 = String.Format("{0:X}", idNum2).ToString().PadLeft(8, '0').ToUpper();
+                id = String.Format("{0}-{1}-{2}-{3}", id1.Substring(0, 4), id1.Substring(4, 4), id2.Substring(0, 4), id2.Substring(4, 4));
+                if (id.StartsWith("0000-")) continue;
                 else break;
             }
             // 创建方案描述文件
@@ -90,13 +97,22 @@ namespace TS3Sky
             IniFiles desFile = new IniFiles(tempFilePath);
             desFile.WriteString(BasicSection, "Id", id);
             desFile.WriteString(BasicSection, "Name", name);
-            desFile.WriteString(BasicSection, "Version", TS3Sky.Language.About.VersionText);
+            desFile.WriteString(BasicSection, "Version", TS3Sky.Language.Application.Version);
             desFile.WriteString(BasicSection, "Creator", creator);
             desFile.WriteString(BasicSection, "Description", description);
-            string imageName;
-            int index = image.LastIndexOf('\\');
-            imageName = image.Substring(index + 1, image.Length - index - 1);
-            desFile.WriteString(BasicSection, "Preview", imageName);
+            if (isTemp) desFile.WriteBool(BasicSection, "IsTemp", true);
+            if (image != null && image.Length > 0)
+            {
+                string imageName;
+                int index = image.LastIndexOf('\\');
+                imageName = image.Substring(index + 1, image.Length - index - 1);
+                desFile.WriteString(BasicSection, "Preview", imageName);
+            }
+            desFile.WriteString(FileSection, "1", "Sky_Clear1.ini");
+            desFile.WriteString(FileSection, "2", "Sky_Clear2.ini");
+            desFile.WriteString(FileSection, "3", "Sky_ClearLight.ini");
+            desFile.WriteString(FileSection, "4", "Sky_ClearSky.ini");
+            desFile.WriteString(FileSection, "5", "Sky_ClearSea.ini");
             desFile.UpdateFile();
             // 打包方案的所有文件
             if (File.Exists(path)) File.Delete(path);
@@ -122,9 +138,10 @@ namespace TS3Sky
         public static Package Import(string path)
         {
             Package package = Open(path);
+            package.PackagePath = CustomPath + "\\" + package.Id + "." + Extension;
             if (package.IsValid)
             {
-                File.Copy(path, CustomPath + "\\" + package.Id + "." + Extension, true);
+                File.Copy(path, package.PackagePath, true);
             }
             return package;
         }
@@ -175,7 +192,7 @@ namespace TS3Sky
             }
             catch
             {
-                return new Package(false, "添加的文件不是有效的环境配置包。");
+                return new Package(false, TS3Sky.Language.Package.ImportInvalidPackage);
             }
             // 检查Id是否合法
             IniFiles idf = new IniFiles(tempFilePath);
@@ -194,13 +211,16 @@ namespace TS3Sky
                 Package package = new Package();
                 IniFiles info = new IniFiles(cacheFolder + @"\info.ini");
                 package.PackagePath = packagePath;
-                package.PackageDirectory = cacheFolder;
                 package.Id = info.ReadString(BasicSection, "Id", String.Empty);
                 package.Name = info.ReadString(BasicSection, "Name", String.Empty);
+                package.Name = info.ReadString(BasicSection, "Name-" + TS3Sky.Language.LanguageManager.LocalLanguage, package.Name);
                 package.Version = info.ReadString(BasicSection, "Version", String.Empty);
                 package.Creator = info.ReadString(BasicSection, "Creator", String.Empty);
+                package.Creator = info.ReadString(BasicSection, "Creator-" + TS3Sky.Language.LanguageManager.LocalLanguage, package.Creator);
                 package.Description = info.ReadString(BasicSection, "Description", String.Empty);
+                package.Description = info.ReadString(BasicSection, "Description-" + TS3Sky.Language.LanguageManager.LocalLanguage, package.Description);
                 package.ImageFile = cacheFolder + "\\" + info.ReadString(BasicSection, "Preview", String.Empty);
+                package.IsTemp = info.ReadBool(BasicSection, "IsTemp", false);
                 package.IsProtected = info.ReadBool(BasicSection, "Protected", false);
                 package.ProtectedReason = info.ReadString(BasicSection, "ProtectedReason", String.Empty);
                 // 包内的文件列表
@@ -215,13 +235,13 @@ namespace TS3Sky
                 // 添加到包列表
                 if (!AddPackage(package))
                 {
-                    return new Package(false, "已经存在一个相同的包。");
+                    return new Package(false, TS3Sky.Language.Package.ImportExistedPackage);
                 }
                 return package;
             }
             else
             {
-                return new Package(false, "此环境配置包具有无效的ID。");
+                return new Package(false, TS3Sky.Language.Package.ImportUnknowPackage);
             }
         }
 
@@ -245,8 +265,12 @@ namespace TS3Sky
             File.Delete(PackagePath);
         }
 
-        public static void ClearTempAndCache()
+        public static void ClearTempBackupAndCache()
         {
+            foreach (Package p in Packages)
+            {
+                if (p.IsTemp) File.Delete(CustomPath + "\\" + p.Id + "." + Extension);
+            }
             if (Directory.Exists(AppDataPath))
             {
                 DirectoryInfo di = new DirectoryInfo(AppDataPath);
