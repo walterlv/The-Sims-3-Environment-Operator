@@ -70,3 +70,119 @@ The Sims 3: Environment Operator
 1. 你可以使用预设方案——软件目前内置了anteen制作的金色黄昏方案，真的很好看，看截图吧！
 1. 你可以下载大家的方案——点击下载按钮，就可以到论坛的方案收集帖下载新的方案（自己改不出好看的方案的话，可以下大家的来玩啦）。
 1. 你可以导出方案——自己辛辛苦苦做的配色不再只呆在自己的电脑里了，赶快分享给大家吧！（点开始，然后找到下面的导出按钮。）
+
+## 【软件界面 - The UI Pictures】
+
+![](/Docs/1.jpg)
+
+![](/Docs/2.jpg)
+
+![](/Docs/3.jpg)
+
+![](/Docs/4.jpg)
+
+![](/Docs/5.jpg)
+
+### 【这是使用anteen制作的金色黄昏的效果 - Some Examples of the program】
+
+![](/Docs/金色黄昏.jpg)
+
+### 【安装方法】
+
+1、对于绿色版——不用安装，只要把附件下载下来解压到同一个文件夹中就可以立即使用了。2、对于安装版——适用于懒人，下载下来，直接双击安装文件点击“解压”即可。（会自动创建桌面快捷方式）
+
+### 【使用方法】
+
+1、打开软件，点击“选择环境”，直接选择一个方案，然后点击应用，即可立刻看到效果；
+（注：首页中列出了软件支持的所有城镇，对于需要进行处理的城镇，只有处理掉它才可以应用你的环境方案。）
+2、如果你觉得没有你喜欢的方案，可以点击“下载”按钮下载一些方案包；
+==== 小白请 直接忽视 下面的3、4、5 ====
+3、如果你想设计一个属于自己的模拟人生3环境，则可以在左边点击“编辑环境”标签；
+4、界面上列出了所有可以修改的环境色谱，编辑他们就行了；
+5、点击“应用”按钮即可立即在游戏中看到效果；
+（注：由于《模拟人生3：春夏秋冬》中的天气是叠加在原有天气上的，所以，对软件中列出的任何一种天气进行修改都会同时对冰雹、雨、雪、雾天生效！）
+
+
+### 【下面介绍一下“即时修改”】
+
+“即时修改”就是你正在玩游戏时，你可以随时切换到这个软件修改环境。点击保存后，回到游戏可以立即看到效果。
+不过，由于EA的加载策略所限，这样操作之后有可能还是不能立即看到效果（尤其是修改“天空”）。你可以尝试修改一下别的（比如“海洋”）中的颜色，这时再切换进游戏就能看到效果了。
+
+### 【下载软件】
+
+模拟人生3：编辑环境工具2.0（build 57）
+
+绿色版（请自己解压使用）：[编辑环境工具2.0(57)绿色版.zip](http://bbs.3dmgame.com/forum.php?mod=attachment&aid=MjEzNDA5NHxhOTQxYjgwZXwxNTA3Mzg3ODMyfDQyMDM0ODV8MzQzMzU3NA%3D%3D)
+
+安装版（懒人下载这个用）：[编辑环境工具2.0(53)安装版.rar](http://bbs.3dmgame.com/forum.php?mod=attachment&aid=MjEzNDA5NXw3YWQ0NzhhMHwxNTA3Mzg3ODMyfDQyMDM0ODV8MzQzMzU3NA%3D%3D)
+
+### 【运行环境】
+
+Win7用户请无视XP用户需要下载：
+
+[http://www.microsoft.com/zh-cn/download/details.aspx?id=25150](http://www.microsoft.com/zh-cn/download/details.aspx?id=25150)
+
+---
+
+【本补丁仅作学习和交流之用，任何个人及组织未经本组同意，不得用作商业用途】
+
+- 项目负责人：Kuree , MAIzhentao
+- 主要开发者：walterlv
+- 研究环境修改原理：kuree
+- 内测人员：
+- anteen - 测试环境配置方案的工作情况，为大家制作预设方案。测试各种天气下游戏的状况。
+- MAIzhentao - 测试软件功能正常工作情况。
+- 迪克.CGD.蘭德古 - 测试软件在XP平台下的可用性。
+
+本工具在3DM论坛首发发布，严禁剽窃以及整合或重新打包，此外欢迎转载，但请务必保留以上信息！
+
+---
+
+==== The Words below are in English ====
+
+### 【How to Install】
+
+You don't need to install. Just Extract the attachment to a folder of your computer. 
+
+### 【How to Use】 
+
+1. Open the program. Just choose your favorite environment config and click Apply.
+1. If you cannot find your favorite config, Please click Download.
+1. If your are an advanced user, you can create your own seo package. Just read the following steps.
+1. Click the navigation buttons on the left to choose what you want to change.
+1. Change the colors on the right and click Save.
+1. After you change most of the colors, please go back to the start page.
+1. Click Share Button, and write your own package information.
+1. Then, you've finished your own seo package. Share it with your friends!
+
+### 【Download】
+
+The Sims 3: Environment Operator 2.0.51.42  (International)
+
+### 【Runtime】
+
+The program cannot run without the .NET Framework 3.5 Runtime.
+
+If you are a XP or Vista user, please click the link below to download the runtime:
+
+[http://pan.baidu.com/share/link?shareid=67875&uk=4194319732](http://pan.baidu.com/share/link?shareid=67875&uk=4194319732)  (Vista contains .NET 3.0) 
+
+If your operating  system is Windows 7, just ignore it. (Windows 7 contains .NET 3.5)
+
+If you use Windows 8, when you run the program, you should follow the system tips to download .NET3.5.
+
+### 【Our Software Team】
+
+- Developer: walterlv
+- Solution Provider: Kuree
+- Both are from 3DM M3 Group.
+- Show appreciation to MAIzhentao, 迪克.CGD.蘭德古, anteen for testing and send feedback to debug.
+- Copyright © walterlv kuree 2012, All Rights Reserved.
+
+```xml
+<UpdateInfo>
+<Name>模拟人生3：编辑环境工具</Name>
+<Version>2.0.57.55</Version>
+<Features>这是一个小幅更新<br/>修复了小部分bug</Features>
+</UpdateInfo>
+```
