@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TS3Sky.Language
 {
-    public class Sky_ClearLight
+    public class Sky_Light
     {
         public static string DayColorName = "Light";
         public static string DayColorDescription = "The light's color of both sun and moon.";
@@ -16,7 +16,7 @@ namespace TS3Sky.Language
         public static string AmbientSkyBottomName = "Ambient Sky Bottom";
         public static string AmbientSkyBottomDescription = "The color of reflection at the bottom in night";
 
-        private const string Section = "Sky_ClearLight";
+        private const string Section = "Sky_Light";
         public static void Initialize(LanguageReader lr)
         {
             DayColorName = lr.Read(Section, "Name", DayColorName);

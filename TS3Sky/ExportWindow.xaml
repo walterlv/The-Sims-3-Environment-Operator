@@ -1,7 +1,7 @@
 ﻿<Window x:Class="TS3Sky.ExportWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="导出环境配置包" Icon="/TS3Sky;component/Images/icon.ico"
+        Title="导出环境配置包" Icon="icon.ico"
         ResizeMode="NoResize" ShowInTaskbar="False"
         FontSize="14" FontFamily="Microsoft YaHei" Background="AliceBlue"
         SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner" Loaded="Window_Loaded">

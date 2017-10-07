@@ -3,20 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
-using Microsoft.Win32;
 using System.IO;
 
 namespace TS3Sky
 {
-    public enum ColorAssembly
-    {
-        Sky_Clear1,
-        Sky_Clear2,
-        Sky_ClearLight,
-        Sky_ClearSea,
-        Sky_ClearSky
-    }
-
     public class SkyColor
     {
         /// <summary>
@@ -132,10 +122,6 @@ namespace TS3Sky
         }
         #endregion
 
-        /// <summary>
-        /// 获取存放配置文件的文件夹
-        /// </summary>
-        public static string ColorDirectory { get; private set; }
 
         #region 一天中的所有颜色的种类
         /// <summary>
@@ -144,46 +130,51 @@ namespace TS3Sky
         public List<DayColor> DayColors = new List<DayColor>();
         #endregion
 
-        #region 所有颜色组的合集
-        /// <summary>
-        /// 获取所有颜色组的合集
-        /// </summary>
-        public static List<SkyColor> AllSkyColors = new List<SkyColor>();
-        #endregion
-
         protected SkyColor()
         {
         }
 
-        public static SkyColor FromColorAssembly(ColorAssembly colorName)
+        public static SkyColor FromColorAssembly(ColorAssembly colorName, Weather weather)
         {
             SkyColor skyColor;
             switch (colorName)
             {
-                case ColorAssembly.Sky_Clear1:
-                    skyColor = new Sky_Clear1();
+                case ColorAssembly.Sky_1:
+                    skyColor = new Sky_1();
+                    skyColor.colorFileName = String.Format("Sky_{0}1", WeatherSky.GetWeatherString(weather));
                     break;
-                case ColorAssembly.Sky_Clear2:
-                    skyColor = new Sky_Clear2();
+                case ColorAssembly.Sky_2:
+                    skyColor = new Sky_2();
+                    skyColor.colorFileName = String.Format("Sky_{0}2", WeatherSky.GetWeatherString(weather));
                     break;
-                case ColorAssembly.Sky_ClearLight:
-                    skyColor = new Sky_ClearLight();
+                case ColorAssembly.Sky_Light:
+                    skyColor = new Sky_Light();
+                    skyColor.colorFileName = String.Format("Sky_{0}Light", WeatherSky.GetWeatherString(weather));
                     break;
-                case ColorAssembly.Sky_ClearSea:
-                    skyColor = new Sky_ClearSea();
+                case ColorAssembly.Sky_Sea:
+                    skyColor = new Sky_Sea();
+                    skyColor.colorFileName = String.Format("Sky_{0}Sea", WeatherSky.GetWeatherString(weather));
                     break;
-                case ColorAssembly.Sky_ClearSky:
-                    skyColor = new Sky_ClearSky();
+                case ColorAssembly.Sky_Sky:
+                    skyColor = new Sky_Sky();
+                    skyColor.colorFileName = String.Format("Sky_{0}Sky", WeatherSky.GetWeatherString(weather));
                     break;
                 default:
                     return null;
             }
             skyColor.colorType = colorName;
-            skyColor.colorPath = skyColor.getColorPath(colorName);
+            skyColor.colorPath = WeatherSky.ColorDirectory + "\\" + skyColor.ColorFileName + ".ini";
             if (skyColor.colorPath == null) return null;
             skyColor.Read();
-            AllSkyColors.Add(skyColor);
             return skyColor;
+        }
+
+        public static void ChangeWeather(Weather newWeather)
+        {
+            foreach (SkyColor skyColor in WeatherSky.GetWeatherByName(newWeather).SkyColors)
+            {
+                skyColor.colorFileName = String.Format("Sky_{0}Sky", WeatherSky.GetWeatherString(newWeather));
+            }
         }
 
         protected void Read()
@@ -235,16 +226,9 @@ namespace TS3Sky
                 iniFile.EraseSection(DayColors[DayColors.Count - 1].ColorSection);
             }
             iniFile.UpdateFile();
-            // 修改晴天出现的概率为非常大，以确保修改后有很大概率能生效
-            if (colorType == ColorAssembly.Sky_ClearSky)
-            {
-                iniFile = new IniFiles(colorPath);
-                iniFile.WriteDouble("MiscParams", "ProbabilityWeight", 100);
-                iniFile.UpdateFile();
-            }
         }
 
-        public void Revoke()
+        public void Reread()
         {
             Read();
         }
@@ -254,21 +238,6 @@ namespace TS3Sky
             File.Copy(Package.CachePath + @"\0000-0000-0000-0000\" + colorType + ".ini", colorPath, true);
         }
 
-        private string getColorPath(ColorAssembly colorName)
-        {
-            if (ColorDirectory == null)
-            {
-                string simsPath;
-                RegistryKey key = Registry.LocalMachine;
-                key = key.OpenSubKey("SOFTWARE", true);
-                key = key.OpenSubKey("Sims", true);
-                key = key.OpenSubKey("The Sims 3", true);
-                simsPath = key.GetValue("Install Dir").ToString();
-                if (simsPath.EndsWith("\\")) simsPath.Substring(0, simsPath.Length - 1);
-                ColorDirectory = simsPath + @"\GameData\Shared\NonPackaged\Ini";
-            }
-            return ColorDirectory + "\\" + colorFileName + ".ini";
-        }
 
         protected BasicColor ReadColor(string colorSection, int index)
         {

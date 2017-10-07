@@ -15,7 +15,6 @@ namespace TS3Sky.Language
         public static string ContactUs = "Contact Us";
         public static string DownloadWorldsDescription = "Click here to download worlds";
         public static string DownloadWorlds = "Download Worlds";
-        public static string Copyright = "Copyright © walterlv kuree 2012, All Rights Reserved.";
         public static string Update = "Update History";
 
         private const string Section = "About";

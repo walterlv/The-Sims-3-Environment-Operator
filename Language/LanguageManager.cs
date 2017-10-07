@@ -86,15 +86,16 @@ namespace TS3Sky.Language
             Welcome.Initialize(lr);
             Package.Initialize(lr);
             Navigation.Initialize(lr);
+            Weather.Initialize(lr);
             About.Initialize(lr);
             Operation.Initialize(lr);
             Dialog.Initialize(lr);
             ColorPickBar.Initialize(lr);
-            Sky_Clear1.Initialize(lr);
-            Sky_Clear2.Initialize(lr);
-            Sky_ClearLight.Initialize(lr);
-            Sky_ClearSky.Initialize(lr);
-            Sky_ClearSea.Initialize(lr);
+            Sky_1.Initialize(lr);
+            Sky_2.Initialize(lr);
+            Sky_Light.Initialize(lr);
+            Sky_Sky.Initialize(lr);
+            Sky_Sea.Initialize(lr);
 
             lr.UpdateFile();
         }

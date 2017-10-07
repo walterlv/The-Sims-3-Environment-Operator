@@ -15,6 +15,10 @@ namespace TS3Sky.Language
         public static string InitialFailedContent = "Initial failed.\n\nDescriptions:\n{0}";
         public static string ReadEnvironmentFileFailedTitle = "Program failed when reading config files";
         public static string ReadEnvironmentFileFailedContent = "Descriptions:\n{0}";
+        public static string CannotFindInstallDirException = "Cannot find the sims 3 install directory.";
+        public static string CannotFindInstallDirTitle = "Select Base Game folder";
+        public static string CannotFindInstallDirLabel = "Sorry but we can't find your Sims path. So SEO cannot run normally. Please select your base game root folder.";
+        public static string NotTheRightInstallDirMsg = "It seems that this is not the right base game folder. Please select again!";
         // 编辑配置文件
         public static string EnvironmentFileNotFound = "Cannot find the environment files from The Sims files.";
         public static string WriteEnvironmentFileFailed = "Cannot set the environment files. The files may be being used by The Sims game.";
@@ -55,8 +59,6 @@ namespace TS3Sky.Language
         public static string SaveSingleContent = "Save all changes of {0}?";
         public static string SaveRetryTitle = "Save failed";
         public static string SaveRetryContent = "{0}\n\nRetry？";
-        public static string RevokeTitle = "Undo";
-        public static string RevokeContent = "All your changes of {0} will be discarded, Continue?";
         public static string SetToDefaultTitle = "Set to Default";
         public static string SetToDefaultContent = "Set the color of {0} to EA default?";
         public static string SetToDefaultFailedTitle = "Set to Default Failed";
@@ -72,6 +74,9 @@ namespace TS3Sky.Language
             InitialFailedContent = lr.Read(Section, "InitialFailedContent", InitialFailedContent);
             ReadEnvironmentFileFailedTitle = lr.Read(Section, "ReadEnvironmentFileFailedTitle", ReadEnvironmentFileFailedTitle);
             ReadEnvironmentFileFailedContent = lr.Read(Section, "ReadEnvironmentFileFailedContent", ReadEnvironmentFileFailedContent);
+            CannotFindInstallDirTitle = lr.Read(Section, "CannotFindInstallDirTitle", CannotFindInstallDirTitle);
+            CannotFindInstallDirLabel = lr.Read(Section, "CannotFindInstallDirLabel", CannotFindInstallDirLabel);
+            NotTheRightInstallDirMsg = lr.Read(Section, "NotTheRightInstallDirMsg", NotTheRightInstallDirMsg);
             // 编辑配置文件
             EnvironmentFileNotFound = lr.Read(Section, "EnvironmentFileNotFound", EnvironmentFileNotFound);
             WriteEnvironmentFileFailed = lr.Read(Section, "WriteEnvironmentFileFailed", WriteEnvironmentFileFailed);
@@ -110,8 +115,6 @@ namespace TS3Sky.Language
             // 保存, 恢复文件
             SaveSingleTitle = lr.Read(Section, "SaveSingleTitle", SaveSingleTitle);
             SaveSingleContent = lr.Read(Section, "SaveSingleContent", SaveSingleContent);
-            RevokeTitle = lr.Read(Section, "RevokeTitle", RevokeTitle);
-            RevokeContent = lr.Read(Section, "RevokeContent", RevokeContent);
             SetToDefaultTitle = lr.Read(Section, "SetToDefaultTitle", SetToDefaultTitle);
             SetToDefaultContent = lr.Read(Section, "SetToDefaultContent", SetToDefaultContent);
             // 其它

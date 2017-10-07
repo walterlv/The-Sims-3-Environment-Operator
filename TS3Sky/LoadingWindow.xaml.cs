@@ -45,8 +45,10 @@ namespace TS3Sky
 
         private void UpdateLogo(string local)
         {
-            if (local.Equals("zh-cn") || local.Equals("zh-tw"))
-                LogoImage.Source = new BitmapImage(new Uri(String.Format("/Images/Logo-{0}.png", local), UriKind.Relative));
+            if (local.Equals("zh-cn"))
+                LogoImage.Source = new BitmapImage(new Uri(String.Format("/Images/Logo-zh-cn.png", local), UriKind.Relative));
+            else if (local.Equals("zh-tw") || local.Equals("zh-hk") || local.Equals("zh-mo"))
+                LogoImage.Source = new BitmapImage(new Uri(String.Format("/Images/Logo-zh-tw.png", local), UriKind.Relative));
         }
 
         private void UpdateLoadingState(int n)
@@ -92,6 +94,25 @@ namespace TS3Sky
                         }
                         #endregion
                         break;
+                    case -2:
+                        #region 打开路径选择对话框
+                        SetInstallDirWindow sidw = new SetInstallDirWindow();
+                        sidw.Owner = this;
+                        sidw.ShowDialog();
+                        if (sidw.DialogResult == true)
+                        {
+                            WeatherSky.ColorDirectory = sidw.InstallDir;
+                            Configs.CustomInstallDir = sidw.InstallDir;
+                            Configs.Save();
+                            ThreadDelegate load = new ThreadDelegate(InitializeApplication);
+                            load.BeginInvoke(null, null);
+                        }
+                        else
+                        {
+                            this.Close();
+                        }
+                        #endregion
+                        break;
                     default:
                         Environment.Exit(-1);
                         break;
@@ -126,7 +147,8 @@ namespace TS3Sky
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Language Not Found", MessageBoxButton.OK, MessageBoxImage.Stop); Environment.Exit(-1);
+                MessageBox.Show(ex.Message, "Language Not Found", MessageBoxButton.OK, MessageBoxImage.Stop);
+                Environment.Exit(-1);
             }
             #endregion
 
@@ -135,11 +157,14 @@ namespace TS3Sky
             #region 读取模拟人生3环境配置文件
             try
             {
-                SkyColor Sky_Clear1 = SkyColor.FromColorAssembly(ColorAssembly.Sky_Clear1);
-                SkyColor Sky_Clear2 = SkyColor.FromColorAssembly(ColorAssembly.Sky_Clear2);
-                SkyColor Sky_ClearLight = SkyColor.FromColorAssembly(ColorAssembly.Sky_ClearLight);
-                SkyColor Sky_ClearSky = SkyColor.FromColorAssembly(ColorAssembly.Sky_ClearSky);
-                SkyColor Sky_ClearSea = SkyColor.FromColorAssembly(ColorAssembly.Sky_ClearSea);
+                Configs.Initialize();
+                if (Configs.CustomInstallDir != null) WeatherSky.ColorDirectory = Configs.CustomInstallDir + WeatherSky.SimsDirectoryTail;
+                WeatherSky.ReadAllWeathers();
+            }
+            catch (TS3Sky.Exceptions.CannotFindInstallDirException)
+            {
+                UpdateLoadingState(-2);
+                return;
             }
             catch (Exception ex)
             {

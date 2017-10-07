@@ -20,6 +20,7 @@ namespace TS3Sky
     enum TS3SkyPage
     {
         Welcome,
+        Weather,
         Content,
         About
     }
@@ -50,12 +51,19 @@ namespace TS3Sky
 
             #region 初始化应用程序界面风格
             string local = TS3Sky.Language.LanguageManager.LocalLanguage;
-            if (local.Equals("zh-cn") || local.Equals("zh-tw"))
+            if (local.Equals("zh-cn"))
             {
                 // Logo
-                logoImage.Source = new BitmapImage(new Uri(String.Format("/Images/Logo-{0}.png", local), UriKind.Relative));
+                logoImage.Source = new BitmapImage(new Uri(String.Format("/Images/Logo-zh-cn.png", local), UriKind.Relative));
                 // 关于背景
-                AboutBackground.Source = new BitmapImage(new Uri(String.Format("/Images/AboutBackground-{0}.jpg", local), UriKind.Relative));
+                AboutBackground.Source = new BitmapImage(new Uri(String.Format("/Images/Logo-zh-cn.png", local), UriKind.Relative));
+            }
+            else if (local.Equals("zh-tw") || local.Equals("zh-hk") || local.Equals("zh-mo"))
+            {
+                // Logo
+                logoImage.Source = new BitmapImage(new Uri(String.Format("/Images/Logo-zh-tw.png", local), UriKind.Relative));
+                // 关于背景
+                AboutBackground.Source = new BitmapImage(new Uri(String.Format("/Images/Logo-zh-tw.png", local), UriKind.Relative));
             }
             // 背景图片
             try
@@ -79,12 +87,13 @@ namespace TS3Sky
             SettingsLabel.Content = TS3Sky.Language.Navigation.SettingsLabel;
             OtherInfoLabel.Content = TS3Sky.Language.Navigation.OtherInfoLabel;
             SkyColorWelcome.Content = TS3Sky.Language.Navigation.Welcome;
+            SkyColorWeather.Content = TS3Sky.Language.Navigation.Weather;
             SkyColorAbout.Content = TS3Sky.Language.Navigation.About;
-            SkyColorButton0.Content = SkyColor.AllSkyColors[0].ColorName;
-            SkyColorButton1.Content = SkyColor.AllSkyColors[1].ColorName;
-            SkyColorButton2.Content = SkyColor.AllSkyColors[2].ColorName;
-            SkyColorButton3.Content = SkyColor.AllSkyColors[3].ColorName;
-            SkyColorButton4.Content = SkyColor.AllSkyColors[4].ColorName;
+            SkyColorButton0.Content = WeatherSky.CurrentWeather.SkyColors[0].ColorName;
+            SkyColorButton1.Content = WeatherSky.CurrentWeather.SkyColors[1].ColorName;
+            SkyColorButton2.Content = WeatherSky.CurrentWeather.SkyColors[2].ColorName;
+            SkyColorButton3.Content = WeatherSky.CurrentWeather.SkyColors[3].ColorName;
+            SkyColorButton4.Content = WeatherSky.CurrentWeather.SkyColors[4].ColorName;
             // 初始化欢迎页面
             WelcomeTitle.Text = TS3Sky.Language.Application.Name;
             WelcomeDescription.Text = TS3Sky.Language.Application.Description;
@@ -95,12 +104,24 @@ namespace TS3Sky
             ImportPackageButton.Content = TS3Sky.Language.Operation.ImportPackage;
             DownloadPackageButton.Content = TS3Sky.Language.Operation.DownloadPackage;
             ExportPackageButton.Content = TS3Sky.Language.Operation.ExportPackage;
+            // 初始化天气页面
+            ChooseWeatherLabel.Content = TS3Sky.Language.Weather.ChooseWeather;
+            SetWeatherWeightLabel.Content = TS3Sky.Language.Weather.SetWeatherWeight;
+            SetWeatherWeightTip.Text = TS3Sky.Language.Weather.SetWeatherWeightTip;
+            LockWeatherWeight.Content = TS3Sky.Language.Weather.LockWeight;
+            SaveWeatherWeightButton.Content = TS3Sky.Language.Weather.SaveWeight;
+            WeatherLabel0.Content = TS3Sky.Language.Weather.Clear;
+            WeatherLabel1.Content = TS3Sky.Language.Weather.PartlyCloudy;
+            WeatherLabel2.Content = TS3Sky.Language.Weather.Overcast;
+            WeatherLabel3.Content = TS3Sky.Language.Weather.Storm;
+            WeatherLabel4.Content = TS3Sky.Language.Weather.Custom;
             // 初始化操作按钮
             DownloadWorldButton.Content = TS3Sky.Language.Operation.DownloadWorld;
             SaveButton.Content = TS3Sky.Language.Operation.Save;
             UndoButton.Content = TS3Sky.Language.Operation.Undo;
             SetToDefaultButton.Content = TS3Sky.Language.Operation.SetToDefault;
             // 初始化关于画面
+            AboutTitle.Text = TS3Sky.Language.Application.Name;
             AboutInfomation.Text = String.Format("{0}:\n{1}\n\n{2}: {3}\n\n{4}: {5}\n{6}",
                                     TS3Sky.Language.About.Author,
                                     TS3Sky.Language.Application.Developer,
@@ -112,7 +133,7 @@ namespace TS3Sky
             ContactUsButton.Content = TS3Sky.Language.About.ContactUs;
             WorldDescription.Text = TS3Sky.Language.About.DownloadWorldsDescription;
             DownloadWorldButton.Content = TS3Sky.Language.About.DownloadWorlds;
-            CopyrightInfomation.Text = TS3Sky.Language.About.Copyright;
+            CopyrightInfomation.Text = TS3Sky.Language.Application.Copyright;
             #endregion
 
             #region 初始化预设方案列表
@@ -124,13 +145,19 @@ namespace TS3Sky
                 PackageListBox.Items.Add(pli);
             }
             #endregion
+
+            #region 初始化天气选项
+            WeatherPicker.Owner = this;
+            InitializeWeatherPage();
+            if (!Configs.UnlockAllWeathers) CollapseWeather();
+            #endregion
         }
         #endregion
 
         #region 关闭程序时执行操作
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (IsSkyColorModified)
+            if (WeatherSky.IsWeatherModified)
             {
                 MessageBoxResult msgR = MessageBox.Show(TS3Sky.Language.Dialog.SaveClosingContent, TS3Sky.Language.Dialog.SaveClosingTitle, MessageBoxButton.YesNoCancel, MessageBoxImage.None);
                 if (msgR == MessageBoxResult.Yes)
@@ -146,13 +173,15 @@ namespace TS3Sky
                 }
             }
             // 退出后保存设置
+            Configs.Save();
             ColorPickBar.SaveCustomColors();
             // 退出后清除缓存
             if (e.Cancel == false) Package.ClearTempBackupAndCache();
         }
         #endregion
 
-        #region 点击导航按钮按钮 (包括在欢迎页中的其它导航按钮)
+        #region 导航
+        #region 点击导航按钮
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button) sender;
@@ -161,33 +190,37 @@ namespace TS3Sky
             {
                 showPage(TS3SkyPage.Welcome);
             }
+            else if (name.StartsWith(TS3Sky.Language.Navigation.Weather))
+            {
+                showPage(TS3SkyPage.Weather);
+            }
             else if (name.Equals(TS3Sky.Language.Navigation.About))
             {
                 showPage(TS3SkyPage.About);
             }
-            else if (name.StartsWith(TS3Sky.Language.Sky_Clear1.DayColorName))
+            else if (name.StartsWith(TS3Sky.Language.Sky_1.DayColorName))
             {
-                showPage(SkyColor.AllSkyColors[0], button);
+                showPage(WeatherSky.CurrentWeather.SkyColors[0], button);
                 UpdatePageState();
             }
-            else if (name.StartsWith(TS3Sky.Language.Sky_Clear2.DayColorName))
+            else if (name.StartsWith(TS3Sky.Language.Sky_2.DayColorName))
             {
-                showPage(SkyColor.AllSkyColors[1], button);
+                showPage(WeatherSky.CurrentWeather.SkyColors[1], button);
                 UpdatePageState();
             }
-            else if (name.StartsWith(TS3Sky.Language.Sky_ClearLight.DayColorName))
+            else if (name.StartsWith(TS3Sky.Language.Sky_Light.DayColorName))
             {
-                showPage(SkyColor.AllSkyColors[2], button);
+                showPage(WeatherSky.CurrentWeather.SkyColors[2], button);
                 UpdatePageState();
             }
-            else if (name.StartsWith(TS3Sky.Language.Sky_ClearSky.DayColorName))
+            else if (name.StartsWith(TS3Sky.Language.Sky_Sky.DayColorName))
             {
-                showPage(SkyColor.AllSkyColors[3], button);
+                showPage(WeatherSky.CurrentWeather.SkyColors[3], button);
                 UpdatePageState();
             }
-            else if (name.StartsWith(TS3Sky.Language.Sky_ClearSea.DayColorName))
+            else if (name.StartsWith(TS3Sky.Language.Sky_Sea.DayColorName))
             {
-                showPage(SkyColor.AllSkyColors[4], button);
+                showPage(WeatherSky.CurrentWeather.SkyColors[4], button);
                 UpdatePageState();
             }
             else
@@ -196,164 +229,72 @@ namespace TS3Sky
         }
         #endregion
 
-        #region 点击功能按钮
-        // 下面四个方法是为了给SaveButton, UndoButton和RedoButton传递快捷键的
-        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        #region 对应按钮与颜色
+        private Button FindButtonBySkyColor(SkyColor color)
         {
-            e.CanExecute = true;
-        }
-        private void CommandBinding_SaveExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            SaveButton_Click(this, null);
-        }
-        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (UndoButton.IsEnabled) UndoButton_Click(UndoButton, null);
-        }
-        private void CommandBinding_ReExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            RedoButton_Click(this, null);
-        }
-        // 保存
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            while (true)
+            SkyColor newSkyColor = null;
+            foreach (SkyColor oldSkyColor in colorPickBarLink.SkyColorListAsIndex)
             {
-                try
+                if (color.ColorType == oldSkyColor.ColorType)
                 {
-                    currentShow.Save();
-                    // 使保存按钮不可用
-                    SaveButton.IsEnabled = false;
-                    // 去掉导航按钮后面的星号
-                    int index = colorPickBarLink.SkyColorListAsIndex.IndexOf(currentShow);
-                    if (index >= 0) colorPickBarLink.SkyColorButton[index].Content = currentShow.ColorName;
+                    newSkyColor = oldSkyColor;
                     break;
                 }
-                catch (Exception ex)
-                {
-                    if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SaveRetryContent, ex.Message), TS3Sky.Language.Dialog.SaveRetryTitle,
-                        MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes) continue;
-                    else break;
-                }
             }
-        }
-        // 撤消
-        private void UndoButton_Click(object sender, RoutedEventArgs e)
-        {
-            ColorChangeAction action = ColorChangeAction.GetUndoAction();
-            if (action != null)
-            {
-                action.ActionBar.Undo();
-                if (currentShow != action.ActionBar.ColorBarGroup) showPage(action.ActionBar.ColorBarGroup);
-            }
-            if (ColorChangeAction.GetUndoAction() == null)
-            {
-                UndoButton.IsEnabled = false;
-            }
-        }
-        // 重做
-        private void RedoButton_Click(object sender, RoutedEventArgs e)
-        {
-            ColorChangeAction action = ColorChangeAction.GetRedoAction();
-            if (action != null)
-            {
-                action.ActionBar.Redo();
-                if (currentShow != action.ActionBar.ColorBarGroup) showPage(action.ActionBar.ColorBarGroup);
-            }
-        }
-        // 重新读取文件
-        private void RevokeButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.RevokeContent, currentShow.ColorName), TS3Sky.Language.Dialog.RevokeTitle, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-            {
-                currentShow.Revoke();
-                RefreshPage(currentShow);
-            }
-        }
-        // 恢复默认
-        private void SetToDefaultButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SetToDefaultContent, currentShow.ColorName), TS3Sky.Language.Dialog.SetToDefaultTitle, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-            {
-                try
-                {
-                    currentShow.SetToDefault();
-                    // 标记为已保存(未修改)
-                    currentShow.Modified = false;
-                    // 使保存按钮不可用
-                    SaveButton.IsEnabled = false;
-                    UndoButton.IsEnabled = false;
-                    // 使撤消失效
-                    ColorChangeAction.ClearActions();
-                    // 去掉导航按钮后面的星号
-                    int index = colorPickBarLink.SkyColorListAsIndex.IndexOf(currentShow);
-                    if (index >= 0) colorPickBarLink.SkyColorButton[index].Content = currentShow.ColorName;
-                    // 重新读取页面
-                    currentShow.Revoke();
-                    RefreshPage(currentShow);
-                    
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SetToDefaultFailedContent, ex.Message), TS3Sky.Language.Dialog.SetToDefaultFailedTitle, MessageBoxButton.OK, MessageBoxImage.Stop);
-                }
-            }
-        }
-
-        // 接收颜色条控件传来的已经点击颜色事件
-        public void ColorPicked()
-        {
-            if (ColorChangeAction.GetUndoAction() == null) UndoButton.IsEnabled = false;
-            else UndoButton.IsEnabled = true;
-            if (currentShow.Modified) SaveButton.IsEnabled = true;
-            else SaveButton.IsEnabled = false;
-            foreach (SkyColor skyColor in SkyColor.AllSkyColors)
-            {
-                Button button = FindButtonBySkyColor(skyColor);
-                if (skyColor.Modified)
-                {
-                    if (!button.Content.ToString().EndsWith("*")) button.Content += "*";
-                }
-            }
-        }
-        // 用于更新页面按钮是否可用(与上面的方法接收颜色点击事件作用一致)
-        private void UpdatePageState()
-        {
-            ColorPicked();
-        }
-
-        // 执行操作后需要刷新颜色页
-        private void RefreshPage(SkyColor skyColor)
-        {
-            int index = colorPickBarLink.SkyColorListAsIndex.IndexOf(skyColor);
+            int index = colorPickBarLink.SkyColorListAsIndex.IndexOf(newSkyColor);
             if (index >= 0)
             {
-                for (int i = 0; i < colorPickBarLink.ColorPickBarList[index].Count; i++)
-                {
-                    colorPickBarLink.ColorPickBarList[index][i].Refresh();
-                }
+                return colorPickBarLink.SkyColorButton[index];
             }
-        }
-
-
-        // 访问帖子 - 联系我们
-        private void ProgramSiteButton_Click(object sender, RoutedEventArgs e)
-        {
-            VisitSite(TS3Sky.Language.Application.ProgramSite);
-        }
-        private void ContactUsButton_Click(object sender, RoutedEventArgs e)
-        {
-            VisitSite(TS3Sky.Language.Application.ContactSite);
-        }
-        // 访问帖子 - 下载世界
-        private void DownloadWorldButton_Click(object sender, RoutedEventArgs e)
-        {
-            VisitSite(TS3Sky.Language.Application.WorldDownloadSite);
+            else return null;
         }
         #endregion
 
-        #region 导航到页面
-        #region 颜色页
+        #region 布局页导航
+        private void showPage(TS3SkyPage page)
+        {
+            switch (page)
+            {
+                case TS3SkyPage.Welcome:
+                    PackageListBox.SelectedIndex = -1;
+                    if (SkyWelcome.Visibility != Visibility.Visible)
+                    {
+                        SkyWelcome.Visibility = Visibility.Visible;
+                        SkyWeather.Visibility = Visibility.Collapsed;
+                        ColorPageScroll.Visibility = Visibility.Collapsed;
+                        SkyAbout.Visibility = Visibility.Collapsed;
+                    }
+                    currentShow = null;
+                    break;
+                case TS3SkyPage.Weather:
+                    if (SkyWeather.Visibility != Visibility.Visible)
+                    {
+                        SkyWelcome.Visibility = Visibility.Collapsed;
+                        SkyWeather.Visibility = Visibility.Visible;
+                        ColorPageScroll.Visibility = Visibility.Collapsed;
+                        SkyAbout.Visibility = Visibility.Collapsed;
+                    }
+                    break;
+                case TS3SkyPage.Content:
+                    break;
+                case TS3SkyPage.About:
+                    if (SkyAbout.Visibility != Visibility.Visible)
+                    {
+                        SkyWelcome.Visibility = Visibility.Collapsed;
+                        SkyWeather.Visibility = Visibility.Collapsed;
+                        ColorPageScroll.Visibility = Visibility.Collapsed;
+                        SkyAbout.Visibility = Visibility.Visible;
+                    }
+                    currentShow = null;
+                    break;
+                default:
+                    currentShow = null;
+                    break;
+            }
+        }
+        #endregion
+
+        #region 颜色页导航
         int ColorBarStartIndex = -1;
         ColorPickBarLink colorPickBarLink = new ColorPickBarLink();
         SkyColor currentShow = null;
@@ -375,7 +316,7 @@ namespace TS3Sky
                     }
                 }
                 // 设置标题
-                SkyTitleText.Text = skyColor.ColorName;
+                SkyTitleText.Text = WeatherSky.CurrentWeather.Name + " - " + skyColor.ColorName;
                 SkyTitleDescription.Text = skyColor.ColorDescription;
                 // 新建颜色行
                 int index = colorPickBarLink.SkyColorListAsIndex.IndexOf(skyColor);
@@ -419,6 +360,7 @@ namespace TS3Sky
             if (ColorPageScroll.Visibility != Visibility.Visible)
             {
                 SkyWelcome.Visibility = Visibility.Collapsed;
+                SkyWeather.Visibility = Visibility.Collapsed;
                 ColorPageScroll.Visibility = Visibility.Visible;
                 SkyAbout.Visibility = Visibility.Collapsed;
             }
@@ -427,41 +369,9 @@ namespace TS3Sky
             currentShow = skyColor;
         }
         #endregion
-        #region 布局页
-        private void showPage(TS3SkyPage page)
-        {
-            switch (page)
-            {
-                case TS3SkyPage.Welcome:
-                    PackageListBox.SelectedIndex = -1;
-                    if (SkyWelcome.Visibility != Visibility.Visible)
-                    {
-                        SkyWelcome.Visibility = Visibility.Visible;
-                        ColorPageScroll.Visibility = Visibility.Collapsed;
-                        SkyAbout.Visibility = Visibility.Collapsed;
-                    }
-                    currentShow = null;
-                    break;
-                case TS3SkyPage.Content:
-                    break;
-                case TS3SkyPage.About:
-                    if (SkyAbout.Visibility != Visibility.Visible)
-                    {
-                        SkyWelcome.Visibility = Visibility.Collapsed;
-                        ColorPageScroll.Visibility = Visibility.Collapsed;
-                        SkyAbout.Visibility = Visibility.Visible;
-                    }
-                    currentShow = null;
-                    break;
-                default:
-                    currentShow = null;
-                    break;
-            }
-        }
-        #endregion
         #endregion
 
-        #region 方案处理
+        #region 欢迎页
         #region 当选择一个方案时
         private void PackageListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -497,8 +407,8 @@ namespace TS3Sky
                     // 尝试备份用户方案
                     try
                     {
-                        bool isModified = IsSkyColorModified;
-                        if (!isBackupExisted || IsSkyColorModified)
+                        bool isModified = WeatherSky.IsWeatherModified;
+                        if (!isBackupExisted || isModified)
                         {
                             if (isModified) saveAll();
                             string backupPackageFile = Package.TempPath + "\\Backup." + Package.Extension;
@@ -511,11 +421,16 @@ namespace TS3Sky
                     catch { }
                     // 开始应用方案
                     Package.Apply(Packages[index]);
-                    foreach (SkyColor color in SkyColor.AllSkyColors)
+                    foreach (SkyColor color in WeatherSky.CurrentWeather.SkyColors)
                     {
-                        color.Revoke();
+                        color.Reread();
                         RefreshPage(color);
                     }
+                    // 调整此方案的天气参数
+                    if (Configs.LockWeatherWeight) WeatherSky.SaveWeight();
+                    else WeatherSky.RereadWeight();
+                    InitializeWeatherPage();
+                    // 清空撤消步骤
                     ColorChangeAction.ClearActions();
                     MessageBox.Show(String.Format(TS3Sky.Language.Dialog.ApplyPackageSuccessfullyContent, Packages[index].Name), TS3Sky.Language.Dialog.ApplyPackageSuccessfullyTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -592,7 +507,7 @@ namespace TS3Sky
             try
             {
                 // 如果方案被修改, 则提示保存
-                if (IsSkyColorModified)
+                if (WeatherSky.IsWeatherModified)
                 {
                     if (MessageBox.Show(TS3Sky.Language.Dialog.ExportPackageButNotSavedContent, TS3Sky.Language.Dialog.ExportPackageButNotSavedTitle,
                         MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -612,51 +527,332 @@ namespace TS3Sky
             }
         }
         #endregion
-        #region 检查方案是否已被修改
-        private bool IsSkyColorModified
-        {
-            get
-            {
-                bool isModified = false;
-                foreach (SkyColor color in SkyColor.AllSkyColors)
-                {
-                    if (color.Modified)
-                    {
-                        isModified = true;
-                        break;
-                    }
-                }
-                return isModified;
-            }
-        }
-        #endregion
         #region 保存所有方案
         private void saveAll()
         {
-            foreach (SkyColor color in SkyColor.AllSkyColors)
+            WeatherSky.CurrentWeather.Save();
+            foreach (SkyColor color in WeatherSky.CurrentWeather.SkyColors)
             {
-                color.Save();
                 try { FindButtonBySkyColor(color).Content = color.ColorName; }
                 catch { }
             }
+            SkyColorWeather.Content = TS3Sky.Language.Navigation.Weather;
         }
         #endregion
         #endregion
 
-        private Button FindButtonBySkyColor(SkyColor color)
+        #region 天气页
+        // 初始化天气页
+        private void InitializeWeatherPage()
         {
-            int index = colorPickBarLink.SkyColorListAsIndex.IndexOf(color);
+            // 当前天气
+            WeatherPicker.SelectedWeather = WeatherSky.CurrentWeather.Type;
+            // 滑杆
+            double total = 0.0;
+            foreach (WeatherSky ws in WeatherSky.AllWeathers)
+            {
+                total += ws.WeatherWeight;
+            }
+            if (total > 0)
+            {
+                WeatherSlide0.Value = WeatherSky.AllWeathers[0].WeatherWeight / total;
+                WeatherSlide1.Value = WeatherSky.AllWeathers[1].WeatherWeight / total;
+                WeatherSlide2.Value = WeatherSky.AllWeathers[2].WeatherWeight / total;
+                WeatherSlide3.Value = WeatherSky.AllWeathers[3].WeatherWeight / total;
+                WeatherSlide4.Value = WeatherSky.AllWeathers[4].WeatherWeight / total;
+            }
+            // 锁定天气比例
+            LockWeatherWeight.IsChecked = Configs.LockWeatherWeight;
+        }
+        // 隐藏部分天气
+        private void CollapseWeather()
+        {
+            WeatherLabel2.Visibility = Visibility.Collapsed;
+            WeatherLabel3.Visibility = Visibility.Collapsed;
+            WeatherLabel4.Visibility = Visibility.Collapsed;
+            WeatherSlide2.Visibility = Visibility.Collapsed;
+            WeatherSlide3.Visibility = Visibility.Collapsed;
+            WeatherSlide4.Visibility = Visibility.Collapsed;
+            WeatherPercent2.Visibility = Visibility.Collapsed;
+            WeatherPercent3.Visibility = Visibility.Collapsed;
+            WeatherPercent4.Visibility = Visibility.Collapsed;
+            WeatherPicker.CollapseWeather();
+        }
+        // 修改概率百分比
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            double[] pers = new double[5];
+            pers[0] = WeatherSlide0.Value;
+            pers[1] = WeatherSlide1.Value;
+            pers[2] = WeatherSlide2.Value;
+            pers[3] = WeatherSlide3.Value;
+            pers[4] = WeatherSlide4.Value;
+            double total = pers[0] + pers[1] + pers[2] + pers[3] + pers[4];
+            if (total <= 0)
+            {
+                pers[0] = pers[1] = pers[2] = pers[3] = pers[4] = 0.2;
+            }
+            else
+            {
+                pers[0] = pers[0] / total;
+                pers[1] = pers[1] / total;
+                pers[2] = pers[2] / total;
+                pers[3] = pers[3] / total;
+                pers[4] = pers[4] / total;
+            }
+            WeatherPercent0.Content = pers[0].ToString("P");
+            WeatherPercent1.Content = pers[1].ToString("P");
+            WeatherPercent2.Content = pers[2].ToString("P");
+            WeatherPercent3.Content = pers[3].ToString("P");
+            WeatherPercent4.Content = pers[4].ToString("P");
+            if (!SaveWeatherWeightButton.IsEnabled) SaveWeatherWeightButton.IsEnabled = true;
+        }
+        // 应用天气设置
+        public void WeatherSelectionChanged()
+        {
+            WeatherSky.SetCurrentWeather(WeatherPicker.SelectedWeather);
+            // 更新按钮
+            foreach (SkyColor color in WeatherSky.CurrentWeather.SkyColors)
+            {
+                RefreshPage(color);
+            }
+            // 处理保存星号
+            if (WeatherSky.IsWeatherModified)
+            {
+                if (!SkyColorWeather.Content.ToString().EndsWith("*")) SkyColorWeather.Content += "*";
+            }
+            else
+            {
+                if (SkyColorWeather.Content.ToString().EndsWith("*")) SkyColorWeather.Content = TS3Sky.Language.Navigation.Weather;
+            }
+            ColorChangeAction.ClearActions();
+        }
+        // 锁定天气比例
+        private void LockWeatherWeight_Checked(object sender, RoutedEventArgs e)
+        {
+            Configs.LockWeatherWeight = true;
+        }
+        private void LockWeatherWeight_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Configs.LockWeatherWeight = false;
+        }
+        // 保存天气比例
+        private void SaveWeatherWeightButton_Click(object sender, RoutedEventArgs e)
+        {
+            double[] pers = new double[5];
+            pers[0] = WeatherSlide0.Value;
+            pers[1] = WeatherSlide1.Value;
+            pers[2] = WeatherSlide2.Value;
+            pers[3] = WeatherSlide3.Value;
+            pers[4] = WeatherSlide4.Value;
+            double total = pers[0] + pers[1] + pers[2] + pers[3] + pers[4];
+            if (total <= 0)
+            {
+                pers[0] = pers[1] = pers[2] = pers[3] = 0.2;
+            }
+            else
+            {
+                pers[0] = pers[0] / total;
+                pers[1] = pers[1] / total;
+                pers[2] = pers[2] / total;
+                pers[3] = pers[3] / total;
+                pers[4] = pers[4] / total;
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                WeatherSky.AllWeathers[i].WeatherWeight = pers[i];
+            }
+            WeatherSky.SaveWeight();
+            SaveWeatherWeightButton.IsEnabled = false;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #endregion
+
+        #region 颜色页
+        #region 点击颜色页功能按钮
+        // 下面四个方法是为了给SaveButton, UndoButton和RedoButton传递快捷键的
+        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void CommandBinding_SaveExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveButton_Click(this, null);
+        }
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (UndoButton.IsEnabled) UndoButton_Click(UndoButton, null);
+        }
+        private void CommandBinding_ReExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            RedoButton_Click(this, null);
+        }
+        // 保存
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            while (true)
+            {
+                try
+                {
+                    currentShow.Save();
+                    // 使保存按钮不可用
+                    SaveButton.IsEnabled = false;
+                    // 去掉导航按钮后面的星号
+                    int index = colorPickBarLink.SkyColorListAsIndex.IndexOf(currentShow);
+                    if (index >= 0) colorPickBarLink.SkyColorButton[index].Content = currentShow.ColorName;
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SaveRetryContent, ex.Message), TS3Sky.Language.Dialog.SaveRetryTitle,
+                        MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes) continue;
+                    else break;
+                }
+            }
+        }
+        // 撤消
+        private void UndoButton_Click(object sender, RoutedEventArgs e)
+        {
+            ColorChangeAction action = ColorChangeAction.GetUndoAction();
+            if (action != null)
+            {
+                action.ActionBar.Undo();
+                if (currentShow != action.ActionBar.ColorBarGroup) showPage(action.ActionBar.ColorBarGroup);
+            }
+            if (ColorChangeAction.GetUndoAction() == null)
+            {
+                UndoButton.IsEnabled = false;
+            }
+        }
+        // 重做
+        private void RedoButton_Click(object sender, RoutedEventArgs e)
+        {
+            ColorChangeAction action = ColorChangeAction.GetRedoAction();
+            if (action != null)
+            {
+                action.ActionBar.Redo();
+                if (currentShow != action.ActionBar.ColorBarGroup) showPage(action.ActionBar.ColorBarGroup);
+            }
+        }
+        // 恢复默认
+        private void SetToDefaultButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SetToDefaultContent, currentShow.ColorName), TS3Sky.Language.Dialog.SetToDefaultTitle, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                try
+                {
+                    currentShow.SetToDefault();
+                    // 标记为已保存(未修改)
+                    currentShow.Modified = false;
+                    // 使保存按钮不可用
+                    SaveButton.IsEnabled = false;
+                    UndoButton.IsEnabled = false;
+                    // 使撤消失效
+                    ColorChangeAction.ClearActions();
+                    // 去掉导航按钮后面的星号
+                    int index = colorPickBarLink.SkyColorListAsIndex.IndexOf(currentShow);
+                    if (index >= 0) colorPickBarLink.SkyColorButton[index].Content = currentShow.ColorName;
+                    // 重新读取页面
+                    currentShow.Reread();
+                    RefreshPage(currentShow);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SetToDefaultFailedContent, ex.Message), TS3Sky.Language.Dialog.SetToDefaultFailedTitle, MessageBoxButton.OK, MessageBoxImage.Stop);
+                }
+            }
+        }
+        // 接收颜色条控件传来的已经点击颜色事件
+        public void ColorPicked()
+        {
+            if (ColorChangeAction.GetUndoAction() == null) UndoButton.IsEnabled = false;
+            else UndoButton.IsEnabled = true;
+            if (currentShow.Modified) SaveButton.IsEnabled = true;
+            else SaveButton.IsEnabled = false;
+            foreach (SkyColor skyColor in WeatherSky.CurrentWeather.SkyColors)
+            {
+                Button button = FindButtonBySkyColor(skyColor);
+                if (skyColor.Modified)
+                {
+                    if (!button.Content.ToString().EndsWith("*")) button.Content += "*";
+                }
+            }
+            if (WeatherSky.IsWeatherModified)
+            {
+                if (!SkyColorWeather.Content.ToString().EndsWith("*")) SkyColorWeather.Content += "*";
+            }
+        }
+        // 用于更新页面按钮是否可用(与上面的方法接收颜色点击事件作用一致)
+        private void UpdatePageState()
+        {
+            ColorPicked();
+        }
+        // 执行操作后需要刷新颜色页
+        private void RefreshPage(SkyColor skyColor)
+        {
+            int index = colorPickBarLink.SkyColorListAsIndex.IndexOf(skyColor);
             if (index >= 0)
             {
-                return colorPickBarLink.SkyColorButton[index];
+                for (int i = 0; i < colorPickBarLink.ColorPickBarList[index].Count; i++)
+                {
+                    colorPickBarLink.ColorPickBarList[index][i].Refresh();
+                }
             }
-            else return null;
+            Button button = FindButtonBySkyColor(skyColor);
+            if (button == null) return;
+            if (skyColor.Modified)
+            {
+                if (!button.Content.ToString().EndsWith("*")) button.Content += "*";
+            }
+            else
+            {
+                if (button.Content.ToString().EndsWith("*")) button.Content = skyColor.ColorName;
+            }
         }
+        #endregion
+        #endregion
 
+        #region 关于页
+        // 访问帖子 - 联系我们
+        private void ProgramSiteButton_Click(object sender, RoutedEventArgs e)
+        {
+            VisitSite(TS3Sky.Language.Application.ProgramSite);
+        }
+        private void ContactUsButton_Click(object sender, RoutedEventArgs e)
+        {
+            VisitSite(TS3Sky.Language.Application.ContactSite);
+        }
+        // 访问帖子 - 下载世界
+        private void DownloadWorldButton_Click(object sender, RoutedEventArgs e)
+        {
+            VisitSite(TS3Sky.Language.Application.WorldDownloadSite);
+        }
+        // 访问网站
         public static void VisitSite(string site)
         {
             System.Diagnostics.Process.Start(site);
         }
+        #endregion
+
+
+
+
     }
 
     #region 封装一个绑定后台颜色组和前台颜色条的类

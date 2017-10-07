@@ -10,9 +10,10 @@ namespace TS3Sky.Language
         // 程序基本信息
         public static string Name = "The Sims 3: Environment Operator";
         public static string Description = "Enter an iridescent game-world from this program!\nProgram by Waterlv; Solutions by Kuree. 3DM-M3 groups.";
-        public static string Version = "1.1.1.34";
-        public static string ShowVersion = "1.1 (34)";
+        public static string Version = "1.2.2.47";
+        public static string ShowVersion = "1.2 (47)";
         public static string Developer = "walterlv (UI Designer, Developer)\nKuree (Solution Provider)";
+        public static string Copyright = "Copyright © walterlv kuree 2012, All Rights Reserved.";
 
         // 程序加载过程语句
         public static string ChooseLanguage = "This is your first time to run this program, please choose the language you want to use:";
@@ -31,7 +32,7 @@ namespace TS3Sky.Language
 
         public static void Initialize(string local)
         {
-            if (local.Equals("zh-cn"))
+            if (local.Equals("zh-cn") || local.Equals("zh-hans"))
             {
                 Name = "模拟人生3：编辑环境工具";
                 Description = "想让你的世界充满梦幻般的色彩吗？从这里开始。\n软件由 walterlv 开发，解决方案由 Kuree 提供。（3DMGAME M3 小组）";
@@ -49,7 +50,7 @@ namespace TS3Sky.Language
                 WorldDownloadSite = "http://bbs.3dmgame.com/forum.php?mod=redirect&goto=findpost&ptid=3433574&pid=66576405&fromuid=2474653";
                 PackageDownloadSite = "http://bbs.3dmgame.com/thread-3448055-1-1.html";
             }
-            else if (local.Equals("zh-tw"))
+            else if (local.Equals("zh-tw") || local.Equals("zh-hk") || local.Equals("zh-mo") || local.Equals("zh-sg") || local.Equals("zh-hant"))
             {
                 Name = "模擬市民3：編輯環境工具";
                 Description = "模擬世界的色彩，從這裡開始！\n（軟體由 walterlv 開發，方案由 Kuree 提供。來自 3DMGAME M3 小組。）";
@@ -67,6 +68,24 @@ namespace TS3Sky.Language
                 WorldDownloadSite = "http://bbs.3dmgame.com/forum.php?mod=redirect&goto=findpost&ptid=3433574&pid=66576405&fromuid=2474653";
                 PackageDownloadSite = "http://bbs.3dmgame.com/thread-3448055-1-1.html";
             }
+            else if (local.Equals("it-it"))
+            {
+                Name = "The Sims 3: Environment Operator";
+                Description = "Entra in un mondo colorato grazie a questo programma!\nProgram: Waterlv; Solutions: Kuree; 3DM-M3. (Italian Translation by Xidian.)";
+                Developer = "walterlv (UI Designer, Developer)\nKuree (Solution Provider)\nanteen (Super Tester)";
+
+                ChooseLanguage = "Questa ?la prima volta che il programma viene avviato, seleziona la lingua da utilizzare:";
+                OK = "OK";
+                LoadStart = "The Sims 3: Environment Operator";
+                LoadLanguage = "Caricamento lingua";
+                LoadEnvironment = "Lettura delle impostazioni ambientali";
+                LoadPackage = "Caricamento dei file seo";
+                LoadCompleted = "Avvio";
+
+                ContactSite = "http://www.modthesims.info/download.php?t=488621";
+                WorldDownloadSite = "http://www.modthesims.info/download.php?t=488621";
+                PackageDownloadSite = "http://bbs.3dmgame.com/thread-3448055-1-1.html";
+            }
             else
             {
                 Name = "The Sims 3: Environment Operator";
@@ -80,6 +99,10 @@ namespace TS3Sky.Language
                 LoadEnvironment = "Reading sims3 language settings";
                 LoadPackage = "Loading seo files";
                 LoadCompleted = "Starting";
+
+                ContactSite = "http://www.modthesims.info/download.php?t=488621";
+                WorldDownloadSite = "http://www.modthesims.info/download.php?t=488621";
+                PackageDownloadSite = "http://bbs.3dmgame.com/thread-3448055-1-1.html";
             }
         }
     }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TS3Sky.Language
 {
-    public class Sky_ClearSea
+    public class Sky_Sea
     {
         public static string DayColorName = "Sea";
         public static string DayColorDescription = "You can change the color of water (sea, river,lake and pool) here.";
@@ -14,7 +14,7 @@ namespace TS3Sky.Language
         public static string SunMoonColorName = "Water Reflection Color";
         public static string SunMoonColorDescription = "Water color reflected from the light from the sun and moon";
 
-        private const string Section = "Sky_ClearSea";
+        private const string Section = "Sky_Sea";
         public static void Initialize(LanguageReader lr)
         {
             DayColorName = lr.Read(Section, "Name", DayColorName);

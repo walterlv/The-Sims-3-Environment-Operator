@@ -108,19 +108,26 @@ namespace TS3Sky
                 imageName = image.Substring(index + 1, image.Length - index - 1);
                 desFile.WriteString(BasicSection, "Preview", imageName);
             }
-            desFile.WriteString(FileSection, "1", "Sky_Clear1.ini");
-            desFile.WriteString(FileSection, "2", "Sky_Clear2.ini");
-            desFile.WriteString(FileSection, "3", "Sky_ClearLight.ini");
-            desFile.WriteString(FileSection, "4", "Sky_ClearSky.ini");
-            desFile.WriteString(FileSection, "5", "Sky_ClearSea.ini");
+            int num = 1;
+            foreach (WeatherSky weather in WeatherSky.AllWeathers)
+            {
+                foreach (SkyColor skyColor in weather.SkyColors)
+                {
+                    desFile.WriteString(FileSection, num.ToString(), skyColor.ColorFileName + ".ini");
+                    num++;
+                }
+            }
             desFile.UpdateFile();
             // 打包方案的所有文件
             if (File.Exists(path)) File.Delete(path);
             using (ZipFile zip = new ZipFile(path))
             {
-                foreach (SkyColor skyColor in SkyColor.AllSkyColors)
+                foreach (WeatherSky weather in WeatherSky.AllWeathers)
                 {
-                    zip.AddFile(skyColor.ColorPath, String.Empty);
+                    foreach (SkyColor skyColor in weather.SkyColors)
+                    {
+                        zip.AddFile(skyColor.ColorPath, String.Empty);
+                    }
                 }
                 if (image != null && image.Length > 0) zip.AddFile(image, String.Empty);
                 zip.AddFile(tempFilePath, String.Empty);
@@ -151,7 +158,7 @@ namespace TS3Sky
             foreach (string file in package.Files)
             {
                 int index = file.LastIndexOf('\\');
-                string desDir = SkyColor.ColorDirectory + "\\" + file.Substring(index + 1, file.Length - index - 1);
+                string desDir = WeatherSky.ColorDirectory + "\\" + file.Substring(index + 1, file.Length - index - 1);
                 File.Copy(file, desDir, true);
             }
         }

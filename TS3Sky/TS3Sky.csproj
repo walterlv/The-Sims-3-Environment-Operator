@@ -70,12 +70,20 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Configs.cs" />
+    <Compile Include="SetInstallDirWindow.xaml.cs">
+      <DependentUpon>SetInstallDirWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WeatherPickBar.xaml.cs">
+      <DependentUpon>WeatherPickBar.xaml</DependentUpon>
+    </Compile>
     <Page Include="ColorPickBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -118,6 +126,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PackageListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SetInstallDirWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WeatherPickBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -170,9 +186,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -203,9 +216,13 @@
     <Resource Include="Images\Logo-zh-tw.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\AboutBackground.jpg" />
-    <Resource Include="Images\AboutBackground-zh-tw.jpg" />
-    <Resource Include="Images\AboutBackground-zh-cn.jpg" />
+    <Resource Include="Images\Clear.png" />
+    <Resource Include="Images\Overcast.png" />
+    <Resource Include="Images\PartlyCloudy.png" />
+    <Resource Include="Images\Storm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\AboutBackground.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

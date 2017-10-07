@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TS3Sky.Language
 {
-    public class Sky_ClearSky
+    public class Sky_Sky
     {
         public static string DayColorName = "Sky";
         public static string DayColorDescription = "You can change the color of the sun, sky, and horizon here.";
@@ -22,7 +22,7 @@ namespace TS3Sky.Language
         public static string HorizonDarkName = "Horizon - Dark";
         public static string HorizonDarkDescription = "Horizon without Light";
 
-        private const string Section = "Sky_ClearSky";
+        private const string Section = "Sky_Sky";
         public static void Initialize(LanguageReader lr)
         {
             DayColorName = lr.Read(Section, "Name", DayColorName);

@@ -10,7 +10,6 @@ namespace TS3Sky.Language
         public static string DownloadWorld = "Download World";
         public static string Save = "Save(Ctrl+S)";
         public static string Undo = "Undo(Ctrl+Z)";
-        public static string Revoke = "Revoke";
         public static string SetToDefault = "Default";
         public static string ApplyPackage = "Apply";
         public static string DeletePackage = "Delete";
@@ -34,7 +33,6 @@ namespace TS3Sky.Language
             DownloadWorld = lr.Read(Section, "DownloadWorld", DownloadWorld);
             Save = lr.Read(Section, "Save", Save);
             Undo = lr.Read(Section, "Undo", Undo);
-            Revoke = lr.Read(Section, "Revoke", Revoke);
             SetToDefault = lr.Read(Section, "SetToDefault", SetToDefault);
             ApplyPackage = lr.Read(Section, "ApplyPackage", ApplyPackage);
             DeletePackage = lr.Read(Section, "DeletePackage", DeletePackage);
