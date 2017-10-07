@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{67562995-3F80-442C-AE4C-53224DA60358}</ProjectGuid>
+    <ProjectGuid>{41F139A8-73A4-4658-8002-25DDE9BA540B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Seo.Language</RootNamespace>
-    <AssemblyName>Language</AssemblyName>
+    <RootNamespace>Seo</RootNamespace>
+    <AssemblyName>Sims</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,13 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Configs.cs" />
+    <Compile Include="FilesDirs.cs" />
+    <Compile Include="IniFiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SkyColors\Sky_1.cs" />
-    <Compile Include="SkyColors\Sky_2.cs" />
-    <Compile Include="SkyColors\Sky_Light.cs" />
-    <Compile Include="SkyColors\Sky_Sea.cs" />
-    <Compile Include="SkyColors\Sky_Sky.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

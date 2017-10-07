@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -8,11 +8,11 @@ using System.Windows;
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("Sims Environment Operator")]
-[assembly: AssemblyDescription("The Sims 3: Environment Operator")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("walterlv, kuree")]
-[assembly: AssemblyProduct("The Sims 3: Environment Operator")]
-[assembly: AssemblyCopyright("Copyright © walterlv kuree 2012, All Rights Reserved.")]
+[assembly: AssemblyCompany("walterlv")]
+[assembly: AssemblyProduct("Sims Environment Operator")]
+[assembly: AssemblyCopyright("Copyright © walterlv 2012, All rights reserved!")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -45,11 +45,11 @@ using System.Windows;
 //
 //      主版本
 //      次版本 
-//      内部版本号
+//      生成号
 //      修订号
 //
-// 可以指定所有这些值，也可以使用“内部版本号”和“修订号”的默认值，
+// 可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值，
 // 方法是按如下所示使用“*”:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.0.48")]
-[assembly: AssemblyFileVersion("1.3.0.48")]
+[assembly: AssemblyVersion("2.0.49.39")]
+[assembly: AssemblyFileVersion("2.0.49.39")]

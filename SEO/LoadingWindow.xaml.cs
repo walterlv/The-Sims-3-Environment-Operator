@@ -1,6 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,10 +10,9 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Windows.Threading;
-using System.Threading;
 
 namespace Seo
 {
@@ -25,176 +26,134 @@ namespace Seo
             InitializeComponent();
         }
 
-        private delegate void ThreadDelegate();
+        int BCount = 0;
 
-        // 使窗口可以拖动
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        #region 窗口界面操作
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        { this.DragMove(); }
+        private static Brush NormalStyle = new SolidColorBrush(Colors.Black);
+        private static Brush HoverStyle = new SolidColorBrush(Colors.Red);
+        private static Brush PressedStyle = new SolidColorBrush(Color.FromArgb(0xFF, 0x7F, 0x00, 0x00));
+        private void CloseButton_MouseEnter(object sender, MouseEventArgs e)
+        { CloseButton.Foreground = HoverStyle; }
+        private void CloseButton_MouseLeave(object sender, MouseEventArgs e)
+        { CloseButton.Foreground = NormalStyle; }
+        private void CloseButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                DragMove();
-            }
+            CloseButton.Foreground = HoverStyle;
+            // TODO 加上结束线程语句
+            this.Close();
         }
+        #endregion
 
+        #region 进行初始化
+        BackgroundWorker LoadingWorker;
+        enum ProgressState
+        {
+            Empty = 0,
+            Start = 1,
+            InitializeOperator = 2,
+            CheckEnvironmentFiles = 3,
+            ReadEnvironmentFiles = 4,
+            AllLoaded = 50,
+            SimsDirectoryNotFound = 98,
+            SecurityUp = 99
+        }
+        ProgressState CurrentState = ProgressState.Start;
+        ProgressState NormalState = ProgressState.Start;
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ThreadDelegate load = new ThreadDelegate(InitializeApplication);
-            load.BeginInvoke(null, null);
-            VersionText.Content = Seo.Language.Application.ShowVersion;
+            BeginStoryboard(this.FindResource("LoadingStory") as Storyboard);
+            CreateNewWorker();
+            LoadingWorker.RunWorkerAsync();
         }
 
-        private void UpdateLogo(string local)
+        // 执行异步操作 (这里的状态只正在执行的状态)
+        void LoadingWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (local.Equals("zh-cn"))
-                LogoImage.Source = new BitmapImage(new Uri(String.Format("/Images/Logo-zh-cn.png", local), UriKind.Relative));
-            else if (local.Equals("zh-tw") || local.Equals("zh-hk") || local.Equals("zh-mo"))
-                LogoImage.Source = new BitmapImage(new Uri(String.Format("/Images/Logo-zh-tw.png", local), UriKind.Relative));
-        }
-
-        private void UpdateLoadingState(int n)
-        {
-            ThreadDelegate updateState = delegate()
+            BCount++;
+            switch (CurrentState)
             {
-                switch (n)
-                {
-                    case 0:
-                        UpdateLogo(Seo.Language.LanguageManager.LocalLanguage);
-                        LoadingText.Content = Seo.Language.Application.LoadLanguage;
-                        break;
-                    case 1:
-                        LoadingText.Content =Seo.Language.Application.LoadEnvironment;
-                        break;
-                    case 2:
-                        LoadingText.Content = Seo.Language.Application.LoadPackage;
-                        break;
-                    case 3:
-                        LoadingText.Content = Seo.Language.Application.LoadCompleted;
-                        MainWindow mw = new MainWindow();
-                        mw.Show();
+                // 表示开始初始化
+                case ProgressState.Start:
+                    CurrentState = ProgressState.InitializeOperator;
+                    NormalState = CurrentState;
+                    break;
+                // 初始化EnvironmentOperator实例
+                case ProgressState.InitializeOperator:
+                    try
+                    {
+                        if (EnvironmentOperator.Instance.IsReady) CurrentState = ProgressState.CheckEnvironmentFiles;
+                    }
+                    catch (SecurityException)
+                    {
+                        CurrentState = ProgressState.SecurityUp;
+                    }
+                    catch (Exception)
+                    {
+                        CurrentState = ProgressState.SimsDirectoryNotFound;
+                    }
+                    break;
+                case ProgressState.CheckEnvironmentFiles:
+                    EnvironmentOperator.Instance.CheckWeathers();
+                    CurrentState = ProgressState.ReadEnvironmentFiles;
+                    NormalState = CurrentState;
+                    break;
+                case ProgressState.ReadEnvironmentFiles:
+                    EnvironmentOperator.Instance.ReadWeathers();
+                    CurrentState = ProgressState.AllLoaded;
+                    NormalState = CurrentState;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // 当一个异步已经完成 (这里的状态代表下一步的状态)
+        void LoadingWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null) MessageBox.Show("An error occored when loading the program.", "error");
+            // 只在有特殊操作时才 case, 否则直接执行下一步.
+            switch (CurrentState)
+            {
+                case ProgressState.AllLoaded:
+                    MainWindow mw = new MainWindow();
+                    mw.Show();
+                    this.Close();
+                    break;
+                case ProgressState.SimsDirectoryNotFound:
+                case ProgressState.SecurityUp:
+                    SimsDirForm sdf = new SimsDirForm();
+                    if (CurrentState == ProgressState.SimsDirectoryNotFound)
+                        sdf.IsManual = true;
+                    sdf.ShowDialog();
+                    if (sdf.SimsDir == null)
+                    {
+                        LoadingWorker.CancelAsync();
                         this.Close();
-                        break;
-                    case -1:
-                        #region 打开语言选择对话框
-                        UpdateLogo(Seo.Language.LanguageManager.GetSystemLanguage());
-                        LoadingText.Content = Seo.Language.Application.LoadStart;
-                        LanguageWindow lw = new LanguageWindow();
-                        lw.Owner = this;
-                        lw.Languages = Seo.Language.LanguageManager.GetLanguages();
-                        lw.SelectedLanguage = Seo.Language.LanguageManager.GetSystemLanguage();
-                        lw.ShowDialog();
-                        if (lw.DialogResult == true)
-                        {
-                            Seo.Language.LanguageManager.SaveLanguage(lw.SelectedLanguage);
-                            ThreadDelegate load = new ThreadDelegate(InitializeApplication);
-                            load.BeginInvoke(null, null);
-                        }
-                        else
-                        {
-                            this.Close();
-                        }
-                        #endregion
-                        break;
-                    case -2:
-                        #region 打开路径选择对话框
-                        SetInstallDirWindow sidw = new SetInstallDirWindow();
-                        sidw.Owner = this;
-                        sidw.ShowDialog();
-                        if (sidw.DialogResult == true)
-                        {
-                            WeatherSky.ColorDirectory = sidw.InstallDir;
-                            Configs.CustomInstallDir = sidw.InstallDir;
-                            Configs.Save();
-                            ThreadDelegate load = new ThreadDelegate(InitializeApplication);
-                            load.BeginInvoke(null, null);
-                        }
-                        else
-                        {
-                            this.Close();
-                        }
-                        #endregion
-                        break;
-                    default:
-                        Environment.Exit(-1);
-                        break;
-                }
-            };
-            this.Dispatcher.BeginInvoke(DispatcherPriority.Send, updateState);
+                    }
+                    else
+                    {
+                        Configs.SimsFolder = sdf.SimsDir;
+                        CurrentState = NormalState;
+                        CreateNewWorker();
+                        LoadingWorker.RunWorkerAsync();
+                    }
+                    break;
+                default:
+                    CreateNewWorker();
+                    LoadingWorker.RunWorkerAsync();
+                    break;
+            }
         }
 
-        private void InitializeApplication()
+        private void CreateNewWorker()
         {
-            #region 初始化应用程序
-            if (Seo.Language.LanguageManager.IsSettingExisted)
-            {
-                Seo.Language.LanguageManager.InitializeLocal();
-            }
-            else
-            {
-                string tempLocal = Seo.Language.LanguageManager.GetSystemLanguage();
-                Seo.Language.Application.Initialize(tempLocal);
-                UpdateLoadingState(-1);
-                return;
-            }
-            #endregion
-
-            UpdateLoadingState(0);
-
-            #region 初始化语言
-            // 初始化语言 (如果要读取外部语言,填写true,如果读取内置语言,填写false)
-            try
-            {
-                Seo.Language.LanguageManager.ReadExternalLanguage();
-            }
-            // 如果没有对应的语言文件
-            catch (Seo.Exceptions.LanguageFileNotFoundException)
-            {
-                string tempLocal = Seo.Language.LanguageManager.GetSystemLanguage();
-                Seo.Language.Application.Initialize(tempLocal);
-                UpdateLoadingState(-1);
-                return;
-            }
-            // 如果读取语言异常
-            catch (Exception ex)
-            {
-            }
-            #endregion
-
-            UpdateLoadingState(1);
-
-            #region 读取模拟人生3环境配置文件
-            try
-            {
-                Configs.Initialize();
-                if (Configs.CustomInstallDir != null) WeatherSky.ColorDirectory = Configs.CustomInstallDir + WeatherSky.SimsDirectoryTail;
-                WeatherSky.ReadAllWeathers();
-            }
-            // 如果找不到游戏目录, 则提示用户手动定位
-            catch (Seo.Exceptions.CannotFindInstallDirException)
-            {
-                UpdateLoadingState(-2);
-                return;
-            }
-            // 如果仍然出错, 则提示错误并记录日志
-            catch (Exception ex)
-            {
-                Log.ErrorLog.WriteErrorLog(ex, -100);
-                MessageBox.Show(Seo.Language.Dialog.ReadEnvironmentFileFailedContent, Seo.Language.Dialog.ReadEnvironmentFileFailedTitle, MessageBoxButton.OK, MessageBoxImage.Stop);
-                Environment.Exit(-1);
-            }
-            #endregion
-
-            UpdateLoadingState(2);
-
-            #region 读取方案文件
-            try { Package.OpenAll(); }
-            catch (Exception ex)
-            {
-                Log.ErrorLog.WriteErrorLog(ex, -101);
-                MessageBox.Show(Seo.Language.Dialog.ReadEnvironmentFileFailedContent, Seo.Language.Dialog.ReadEnvironmentFileFailedTitle);
-            }
-            #endregion
-
-            UpdateLoadingState(3);
+            LoadingWorker = new BackgroundWorker();
+            LoadingWorker.WorkerSupportsCancellation = true;
+            LoadingWorker.DoWork += LoadingWorker_DoWork;
+            LoadingWorker.RunWorkerCompleted += LoadingWorker_RunWorkerCompleted;
         }
+        #endregion
     }
 }

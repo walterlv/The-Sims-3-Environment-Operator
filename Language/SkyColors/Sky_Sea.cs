@@ -13,16 +13,5 @@ namespace Seo.Language
         public static string WaterColorDescription = "The basic color of water";
         public static string SunMoonColorName = "Water Reflection Color";
         public static string SunMoonColorDescription = "Water color reflected from the light from the sun and moon";
-
-        private const string Section = "Sky_Sea";
-        public static void Initialize(LanguageReader lr)
-        {
-            DayColorName = lr.Read(Section, "Name", DayColorName);
-            DayColorDescription = lr.Read(Section, "Description", DayColorDescription);
-            WaterColorName = lr.Read(Section, "WaterColorName", WaterColorName);
-            WaterColorDescription = lr.Read(Section, "WaterColorDescription", WaterColorDescription);
-            SunMoonColorName = lr.Read(Section, "SunMoonColorName", SunMoonColorName);
-            SunMoonColorDescription = lr.Read(Section, "SunMoonColorDescription", SunMoonColorDescription);
-        }
     }
 }

@@ -21,24 +21,5 @@ namespace Seo.Language
         public static string HorizonLightDescription = "Horizon with Light";
         public static string HorizonDarkName = "Horizon - Dark";
         public static string HorizonDarkDescription = "Horizon without Light";
-
-        private const string Section = "Sky_Sky";
-        public static void Initialize(LanguageReader lr)
-        {
-            DayColorName = lr.Read(Section, "Name", DayColorName);
-            DayColorDescription = lr.Read(Section, "Description", DayColorDescription);
-            SunColorName = lr.Read(Section, "SunColorName", SunColorName);
-            SunColorDescription = lr.Read(Section, "SunColorDescription", SunColorDescription);
-            HaloColorName = lr.Read(Section, "HaloColorName", HaloColorName);
-            HaloColorDescription = lr.Read(Section, "HaloColorDescription", HaloColorDescription);
-            SkyDarkName = lr.Read(Section, "SkyDarkName", SkyDarkName);
-            SkyDarkDescription = lr.Read(Section, "SkyDarkDescription", SkyDarkDescription);
-            SkyLightName = lr.Read(Section, "SkyLightName", SkyLightName);
-            SkyLightDescription = lr.Read(Section, "SkyLightDescription", SkyLightDescription);
-            HorizonLightName = lr.Read(Section, "HorizonLightName", HorizonLightName);
-            HorizonLightDescription = lr.Read(Section, "HorizonLightDescription", HorizonLightDescription);
-            HorizonDarkName = lr.Read(Section, "HorizonDarkName", HorizonDarkName);
-            HorizonDarkDescription = lr.Read(Section, "HorizonDarkDescription", HorizonDarkDescription);
-        }
     }
 }

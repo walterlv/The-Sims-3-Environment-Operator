@@ -19,22 +19,5 @@ namespace Seo.Language
         public static string ColorWRTHorizonLightDescription = "The color of cloud1 at horizon with sunlight";
         public static string ColorWRTShadowName = "Cloud1 Shadow";
         public static string ColorWRTShadowDescription = "The color of the cloud1's shadow";
-
-        private const string Section = "Sky_1";
-        public static void Initialize(LanguageReader lr)
-        {
-            DayColorName = lr.Read(Section, "Name", DayColorName);
-            DayColorDescription = lr.Read(Section, "Description", DayColorDescription);
-            ColorWRTSunDarkName = lr.Read(Section, "ColorWRTSunDarkName", ColorWRTSunDarkName);
-            ColorWRTSunDarkDescription = lr.Read(Section, "ColorWRTSunDarkDescription", ColorWRTSunDarkDescription);
-            ColorWRTSunLightName = lr.Read(Section, "ColorWRTSunLightName", ColorWRTSunLightName);
-            ColorWRTSunLightDescription = lr.Read(Section, "ColorWRTSunLightDescription", ColorWRTSunLightDescription);
-            ColorWRTHorizonDarkName = lr.Read(Section, "ColorWRTHorizonDarkName", ColorWRTHorizonDarkName);
-            ColorWRTHorizonDarkDescription = lr.Read(Section, "ColorWRTHorizonDarkDescription", ColorWRTHorizonDarkDescription);
-            ColorWRTHorizonLightName = lr.Read(Section, "ColorWRTHorizonLightName", ColorWRTHorizonLightName);
-            ColorWRTHorizonLightDescription = lr.Read(Section, "ColorWRTHorizonLightDescription", ColorWRTHorizonLightDescription);
-            ColorWRTShadowName = lr.Read(Section, "ColorWRTShadowName", ColorWRTShadowName);
-            ColorWRTShadowDescription = lr.Read(Section, "ColorWRTShadowDescription", ColorWRTShadowDescription);
-        }
     }
 }
