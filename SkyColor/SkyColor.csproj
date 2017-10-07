@@ -45,9 +45,11 @@
     <Compile Include="IniFiles.cs" />
     <Compile Include="SkyColor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SkyColors\Sky_Clear1.cs" />
+    <Compile Include="SkyColors\Sky_Clear2.cs" />
+    <Compile Include="SkyColors\Sky_ClearLight.cs" />
     <Compile Include="SkyColors\Sky_ClearSea.cs" />
-    <Compile Include="SkyColors\Sky_CustomSky.cs" />
-    <Compile Include="SkyColors\Sky_OvercastSea.cs" />
+    <Compile Include="SkyColors\Sky_ClearSky.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Language\Language.csproj">

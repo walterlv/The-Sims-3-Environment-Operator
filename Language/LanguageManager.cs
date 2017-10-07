@@ -24,9 +24,11 @@ namespace TS3Sky.Language
             Operation.Initialize(lr);
             Dialog.Initialize(lr);
             ColorPickBar.Initialize(lr);
-            Sky_CustomSky.Initialize(lr);
+            Sky_Clear1.Initialize(lr);
+            Sky_Clear2.Initialize(lr);
+            Sky_ClearLight.Initialize(lr);
+            Sky_ClearSky.Initialize(lr);
             Sky_ClearSea.Initialize(lr);
-            Sky_OvercastSea.Initialize(lr);
 
             lr.UpdateFile();
         }

@@ -10,9 +10,11 @@ namespace TS3Sky
 {
     public enum ColorAssembly
     {
-        Sky_CustomSky,
+        Sky_Clear1,
+        Sky_Clear2,
+        Sky_ClearLight,
         Sky_ClearSea,
-        Sky_OvercastSea
+        Sky_ClearSky
     }
 
     public class SkyColor
@@ -28,7 +30,7 @@ namespace TS3Sky
             {
                 return colorName;
             }
-            private set
+            protected set
             {
                 colorName = value;
             }
@@ -46,7 +48,7 @@ namespace TS3Sky
             {
                 return colorDescription;
             }
-            private set
+            protected set
             {
                 colorDescription = value;
             }
@@ -89,6 +91,24 @@ namespace TS3Sky
         }
         #endregion
 
+        #region 颜色配置文件的名称
+        private string colorFileName;
+        /// <summary>
+        /// 颜色配置文件的名称 (即颜色类型)
+        /// </summary>
+        public string ColorFileName
+        {
+            get
+            {
+                return colorFileName;
+            }
+            protected set
+            {
+                colorFileName = value;
+            }
+        }
+        #endregion
+
         #region 颜色配置文件的路径
         private String colorPath;
         /// <summary>
@@ -123,20 +143,20 @@ namespace TS3Sky
             SkyColor skyColor;
             switch (colorName)
             {
-                case ColorAssembly.Sky_CustomSky:
-                    skyColor = new Sky_CustomSky();
-                    skyColor.colorName = TS3Sky.Language.Sky_CustomSky.DayColorName;
-                    skyColor.colorDescription = TS3Sky.Language.Sky_CustomSky.DayColorDescription;
+                case ColorAssembly.Sky_Clear1:
+                    skyColor = new Sky_Clear1();
+                    break;
+                case ColorAssembly.Sky_Clear2:
+                    skyColor = new Sky_Clear2();
+                    break;
+                case ColorAssembly.Sky_ClearLight:
+                    skyColor = new Sky_ClearLight();
                     break;
                 case ColorAssembly.Sky_ClearSea:
                     skyColor = new Sky_ClearSea();
-                    skyColor.colorName = TS3Sky.Language.Sky_ClearSea.DayColorName;
-                    skyColor.colorDescription = TS3Sky.Language.Sky_ClearSea.DayColorDescription;
                     break;
-                case ColorAssembly.Sky_OvercastSea:
-                    skyColor = new Sky_OvercastSea();
-                    skyColor.colorName = TS3Sky.Language.Sky_OvercastSea.DayColorName;
-                    skyColor.colorDescription = TS3Sky.Language.Sky_OvercastSea.DayColorDescription;
+                case ColorAssembly.Sky_ClearSky:
+                    skyColor = new Sky_ClearSky();
                     break;
                 default:
                     return null;
@@ -152,6 +172,7 @@ namespace TS3Sky
         {
             foreach (DayColor color in DayColors)
             {
+                // 读取颜色组
                 BasicColor temp;
                 int i = 1;
                 color.ColorList.Clear();
@@ -161,6 +182,19 @@ namespace TS3Sky
                     i++;
                     if (temp.IsValid) color.ColorList.Add(temp);
                     else break;
+                }
+                // 排序颜色组
+                for (i = 0; i < color.ColorList.Count; i++)
+                {
+                    for (int j = i; j < color.ColorList.Count; j++)
+                    {
+                        if (color.ColorList[i].TimeValue > color.ColorList[j].TimeValue)
+                        {
+                            temp = color.ColorList[i];
+                            color.ColorList[i] = color.ColorList[j];
+                            color.ColorList[j] = temp;
+                        }
+                    }
                 }
             }
             isRead = true;
@@ -174,6 +208,13 @@ namespace TS3Sky
 	            {
 		            SaveColor(color.ColorSection, i + 1, color.ColorList[i]);
 	            }
+            }
+            // 修改晴天出现的概率为非常大，以确保修改后又很大概率能生效
+            if (colorType == ColorAssembly.Sky_ClearSky)
+            {
+                IniFiles iniFile = new IniFiles(colorPath);
+                iniFile.WriteDouble("MiscParams", "ProbabilityWeight", 100);
+                iniFile.UpdateFile();
             }
         }
 
@@ -197,20 +238,7 @@ namespace TS3Sky
             key = key.OpenSubKey("The Sims 3",true);
             simsPath = key.GetValue("Install Dir").ToString();
             if (simsPath.EndsWith("\\")) simsPath.Substring(0, simsPath.Length - 1);
-            switch (colorName)
-            {
-                case ColorAssembly.Sky_CustomSky:
-                    iniPath = @"\GameData\Shared\NonPackaged\Ini\Sky_CustomSky.ini";
-                    break;
-                case ColorAssembly.Sky_ClearSea:
-                    iniPath = @"\GameData\Shared\NonPackaged\Ini\Sky_ClearSea.ini";
-                    break;
-                case ColorAssembly.Sky_OvercastSea:
-                    iniPath = @"\GameData\Shared\NonPackaged\Ini\Sky_OvercastSea.ini";
-                    break;
-                default:
-                    return null;
-            }
+            iniPath = @"\GameData\Shared\NonPackaged\Ini\" + colorFileName + ".ini";
             return simsPath + iniPath;
         }
 
@@ -219,8 +247,14 @@ namespace TS3Sky
             IniFiles iniFile = new IniFiles(colorPath);
             string section = colorSection + index;
             int red = iniFile.ReadInteger(section, "red", 0);
+            if (red < 0) red = 0;
+            else if (red > 255) red = 255;
             int green = iniFile.ReadInteger(section, "green", 0);
+            if (green < 0) green = 0;
+            else if (green > 255) green = 255;
             int blue = iniFile.ReadInteger(section, "blue", 0);
+            if (blue < 0) blue = 0;
+            else if (blue > 255) blue = 255;
             double timeOfDay = iniFile.ReadDouble(section, "timeOfDay", -1.0);
             BasicColor color = new BasicColor(red, green, blue, timeOfDay);
             if (timeOfDay < 0) color.IsValid = false;

@@ -56,17 +56,19 @@
         <Grid.Background>
             <ImageBrush ImageSource="/TS3Sky;component/Images/MainFrame.png" />
         </Grid.Background>
-        <Image Height="160" HorizontalAlignment="Left" Margin="30,60,0,0" Name="logoImage" Stretch="Fill" VerticalAlignment="Top" Width="160" Source="/TS3Sky;component/Images/DefaultLogo.png" />
-        <StackPanel HorizontalAlignment="Left" Margin="30,280,0,0" Name="grid1" VerticalAlignment="Top" Width="160">
-            <Button x:Name="SkyColorWelcome" x:Uid="TS3N0" Content="Welcome" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
-            <Button x:Name="SkyColorButton0" x:Uid="TS3N1" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
-            <Button x:Name="SkyColorButton1" x:Uid="TS3N2" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
-            <Button x:Name="SkyColorButton2" x:Uid="TS3N3" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
-            <Button x:Name="SkyColorAbout" x:Uid="TS3N4" Content="About" Width="160" Height="32" Click="Button_Click" />
+        <Image Height="160" HorizontalAlignment="Left" Margin="30,50,0,0" Name="logoImage" Stretch="Fill" VerticalAlignment="Top" Width="160" Source="/TS3Sky;component/Images/DefaultLogo.png" />
+        <StackPanel HorizontalAlignment="Left" Margin="30,240,0,0" Name="grid1" VerticalAlignment="Top" Width="160">
+            <Button x:Name="SkyColorWelcome" x:Uid="TS3NW" Content="Welcome" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
+            <Button x:Name="SkyColorButton3" x:Uid="TS3N3" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
+            <Button x:Name="SkyColorButton0" x:Uid="TS3N0" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
+            <Button x:Name="SkyColorButton1" x:Uid="TS3N1" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
+            <Button x:Name="SkyColorButton2" x:Uid="TS3N2" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
+            <Button x:Name="SkyColorButton4" x:Uid="TS3N4" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
+            <Button x:Name="SkyColorAbout" x:Uid="TS3NA" Content="About" Width="160" Height="32" Click="Button_Click" />
         </StackPanel>
         <TextBlock x:Name="LabelText" Margin="30,0,610,30" FontSize="11" Foreground="SteelBlue" Text="By walterlv" VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" />
         <!--这里是欢迎信息-->
-        <StackPanel x:Name="SkyWelcome" Height="540" Width="530" Margin="240,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Grid x:Name="SkyWelcome" Height="540" Width="530" Margin="240,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Image x:Name="WelcomeImage" Stretch="None" />
             <TextBlock x:Name="WelcomeText" TextWrapping="WrapWithOverflow">
                 <Run  FontSize="36" Foreground="DarkBlue">模拟人生3：编辑环境工具</Run>
@@ -93,10 +95,11 @@
                 <LineBreak/>
                 <Run FontSize="26" Foreground="DarkBlue">点击左侧的按钮开始你的奇幻之旅吧！</Run>
             </TextBlock>
-        </StackPanel>
+            <Button VerticalAlignment="Bottom"  x:Uid="TS3L0" Width="160" Height="32" Margin="0, 0, 0, 60" Click="DownloadWorldButton_Click">下载城镇/世界</Button>
+        </Grid>
         <!--这里是内容-->
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="540" Width="530" Margin="240,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <StackPanel x:Name="SkyContent" Width="530" Visibility="Collapsed">
+        <ScrollViewer x:Name="ColorPageScroll" VerticalScrollBarVisibility="Auto" Height="540" Width="530" Margin="240,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+            <StackPanel x:Name="SkyContent" Width="530">
                 <TextBlock x:Name="SkyTitleText" FontSize="40" HorizontalAlignment="Center" Foreground="DarkBlue" />
                 <TextBlock x:Name="SkyTitleDescription" HorizontalAlignment="Center" FontSize="14" Foreground="SteelBlue" TextWrapping="WrapWithOverflow">
                 </TextBlock>
@@ -105,13 +108,16 @@
                     <Button x:Name="RevokeButton" x:Uid="TS3O2" Margin="10,0" Width="140" Height="32" Click="SaveButton_Click" />
                     <Button x:Name="SetToDefaultButton" x:Uid="TS3O3" Margin="10,0" Width="140" Height="32" Click="SaveButton_Click" />
                 </StackPanel>
-                <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="debugText" TextWrapping="WrapWithOverflow" />
             </StackPanel>
         </ScrollViewer>
         <!--这里是关于信息-->
         <Grid x:Name="SkyAbout" Height="540" Width="530" Margin="240,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
             <Image Stretch="None" Source="/TS3Sky;component/Images/AboutBackground.png" />
-            <TextBlock x:Name="AboutInfomation" Margin="60,140,60,50" FontSize="12" VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" />
+            <StackPanel Margin="60,140,60,50" VerticalAlignment="Bottom">
+                <TextBlock x:Name="AboutInfomation" FontSize="12" TextWrapping="WrapWithOverflow" />
+                <Button HorizontalAlignment="Left"  x:Uid="TS3L0" Width="160" Height="32" Margin="0, 0, 0, 20" Click="VisitUsButton_Click">联系我们</Button>
+                <TextBlock x:Name="CopyrightInfomation" FontSize="12" VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" />
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

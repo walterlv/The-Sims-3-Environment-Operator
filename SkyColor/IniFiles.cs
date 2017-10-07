@@ -36,7 +36,7 @@ namespace TS3Sky
                 }
                 catch
                 {
-                    throw (new ApplicationException("Ini文件不存在"));
+                    throw (new ApplicationException("无法找到《模拟人生3》的环境配置文件！"));
                 }
             }
             //必须是完全路径，不能是相对路径 
@@ -48,7 +48,7 @@ namespace TS3Sky
             if (!WritePrivateProfileString(Section, Ident, Value, FileName))
             {
                 // Todo:抛出自定义的异常 
-                throw (new ApplicationException("写Ini文件出错"));
+                throw (new ApplicationException("写入《模拟人生3》的环境配置文件失败，可能是这些文件正在被打开的游戏占用。"));
             }
         }
         //读取INI文件指定 

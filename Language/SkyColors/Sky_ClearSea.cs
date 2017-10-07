@@ -7,8 +7,8 @@ namespace TS3Sky.Language
 {
     public class Sky_ClearSea
     {
-        public static string DayColorName = "海洋 - 晴";
-        public static string DayColorDescription = "晴天时，改变水（包括海洋、河流、湖泊、池塘）的颜色。";
+        public static string DayColorName = "海洋";
+        public static string DayColorDescription = "改变水（包括海洋、河流、湖泊、池塘）的颜色。";
         public static string WaterColorName = "基础颜色";
         public static string WaterColorDescription = String.Empty;
         public static string SunMoonColorName = "倒影颜色";

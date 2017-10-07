@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TS3Sky.Language
 {
-    public class Sky_CustomSky
+    public class Sky_ClearSky
     {
         public static string DayColorName = "天空";
         public static string DayColorDescription = "改变天空的颜色：太阳、天空、地平线。";
@@ -22,7 +22,7 @@ namespace TS3Sky.Language
         public static string HorizonDarkName = "地平线 - 暗色";
         public static string HorizonDarkDescription = "无阳光照射的地平线部分颜色。";
 
-        private const string Section = "Sky_CustomSky";
+        private const string Section = "Sky_ClearSky";
         public static void Initialize(LanguageReader lr)
         {
             DayColorName = lr.Read(Section, "Name", DayColorName);
