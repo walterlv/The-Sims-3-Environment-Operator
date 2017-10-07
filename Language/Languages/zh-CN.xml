@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <Language>
+    <Name>简体中文</Name>
+    <Version>2.0.51.42</Version>
+  </Language>
+  
+  <Window>
+    <ReadonlyMode>
+      <Name>只读模式</Name>
+      <Tip>另一个程序正在编辑模拟人生3的环境，所以只能以只读模式运行。</Tip>
+    </ReadonlyMode>
+    <Navigation>
+      <FrontPage>首页</FrontPage>
+      <EnvironmentPage>选择环境</EnvironmentPage>
+      <OperatorPage>编辑环境</OperatorPage>
+      <SettingsPage>设置</SettingsPage>
+      <AboutPage>关于</AboutPage>
+    </Navigation>
+    <Update>
+      <NewVersion>
+        <Title>发现新版本</Title>
+        <Content>模拟人生3：编辑环境工具有新版本，点击下载按钮即可下载使用。</Content>
+        <Button>下载</Button>
+      </NewVersion>
+    </Update>
+    <Front>
+      <Description>我要亲手创造一个多彩的世界！</Description>
+    </Front>
+    <Worlds>
+      <List>以下是“模拟人生3：编辑环境工具”能够支持的所有城镇。</List>
+      <Crack>破解</Crack>
+      <Restore>恢复</Restore>
+      <NotExisted>不存在</NotExisted>
+      <Existed>需要破解</Existed>
+      <Cracking>破解中</Cracking>
+      <Cracked>已破解，可编辑</Cracked>
+      <Restoring>恢复中</Restoring>
+      <Supported>原生支持</Supported>
+      <Unknow>获取中</Unknow>
+    </Worlds>
+    <Environment>
+      <Select>已安装的模拟人生3环境</Select>
+      <NotSelectedTip>还没有选择一个环境</NotSelectedTip>
+      <Apply>应用...</Apply>
+      <Delete>删除...</Delete>
+      <ProtectedTip>这是受保护的环境，请不要删除。</ProtectedTip>
+      <Import>添加...</Import>
+      <Download>下载</Download>
+      <Export>导出</Export>
+      <ExportTitle>导出我的环境</ExportTitle>
+      <ExportName>名称：</ExportName>
+      <ExportCreator>作者：</ExportCreator>
+      <ExportImage>图片：</ExportImage>
+      <ExportDescription>描述：</ExportDescription>
+      <ExportSaveTo>导出到：</ExportSaveTo>
+      <RestartForLanguage>需要重新启动应用程序才能使用新的语言显示这些环境</RestartForLanguage>
+    </Environment>
+    <Operator>
+      <WeatherExpander>高级</WeatherExpander>
+      <ChangeWeather>切换编辑的天气</ChangeWeather>
+      <WeatherDescription>这些天气只是代表着天气类型，每一种都有冰雹、雨、雪、雾的天气变换。（例如：你对晴天的修改，可能会在雨天、雪天看到同样的效果。）</WeatherDescription>
+      <SetWeatherWeight>修改天气比例</SetWeatherWeight>
+      <LockWeatherWeight>锁定天气比例 (选择新的环境后不修改比例)</LockWeatherWeight>
+      <Save>应用</Save>
+      <Default>默认...</Default>
+      <Undo>撤消</Undo>
+      <Redo>重做</Redo>
+    </Operator>
+    <Settings>
+      <SelectLanguage>选择显示的语言：</SelectLanguage>
+      <Program>程序选项</Program>
+      <AutoUpdate>自动检查更新</AutoUpdate>
+      <Visual>视觉效果</Visual>
+      <AeroGlass>开启毛玻璃效果（仅支持 Windows Vista/7）</AeroGlass>
+      <Background>使用背景图片...</Background>
+    </Settings>
+    <Dialog>
+      <Basic>
+        <OK>确定</OK>
+        <Cancel>取消</Cancel>
+        <Yes>是</Yes>
+        <No>否</No>
+      </Basic>
+      <MultiDocuments>
+        <Title>多个存档</Title>
+        <Content>你的文档中包含多个存档，请选择你正在使用的一个：</Content>
+      </MultiDocuments>
+      <SimsDir>
+        <Title>获取安装路径</Title>
+        <Content>我们无法获取到《模拟人生3》原版的安装路径，你可能需要手动来指定它。<br/>请选择《模拟人生3》原版的根目录：</Content>
+        <Invalid>这不是正确的《模拟人生3》原版根目录。</Invalid>
+      </SimsDir>
+      <OpenImage>
+        <Title>选择图片</Title>
+        <AllPicture>所有图片</AllPicture>
+        <AllFile>所有文件</AllFile>
+      </OpenImage>
+      <ExportEnvironment>
+        <Title>导出环境</Title>
+      </ExportEnvironment>
+      <OpenEnvironment>
+        <Title>选择环境文件</Title>
+      </OpenEnvironment>
+    </Dialog>
+  </Window>
+  
+  <Information>
+    <CloseSave>
+      <Title>保存修改</Title>
+      <Content>你已经修改了环境，是否需要保存？</Content>
+    </CloseSave>
+    <Worlds>
+      <RunningTip>《模拟人生3》正在运行，这个时候不能对城镇进行破解或恢复。</RunningTip>
+      <Cracking>正在破解 {0}...</Cracking>
+      <Cracked>{0} 破解完成，现在你对环境的修改将会对它生效。</Cracked>
+      <CrackFailed>{0} 破解时出现了问题，无法完成。</CrackFailed>
+      <Restoring>正在恢复 {0}...</Restoring>
+      <Restored>{0} 已经恢复，将使用它默认的环境配置。</Restored>
+      <RestoreFailed>{0} 恢复时出现了问题，无法完成。</RestoreFailed>
+    </Worlds>
+    <ReadEnvironment>
+      <Reading>正在读取安装的环境...</Reading>
+      <Completed>总共安装有 {0} 个环境。</Completed>
+    </ReadEnvironment>
+    <ReadEnvironmentError>
+      <Title>添加环境出错</Title>
+      <Content>一个或多个环境没有被正确添加：</Content>
+      <ExistedError>已经安装了一个相同的环境。</ExistedError>
+      <InvalidError>这并不是一个有效的模拟人生3环境。</InvalidError>
+      <UnknownError>我们无法获知这个环境的具体信息，导致无法安装。</UnknownError>
+    </ReadEnvironmentError>
+    <ApplyEnvironment>
+      <Title>应用环境</Title>
+      <Content>要为模拟人生3游戏应用“{0}”吗？</Content>
+      <Okay>成功应用“{0}”环境。</Okay>
+    </ApplyEnvironment>
+    <DeleteEnvironment>
+      <Title>删除环境</Title>
+      <Content>你确定要删除“{0}”吗？</Content>
+      <Error>删除环境时出现问题</Error>
+    </DeleteEnvironment>
+    <ImportEnvironment>
+      <Importing>正在添加新的环境...</Importing>
+      <Completed>成功添加了 {0} 个新的环境。</Completed>
+    </ImportEnvironment>
+    <ExportEnvironment>
+      <EmptyName>没有填写名称</EmptyName>
+      <InvalidName>名称中不应包含这些字符：{0}</InvalidName>
+      <EmptyCreator>没有填写作者</EmptyCreator>
+      <InvalidCreator>作者中不应包含这些字符：{0}</InvalidCreator>
+      <InvalidImage>这并不是一个有效的图片文件</InvalidImage>
+      <EmptyPath>没有指定导出的文件名</EmptyPath>
+      <CustomPathForbidden>不能添加到程序所在的文件夹内</CustomPathForbidden>
+      <InvalidPath>找不到或者没有权限访问这个位置</InvalidPath>
+      <Okay>导出环境成功。</Okay>
+      <Failed>导出环境时出现问题，导出失败。</Failed>
+    </ExportEnvironment>
+    <SaveEnvironment>
+      <Saving>正在应用您对环境的修改...</Saving>
+      <Okay>成功应用这个环境，你可以立即在游戏中体验它。</Okay>
+      <Failed>应用环境失败，可能是模拟人生3游戏正在使用它。你可以再次尝试应用。</Failed>
+    </SaveEnvironment>
+    <DefaultEnvironment>
+      <Title>恢复默认</Title>
+      <Content>要恢复 {0} 的 {1} 到默认吗？</Content>
+      <Okay>已经恢复 {0} 的 {1} 到默认设置。</Okay>
+      <Failed>无法恢复 {0} 的 {1} 到默认设置，可能是因为预安装的默认环境已经丢失。</Failed>
+    </DefaultEnvironment>
+  </Information>
+  
+  <Environment>
+    <File>模拟人生3环境文件</File>
+    <Weather>
+      <Clear>晴天</Clear>
+      <PartlyCloudy>多云</PartlyCloudy>
+      <Overcast>阴天</Overcast>
+      <Stormy>暴风</Stormy>
+      <Custom>自定</Custom>
+    </Weather>
+    <Format>
+      <Name>{0}</Name>
+      <Creator>作者：{0}</Creator>
+      <Description>{0}</Description>
+    </Format>
+    <Backup>
+      <Name>备份</Name>
+      <Creator>自动</Creator>
+      <Description>这是自动生成的备份环境, 生成时间：{0}。</Description>
+    </Backup>
+  </Environment>
+
+  <World>
+    <O>日落溪谷</O>
+    <EP011>中国模海</EP011>
+    <EP012>埃及模哈拉</EP012>
+    <EP013>法国模榭丽舍</EP013>
+    <EP02>双子溪</EP02>
+    <EP03>桥港</EP03>
+    <EP05>阿帕鲁萨平原</EP05>
+    <EP06>星光海岸</EP06>
+    <EP07>月光瀑布</EP07>
+  </World>
+  
+  <Sky_Sky>
+    <Name>天空</Name>
+    <Description>改变天空的颜色：太阳、天空、地平线。</Description>
+    <SunColor>
+      <Name>太阳 - 基础颜色</Name>
+      <Description>太阳光包括两个部分，一个是太阳自己，一个是它的光晕。</Description>
+    </SunColor>
+    <HaloColor>
+      <Name>太阳 - 光晕颜色</Name>
+      <Description>这里是设置太阳光光晕的颜色。</Description>
+    </HaloColor>
+    <SkyDark>
+      <Name>天空 - 暗色</Name>
+      <Description>未被太阳照射的半个天空颜色。</Description>
+    </SkyDark>
+    <SkyLight>
+      <Name>天空 - 亮色</Name>
+      <Description>被太阳照射的半个天空颜色。</Description>
+    </SkyLight>
+    <HorizonLight>
+      <Name>地平线 - 亮色</Name>
+      <Description>有阳光照射的地平线部分颜色。</Description>
+    </HorizonLight>
+    <HorizonDark>
+      <Name>地平线 - 暗色</Name>
+      <Description>无阳光照射的地平线部分颜色。</Description>
+    </HorizonDark>
+  </Sky_Sky>
+  <Sky_Sea>
+    <Name>海洋</Name>
+    <Description>改变水（包括海洋、河流、湖泊、池塘）的颜色。</Description>
+    <WaterColor>
+      <Name>基础颜色</Name>
+      <Description></Description>
+    </WaterColor>
+    <SunMoonColor>
+      <Name>倒影颜色</Name>
+      <Description></Description>
+    </SunMoonColor>
+  </Sky_Sea>
+  <Sky_1>
+    <Name>云 A</Name>
+    <Description>改变云的颜色</Description>
+    <ColorWRTSunDark>
+      <Name>云 - 未照射</Name>
+      <Description>未被太阳照射的云的颜色。</Description>
+    </ColorWRTSunDark>
+    <ColorWRTSunLight>
+      <Name>云 - 照射</Name>
+      <Description>被太阳照射的云的颜色。</Description>
+    </ColorWRTSunLight>
+    <ColorWRTHorizonDark>
+      <Name>云 - 地平线 - 暗色</Name>
+      <Description>无阳光照射的地平线云部分颜色。</Description>
+    </ColorWRTHorizonDark>
+    <ColorWRTHorizonLight>
+      <Name>云 - 地平线 - 亮色</Name>
+      <Description>阳光照射的地平线云部分颜色。</Description>
+    </ColorWRTHorizonLight>
+    <ColorWRTShadow>
+      <Name>云影</Name>
+      <Description>云的阴影颜色</Description>
+    </ColorWRTShadow>
+  </Sky_1>
+  <Sky_2>
+    <Name>云 B</Name>
+    <Description>改变云的颜色</Description>
+    <ColorWRTSunDark>
+      <Name>云 - 未照射</Name>
+      <Description>未被太阳照射的云的颜色。</Description>
+    </ColorWRTSunDark>
+    <ColorWRTSunLight>
+      <Name>云 - 照射</Name>
+      <Description>被太阳照射的云的颜色。</Description>
+    </ColorWRTSunLight>
+    <ColorWRTHorizonDark>
+      <Name>云 - 地平线 - 暗色</Name>
+      <Description>无阳光照射的地平线云部分颜色。</Description>
+    </ColorWRTHorizonDark>
+    <ColorWRTHorizonLight>
+      <Name>云 - 地平线 - 亮色</Name>
+      <Description>阳光照射的地平线云部分颜色。</Description>
+    </ColorWRTHorizonLight>
+    <ColorWRTShadow>
+      <Name>云影</Name>
+      <Description>云的阴影颜色</Description>
+    </ColorWRTShadow>
+  </Sky_2>
+  <Sky_Light>
+    <Name>亮光</Name>
+    <Description>改变游戏里太阳光和月光（同时改变）</Description>
+    <SunMoonLight>
+      <Name>光色</Name>
+      <Description>月光和太阳光的颜色</Description>
+    </SunMoonLight>
+    <AmbientSkyTop>
+      <Name>物体顶部反光颜色</Name>
+      <Description>在晚上物体顶部反光的颜色</Description>
+    </AmbientSkyTop>
+    <AmbientSkyBottom>
+      <Name>物体底部反光颜色</Name>
+      <Description>在晚上物体底部反光的颜色</Description>
+    </AmbientSkyBottom>
+  </Sky_Light>
+</root>

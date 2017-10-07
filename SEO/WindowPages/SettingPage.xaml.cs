@@ -17,7 +17,7 @@ namespace Seo.WindowPages
     /// <summary>
     /// SettingPage.xaml 的交互逻辑
     /// </summary>
-    public partial class SettingPage : Page, PageNavigation, ILanguage
+    public partial class SettingPage : Page, PageNavigation, ILanguage, IDisposable
     {
         bool isLoaded = false;
         Dictionary<string, string> Languages;
@@ -33,10 +33,13 @@ namespace Seo.WindowPages
                 if (pair.Key == Seo.Language.Local) LanguageBox.SelectedIndex = i;
                 i++;
             }
+            AutoUpdateCheckBox.IsChecked = Configs.AutoUpdate;
+            AeroGlassCheckBox.IsChecked = Configs.GlassWindow;
+            BackgroundImageCheckBox.IsChecked = Configs.UseBackgroundImage;
             isLoaded = true;
         }
 
-        ~SettingPage()
+        public void Dispose()
         {
             Seo.Language.UnRegister(this);
         }
@@ -54,6 +57,11 @@ namespace Seo.WindowPages
         public void LoadLanguage()
         {
             SelectLanguageText.Text = Seo.Languages.Window.SelectLanguage;
+            ProgramHeader.Header = Seo.Languages.Window.ProgramHeader;
+            AutoUpdateCheckBox.Content = Seo.Languages.Window.AutoUpdate;
+            VisualHeader.Header = Seo.Languages.Window.VisualHeader;
+            AeroGlassCheckBox.Content = Seo.Languages.Window.AeroGlass;
+            BackgroundImageCheckBox.Content = Seo.Languages.Window.BackgroundImage;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -64,8 +72,57 @@ namespace Seo.WindowPages
         {
             if (isLoaded)
             {
-                Seo.Language.LoadLanguage(Languages.ElementAt(LanguageBox.SelectedIndex).Key);
+                Configs.Local = Languages.ElementAt(LanguageBox.SelectedIndex).Key;
+                Seo.Language.LoadLanguage(Configs.Local);
                 Seo.Language.LoadLanguageOfRegList();
+            }
+        }
+
+        private void AutoUpdateCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (isLoaded)
+            {
+                Configs.AutoUpdate = AutoUpdateCheckBox.IsChecked == true;
+            }
+        }
+
+        private void AeroGlassCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (isLoaded)
+            {
+                bool c = AeroGlassCheckBox.IsChecked == true;
+                MainWindow.Current.AeroGlass = c;
+                BackgroundImageCheckBox.IsEnabled = !c;
+                Configs.GlassWindow = c;
+            }
+        }
+
+        private void BackgroundImageCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (isLoaded)
+            {
+                if (BackgroundImageCheckBox.IsChecked == true)
+                {
+                    System.Windows.Forms.OpenFileDialog open = new System.Windows.Forms.OpenFileDialog();
+                    open.Title = Seo.Languages.Window.SelectImageTitle;
+                    open.Filter = String.Format("{0}|*.png;*.bmp;*.jpg|PNG|*.png|BMP|*.bmp|JPG|*.jpg|{1}|*.*", Seo.Languages.Window.AllImage, Seo.Languages.Window.AllFiles);
+                    open.AddExtension = true;
+                    open.AutoUpgradeEnabled = true;
+                    if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        Configs.BackgroundImage = open.FileName;
+                        MainWindow.Current.AeroGlass = false;
+                    }
+                    else
+                    {
+                        BackgroundImageCheckBox.IsChecked = false;
+                    }
+                }
+                else
+                {
+                    Configs.BackgroundImage = null;
+                    MainWindow.Current.AeroGlass = false;
+                }
             }
         }
     }

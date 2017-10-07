@@ -5,12 +5,10 @@ using System.Text;
 
 namespace Seo
 {
-    public class Sky_Sky : SkyColor,ILanguage
+    public class Sky_Sky : SkyColor, ILanguage, IDisposable
     {
         public Sky_Sky()
         {
-            ColorName = Seo.Languages.Sky_Sky.DayColorName;
-            ColorDescription = Seo.Languages.Sky_Sky.DayColorDescription;
             DayColors.Add(new DayColor("SunColor"));
             DayColors.Add(new DayColor("HaloColor"));
             DayColors.Add(new DayColor("SkyDark"));
@@ -20,13 +18,15 @@ namespace Seo
             Language.Register(this, Priority.Highest);
         }
 
-        ~Sky_Sky()
+        public void Dispose()
         {
-            Language.UnRegister(this);
+            Seo.Language.UnRegister(this);
         }
 
         public void LoadLanguage()
         {
+            ColorName = Seo.Languages.Sky_Sky.DayColorName;
+            ColorDescription = Seo.Languages.Sky_Sky.DayColorDescription;
             DayColors[0].ColorName = Seo.Languages.Sky_Sky.SunColorName;
             DayColors[0].ColorDescription = Seo.Languages.Sky_Sky.SunColorDescription;
             DayColors[1].ColorName = Seo.Languages.Sky_Sky.HaloColorName;

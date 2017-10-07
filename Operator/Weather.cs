@@ -104,8 +104,6 @@ namespace Seo
                 try
                 {
                     weather.WeatherWeightFile = Sky_Sky.ColorFile;
-                    IniFiles ww = new IniFiles(weather.WeatherWeightFile);
-                    weather.WeatherWeight = ww.ReadDouble(MiscParams, ProbabilityWeight, 0.0);
                     weather.Name = WeatherToString(w);
                     weather.Type = w;
                     AllWeathers.Add(weather);
@@ -122,6 +120,29 @@ namespace Seo
         internal void Read()
         {
             foreach (SkyColor skyColor in SkyColors) skyColor.Read();
+        }
+
+        internal void Save()
+        {
+            foreach (SkyColor skyColor in SkyColors) skyColor.Save();
+            SaveWeight();
+        }
+
+        internal static void ReadWeight()
+        {
+            for (int i = 0; i < WeatherArray.Length; i++)
+            {
+                IniFiles sw = new IniFiles(AllWeathers[i].WeatherWeightFile);
+                AllWeathers[i].WeatherWeight = sw.ReadDouble(MiscParams, ProbabilityWeight, AllWeathers[i].WeatherWeight);
+            }
+        }
+        internal static void SaveWeight()
+        {
+            for (int i = 0; i < WeatherArray.Length; i++)
+            {
+                IniFiles sw = new IniFiles(AllWeathers[i].WeatherWeightFile);
+                sw.WriteDouble(MiscParams, ProbabilityWeight, AllWeathers[i].WeatherWeight);
+            }
         }
 
         public static Weather GetWeather(Weathers w)

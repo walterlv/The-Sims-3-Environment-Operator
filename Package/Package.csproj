@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2E672CCD-5333-46FB-8329-054631EF6431}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>s3pi</RootNamespace>
+    <AssemblyName>Package</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AHandlerList.cs" />
+    <Compile Include="ArgumentLengthException.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="FNVHash.cs" />
+    <Compile Include="Interfaces\AApiVersionedFields.cs" />
+    <Compile Include="Interfaces\APackage.cs" />
+    <Compile Include="Interfaces\AResource.cs" />
+    <Compile Include="Interfaces\AResourceHandler.cs" />
+    <Compile Include="Interfaces\AResourceIndexEntry.cs" />
+    <Compile Include="Interfaces\AResourceKey.cs" />
+    <Compile Include="Interfaces\BoundingBox.cs" />
+    <Compile Include="Interfaces\ConstructorParametersAttribute.cs" />
+    <Compile Include="Interfaces\DataGridExpandableAttribute.cs" />
+    <Compile Include="Interfaces\DependentList.cs" />
+    <Compile Include="Interfaces\ElementPriorityAttribute.cs" />
+    <Compile Include="Interfaces\IApiVersion.cs" />
+    <Compile Include="Interfaces\IContentFields.cs" />
+    <Compile Include="Interfaces\IGenericAdd.cs" />
+    <Compile Include="Interfaces\IndexList.cs" />
+    <Compile Include="Interfaces\IPackage.cs" />
+    <Compile Include="Interfaces\IResource.cs" />
+    <Compile Include="Interfaces\IResourceHandler.cs" />
+    <Compile Include="Interfaces\IResourceIndexEntry.cs" />
+    <Compile Include="Interfaces\IResourceKey.cs" />
+    <Compile Include="Interfaces\Quaternion.cs" />
+    <Compile Include="Interfaces\SimpleList.cs" />
+    <Compile Include="Interfaces\TGIBlock.cs" />
+    <Compile Include="Interfaces\TGIBlockListContentFieldAttribute.cs" />
+    <Compile Include="Interfaces\TypedValue.cs" />
+    <Compile Include="Interfaces\VersionAttribute.cs" />
+    <Compile Include="Package\Compression.cs" />
+    <Compile Include="Package\Package.cs" />
+    <Compile Include="Package\PackageIndex.cs" />
+    <Compile Include="Package\ResourceIndexEntry.cs" />
+    <Compile Include="PortableSettingsProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="SevenBitString.cs" />
+    <Compile Include="Sims3PackCRC.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

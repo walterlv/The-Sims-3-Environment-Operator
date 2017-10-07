@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="Seo.WindowParts.DayColorBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DesignWidth="522" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <Storyboard x:Key="PickMoveStory">
+            <DoubleAnimation Storyboard.TargetName="PickColorRect" Storyboard.TargetProperty="(Canvas.Left)"
+                             Duration="0:0:0.3" />
+            <DoubleAnimation Storyboard.TargetName="PickColorRect" Storyboard.TargetProperty="Width"
+                             Duration="0:0:0.3" />
+            <ColorAnimation Storyboard.TargetName="PickColorRect" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)"
+                             Duration="0:0:0.3" />
+        </Storyboard>
+        <Storyboard x:Key="XPickMoveStory">
+            <DoubleAnimation Storyboard.TargetName="XPickColorRect" Storyboard.TargetProperty="(Canvas.Left)"
+                             Duration="0:0:0.3" />
+            <DoubleAnimation Storyboard.TargetName="XPickColorRect" Storyboard.TargetProperty="Width"
+                             Duration="0:0:0.3" />
+            <ColorAnimation Storyboard.TargetName="XPickColorRect" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)"
+                             Duration="0:0:0.3" />
+        </Storyboard>
+        <Storyboard x:Key="ResetPickMoveStory">
+            <DoubleAnimation Storyboard.TargetName="PickColorRect" Storyboard.TargetProperty="(Canvas.Left)"
+                             To="0" Duration="0:0:0.3" />
+            <DoubleAnimation Storyboard.TargetName="PickColorRect" Storyboard.TargetProperty="Width"
+                             To="480" Duration="0:0:0.3" />
+            <ColorAnimation Storyboard.TargetName="PickColorRect" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)"
+                            To="Transparent" Duration="0:0:0.3" />
+            <DoubleAnimation Storyboard.TargetName="XPickColorRect" Storyboard.TargetProperty="(Canvas.Left)"
+                             To="0" Duration="0:0:0.3" />
+            <DoubleAnimation Storyboard.TargetName="XPickColorRect" Storyboard.TargetProperty="Width"
+                             To="480" Duration="0:0:0.3" />
+            <ColorAnimation Storyboard.TargetName="XPickColorRect" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)"
+                            To="Transparent" Duration="0:0:0.3" />
+        </Storyboard>
+    </UserControl.Resources>
+    
+    <StackPanel Margin="20,10">
+        <!--这里是标题-->
+        <TextBlock x:Name="TitleText" FontSize="20" Foreground="DarkBlue" />
+        <TextBlock x:Name="DescriptionText" FontSize="14" Foreground="SteelBlue" TextWrapping="WrapWithOverflow" />
+        <!--这里是时间轴-->
+        <Grid>
+            <TextBlock>0</TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="37,0,0,0">2</TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="77,0,0,0">4</TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="117,0,0,0">6</TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="157,0,0,0">8</TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="195,0,0,0">10</TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="235,0,0,0">12</TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="275,0,0,0">14</TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="315,0,0,0">16</TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="355,0,0,0">18</TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="394,0,0,0">20</TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="434,0,0,0">22</TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="468,0,0,0">24</TextBlock>
+        </Grid>
+        <!--这里是颜色条-->
+        <Grid Background="#054587" Width="482" Height="34">
+            <Rectangle x:Name="ColorPanel" Margin="1" Cursor="Hand"
+                  MouseMove="ColorPanel_MouseMove" MouseLeftButtonDown="ColorPanel_MouseLeftButtonDown" MouseLeave="ColorPanel_MouseLeave" />
+        </Grid>
+        <!--这里是颜色操作-->
+        <Canvas Width="480" Height="32" Margin="0,2,0,0" HorizontalAlignment="Center">
+            <Rectangle x:Name="PickColorRect" Height="10" Width="480" Canvas.Left="0" Fill="Transparent">
+                <Rectangle.BitmapEffect>
+                    <OuterGlowBitmapEffect GlowColor="Black" GlowSize="1" />
+                </Rectangle.BitmapEffect>
+            </Rectangle>
+            <Rectangle x:Name="XPickColorRect" Height="10" Width="480" Canvas.Left="0" Fill="Transparent">
+                <Rectangle.BitmapEffect>
+                    <OuterGlowBitmapEffect GlowColor="Black" GlowSize="1" />
+                </Rectangle.BitmapEffect>
+            </Rectangle>
+            <TextBlock x:Name="ColorDetailText" Grid.Row="1" FontSize="16" Margin="0,10,0,0"></TextBlock>
+        </Canvas>
+    </StackPanel>
+</UserControl>

@@ -6,13 +6,12 @@
       mc:Ignorable="d"
       d:DesignHeight="530" d:DesignWidth="540"
 	  Title="OperatorPage">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <WindowParts:WeatherSelector Grid.Row="0" Selected="WeatherSelector_Selected" />
+        <WindowParts:WeatherSelector x:Name="Selector" Grid.Row="0" Selected="WeatherSelector_Selected" />
 
         <Grid Grid.Row="1" Background="White">
             <Grid.RowDefinitions>
@@ -27,9 +26,13 @@
                 </Grid.RowDefinitions>
                 <WindowParts:PartTabPanel x:Name="PartTabsPanel" Margin="1,1,1,0"
                                       Selected="PartTab_Selected"/>
-                <ScrollViewer Grid.Row="2" Background="White" Margin="1,0,1,1">
+                <ScrollViewer x:Name="DayColorScroll" Grid.Row="2" Background="White" Margin="1,0,1,1" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
-                        <TextBlock Margin="4" FontSize="16" Text="Description" />
+                        <TextBlock x:Name="DescriptionText"
+                                   Margin="8" FontSize="16"
+                                   HorizontalAlignment="Center"
+                                   TextAlignment="Center"
+                                   Text="Description" />
                         <WrapPanel x:Name="DayColorBarPanel" HorizontalAlignment="Center">
                         </WrapPanel>
                     </StackPanel>
@@ -40,9 +43,8 @@
             </Grid>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="4,0,4,4">
-                <WindowParts:SimpleButton Width="96" Height="32" Margin="0,0,8,0" Text="应用" />
-                <WindowParts:SimpleButton Width="96" Height="32" Margin="0,0,8,0" Text="撤消" />
-                <WindowParts:SimpleButton Width="96" Height="32" Text="默认" />
+                <WindowParts:SimpleButton x:Name="ApplyButton" Width="96" Height="32" Margin="0,0,8,0" IsReadonlyDisabled="True" Text="Apply" Click="ApplyButton_Click" />
+                <WindowParts:SimpleButton x:Name="DefaultButton" Width="96" Height="32" IsReadonlyDisabled="True" Text="Default" Click="DefaultButton_Click" />
             </StackPanel>
 
         </Grid>

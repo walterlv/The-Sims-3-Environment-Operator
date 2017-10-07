@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Seo.WindowParts.SimpleSlider"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="24" d:DesignWidth="500">
+    <UserControl.Resources>
+        <Storyboard x:Key="ProgressStory">
+            <DoubleAnimation Storyboard.TargetName="ShowEle" Storyboard.TargetProperty="Width"
+                             Duration="0:0:0.1" DecelerationRatio="1" />
+        </Storyboard>
+    </UserControl.Resources>
+    <Grid x:Name="BackEle" Background="Gray" Cursor="Hand"
+          MouseEnter="ShowEle_MouseEnter"
+          MouseLeave="ShowEle_MouseLeave"
+          MouseLeftButtonDown="ShowEle_MouseLeftButtonDown"
+          MouseLeftButtonUp="ShowEle_MouseLeftButtonUp"
+          MouseMove="ShowEle_MouseMove"
+          MouseWheel="ShowEle_MouseWheel">
+        <Rectangle x:Name="ShowEle" HorizontalAlignment="Left"
+                   Width="0.0" RadiusX="2" RadiusY="2"/>
+        <Rectangle x:Name="Highlight" RadiusX="2" RadiusY="2">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#3FFFFFFF" Offset="0.45" />
+                    <GradientStop Color="Transparent" Offset="0.55" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+                   
+    </Grid>
+</UserControl>

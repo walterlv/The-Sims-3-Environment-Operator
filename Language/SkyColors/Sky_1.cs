@@ -2,34 +2,34 @@
 {
     public class Sky_1
     {
-        public static string DayColorName = "Cloud 1";
-        public static string DayColorDescription = "You can change the color of Cloud1 here.";
-        public static string ColorWRTSunDarkName = "Cloud1 without Sunlight";
-        public static string ColorWRTSunDarkDescription = "The the color of cloud1 without sunlight";
-        public static string ColorWRTSunLightName = "Cloud1 with Sunlight";
-        public static string ColorWRTSunLightDescription = "The the color of cloud1 with sunlight";
-        public static string ColorWRTHorizonDarkName = "Cloud1 at Horizon without Sunlight";
-        public static string ColorWRTHorizonDarkDescription = "The color of cloud1 at horizon without sunlight";
-        public static string ColorWRTHorizonLightName = "Cloud1 at Horizon with Sunlight";
-        public static string ColorWRTHorizonLightDescription = "The color of cloud1 at horizon with sunlight";
-        public static string ColorWRTShadowName = "Cloud1 Shadow";
-        public static string ColorWRTShadowDescription = "The color of the cloud1's shadow";
+        public static string DayColorName = null;
+        public static string DayColorDescription = null;
+        public static string ColorWRTSunDarkName = null;
+        public static string ColorWRTSunDarkDescription = null;
+        public static string ColorWRTSunLightName = null;
+        public static string ColorWRTSunLightDescription = null;
+        public static string ColorWRTHorizonDarkName = null;
+        public static string ColorWRTHorizonDarkDescription = null;
+        public static string ColorWRTHorizonLightName = null;
+        public static string ColorWRTHorizonLightDescription = null;
+        public static string ColorWRTShadowName = null;
+        public static string ColorWRTShadowDescription = null;
 
-        private const string Section = "Sky_1";
-        public static void ReadFile(IniFiles reader)
+        private const string Node = "Sky_1";
+        public static void ReadFile(XmlFiles reader)
         {
-            DayColorName = reader.ReadString(Section, "Name", DayColorName);
-            DayColorDescription = reader.ReadString(Section, "Description", DayColorDescription);
-            ColorWRTSunDarkName = reader.ReadString(Section, "ColorWRTSunDarkName", ColorWRTSunDarkName);
-            ColorWRTSunDarkDescription = reader.ReadString(Section, "ColorWRTSunDarkDescription", ColorWRTSunDarkDescription);
-            ColorWRTSunLightName = reader.ReadString(Section, "ColorWRTSunLightName", ColorWRTSunLightName);
-            ColorWRTSunLightDescription = reader.ReadString(Section, "ColorWRTSunLightDescription", ColorWRTSunLightDescription);
-            ColorWRTHorizonDarkName = reader.ReadString(Section, "ColorWRTHorizonDarkName", ColorWRTHorizonDarkName);
-            ColorWRTHorizonDarkDescription = reader.ReadString(Section, "ColorWRTHorizonDarkDescription", ColorWRTHorizonDarkDescription);
-            ColorWRTHorizonLightName = reader.ReadString(Section, "ColorWRTHorizonLightName", ColorWRTHorizonLightName);
-            ColorWRTHorizonLightDescription = reader.ReadString(Section, "ColorWRTHorizonLightDescription", ColorWRTHorizonLightDescription);
-            ColorWRTShadowName = reader.ReadString(Section, "ColorWRTShadowName", ColorWRTShadowName);
-            ColorWRTShadowDescription = reader.ReadString(Section, "ColorWRTShadowDescription", ColorWRTShadowDescription);
+            DayColorName = reader.TryRead(DayColorName, Node, "Name");
+            DayColorDescription = reader.TryRead(DayColorDescription, Node, "Description");
+            ColorWRTSunDarkName = reader.TryRead(ColorWRTSunDarkName, Node, "ColorWRTSunDark/Name");
+            ColorWRTSunDarkDescription = reader.TryRead(ColorWRTSunDarkDescription, Node, "ColorWRTSunDark/Description");
+            ColorWRTSunLightName = reader.TryRead(ColorWRTSunLightName, Node, "ColorWRTSunLight/Name");
+            ColorWRTSunLightDescription = reader.TryRead(ColorWRTSunLightDescription, Node, "ColorWRTSunLight/Description");
+            ColorWRTHorizonDarkName = reader.TryRead(ColorWRTHorizonDarkName, Node, "ColorWRTHorizonDark/Name");
+            ColorWRTHorizonDarkDescription = reader.TryRead(ColorWRTHorizonDarkDescription, Node, "ColorWRTHorizonDark/Description");
+            ColorWRTHorizonLightName = reader.TryRead(ColorWRTHorizonLightName, Node, "ColorWRTHorizonLight/Name");
+            ColorWRTHorizonLightDescription = reader.TryRead(ColorWRTHorizonLightDescription, Node, "ColorWRTHorizonLight/Description");
+            ColorWRTShadowName = reader.TryRead(ColorWRTShadowName, Node, "ColorWRTShadow/Name");
+            ColorWRTShadowDescription = reader.TryRead(ColorWRTShadowDescription, Node, "ColorWRTShadow/Description");
         }
     }
 }

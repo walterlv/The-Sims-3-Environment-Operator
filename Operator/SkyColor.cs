@@ -25,7 +25,31 @@ namespace Seo
         public bool IsReady
         {
             get { return isReady; }
-            private set { isReady = value; }
+            internal set { isReady = value; if (!value) IsUpdateNeeded = true; }
+        }
+        #endregion
+
+        #region IsUpdateNeeded
+        private bool isUpdateNeeded = true;
+        /// <summary>
+        /// 表示此颜色组中的数据已经更改, 界面上需要更新.
+        /// </summary>
+        public bool IsUpdateNeeded
+        {
+            get { return isUpdateNeeded; }
+            set { isUpdateNeeded = value; }
+        }
+        #endregion
+
+        #region IsModified
+        private bool isModified = false;
+        /// <summary>
+        /// 表示自上次保存以来数据已被修改.
+        /// </summary>
+        public bool IsModified
+        {
+            get { return isModified; }
+            internal set { isModified = value; }
         }
         #endregion
 
@@ -205,7 +229,30 @@ namespace Seo
             IsReady = true;
         }
 
-        internal TimeColor ReadColor(IniFiles reader, string colorSection, int index)
+        internal void Save()
+        {
+            if (!IsModified) return;
+            IsModified = false;
+            // 保存颜色配置文件
+            IniFiles saver = new IniFiles(ColorFile);
+            foreach (DayColor color in DayColors)
+            {
+                for (int i = 0; i < color.ColorList.Count; i++)
+                {
+                    SaveColor(saver, color.ColorSection, i + 1, color.ColorList[i]);
+                }
+            }
+            saver.UpdateFile();
+            // 确保颜色配置文件后面没有额外的颜色
+            IniFiles iniFile = new IniFiles(colorFile);
+            if (iniFile.ValueExists(DayColors[DayColors.Count - 1].ColorSection, "red"))
+            {
+                iniFile.EraseSection(DayColors[DayColors.Count - 1].ColorSection);
+            }
+            iniFile.UpdateFile();
+        }
+
+        private TimeColor ReadColor(IniFiles reader, string colorSection, int index)
         {
             string section = colorSection + index;
             int red = reader.ReadInteger(section, "red", 0);
@@ -221,8 +268,16 @@ namespace Seo
             TimeColor color = new TimeColor(red, green, blue, timeOfDay);
             return color;
         }
+        private void SaveColor(IniFiles saver, string colorSection, int index, TimeColor color)
+        {
+            string section = colorSection + index;
+            saver.WriteInteger(section, "red", color.R);
+            saver.WriteInteger(section, "green", color.G);
+            saver.WriteInteger(section, "blue", color.B);
+            saver.WriteDouble(section, "timeOfDay", color.TimeValue);
+        }
 
-        private static string ColorAssemblyToName(ColorAssemblies color)
+        public static string ColorAssemblyToName(ColorAssemblies color)
         {
             return Enum.GetName(typeof(ColorAssemblies), color);
         }

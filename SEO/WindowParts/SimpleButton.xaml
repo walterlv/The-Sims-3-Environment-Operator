@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Seo.WindowParts.SimpleButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="32" d:DesignWidth="96">
+    <UserControl.Resources>
+        <Storyboard x:Key="EnterStory">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="InnerRect" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)" RepeatBehavior="Forever">
+                <LinearColorKeyFrame KeyTime="0:0:1.0" Value="#7F007FFF" />
+                <LinearColorKeyFrame KeyTime="0:0:2.0" Value="White" />
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="LeaveStory">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="InnerRect" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)">
+                <LinearColorKeyFrame KeyTime="0:0:0.2" Value="White" />
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="DownStory">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="InnerRect" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)">
+                <LinearColorKeyFrame KeyTime="0:0:0.15" Value="#7F007FFF" />
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="UpStory">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="InnerRect" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)">
+                <LinearColorKeyFrame KeyTime="0:0:0.2" Value="White" />
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="EnableStory">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="InnerRect" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)">
+                <LinearColorKeyFrame KeyTime="0:0:0.2" Value="White" />
+            </ColorAnimationUsingKeyFrames>
+            <DoubleAnimation Storyboard.TargetName="ContentGrid" Storyboard.TargetProperty="Opacity"
+                             To="1.0" Duration="0:0:0.2" />
+        </Storyboard>
+        <Storyboard x:Key="DisableStory">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="InnerRect" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)">
+                <LinearColorKeyFrame KeyTime="0:0:0.2" Value="White" />
+            </ColorAnimationUsingKeyFrames>
+            <DoubleAnimation Storyboard.TargetName="ContentGrid" Storyboard.TargetProperty="Opacity"
+                             To="0.5" Duration="0:0:0.5" />
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid x:Name="ContentGrid" Background="SteelBlue"
+          MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"
+          MouseLeftButtonDown="Button_MouseLeftButtonDown" MouseLeftButtonUp="Button_MouseLeftButtonUp">
+        <Rectangle x:Name="InnerRect" Margin="1" Fill="White" />
+        <TextBlock x:Name="InnerText" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    </Grid>
+</UserControl>

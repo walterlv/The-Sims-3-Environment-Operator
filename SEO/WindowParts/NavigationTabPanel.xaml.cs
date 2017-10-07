@@ -19,11 +19,22 @@ namespace Seo.WindowParts
     public class NavigationTabArgs : EventArgs
     {
         public readonly int SelectedIndex;
+        public readonly int OldSelectedIndex;
         public readonly NavigationTab SelectedTab;
-        public NavigationTabArgs(int index, NavigationTab tab)
+        public readonly NavigationTab OldSelectedTab;
+        private bool cancel;
+        public bool Cancel
+        {
+            get { return cancel; }
+            set { cancel = value; }
+        }
+        public NavigationTabArgs(int index, int oldIndex, NavigationTab tab, NavigationTab oldTab)
         {
             SelectedIndex = index;
+            OldSelectedIndex = oldIndex;
             SelectedTab = tab;
+            OldSelectedTab = oldTab;
+            cancel = false;
         }
     }
 
@@ -57,12 +68,20 @@ namespace Seo.WindowParts
             set
             {
                 if (selectedTab == value) return;
-                selectedTab = value;
                 selectedIndex = Children.IndexOf(value);
-                foreach (NavigationTab tab in Children) tab.IsSelected = false;
-                value.IsSelected = true;
+                bool isCancel = false;
                 if (NavigationTabSelected != null)
-                    NavigationTabSelected(this, new NavigationTabArgs(Children.IndexOf(value), value));
+                {
+                    NavigationTabArgs arg = new NavigationTabArgs(Children.IndexOf(value), Children.IndexOf(selectedTab), value, selectedTab);
+                    NavigationTabSelected(this, arg);
+                    isCancel = arg.Cancel;
+                }
+                if (!isCancel)
+                {
+                    if (selectedTab != null) selectedTab.IsSelected = false;
+                    if (value != null) value.IsSelected = true;
+                    selectedTab = value;
+                }
             }
         }
 

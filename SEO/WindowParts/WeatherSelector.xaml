@@ -1,0 +1,53 @@
+﻿<UserControl xmlns:WindowParts="clr-namespace:Seo.WindowParts" x:Class="Seo.WindowParts.WeatherSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600">
+    <UserControl.Resources>
+        <Storyboard x:Key="ExpandStory">
+            <DoubleAnimation Storyboard.TargetName="ContentGrid" Storyboard.TargetProperty="Height"
+                             To="230" Duration="0:0:0.3" DecelerationRatio="1" />
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AdvancedGrid" Storyboard.TargetProperty="Opacity">
+                <LinearDoubleKeyFrame KeyTime="0:0:0.15" Value="0.0" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.3" Value="1.0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="CollapseStory">
+            <DoubleAnimation Storyboard.TargetName="ContentGrid" Storyboard.TargetProperty="Height"
+                             To="46" Duration="0:0:0.3" DecelerationRatio="1" />
+            <DoubleAnimation Storyboard.TargetName="AdvancedGrid" Storyboard.TargetProperty="Opacity"
+                             To="0" Duration="0:0:0.3" />
+        </Storyboard>
+    </UserControl.Resources>
+    
+    <Grid x:Name="ContentGrid" Height="46" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <Grid Height="38" Margin="4,4,0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" x:Name="ChangeWeatherText" Foreground="White" Text="Select Weather" Margin="4,0,8,0" FontSize="16" VerticalAlignment="Center">
+                <TextBlock.BitmapEffect>
+                    <OuterGlowBitmapEffect GlowColor="Black" GlowSize="1" Opacity="0.6" />
+                </TextBlock.BitmapEffect>
+            </TextBlock>
+            <WindowParts:WeatherPickBar x:Name="PickerBar" Grid.Column="1" Selected="WeatherPickBar_Selected" />
+            <Expander Grid.Column="2" x:Name="ExpanderTip" Margin="4,0,0,0" VerticalAlignment="Center" ToolTip="Advance" Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" />
+        </Grid>
+
+        <StackPanel x:Name="AdvancedGrid" Grid.Row="1" VerticalAlignment="Top" Opacity="0.0" >
+            <TextBlock x:Name="SetWeightsText" FontSize="14" Foreground="White" Margin="0,4" Text="Set Weather Weights:" />
+            <WindowParts:WeatherWeightSetter x:Name="WeatherWeightOperator" WeightChanged="WeatherWeightSetter_WeightChanged" />
+            <CheckBox x:Name="LockWeights" HorizontalAlignment="Right" Margin="48,8" Foreground="White" Content="Lock Weights" Checked="LockWeights_Checked" Unchecked="LockWeights_Checked" />
+        </StackPanel>
+    </Grid>
+</UserControl>

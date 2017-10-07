@@ -1,0 +1,43 @@
+﻿<Window xmlns:WindowParts="clr-namespace:Seo.WindowParts"
+        x:Class="Seo.SimsDirWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Sims Folder" SizeToContent="Height" Width="440"
+        WindowStartupLocation="CenterScreen" Icon="icon.ico" ResizeMode="NoResize" ShowInTaskbar="False"
+        Loaded="Window_Loaded" KeyDown="Window_KeyDown">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        
+        <TextBlock x:Name="DescriptionText" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                   TextWrapping="WrapWithOverflow" Margin="0,0,0,8"
+                   Text="Sorry but we could not get The Sims 3 folder. You may have to set it manually." />
+        <TextBox x:Name="FolderText" TextChanged="FolderText_TextChanged"
+                 Grid.Row="1" Grid.Column="0"
+                 MinWidth="400" />
+        <WindowParts:SimpleButton x:Name="FolderButton" Click="FolderButton_Click"
+                                  Grid.Row="1" Grid.Column="1"
+                                  Height="24" Width="24"
+                                  Text="..." />
+        <TextBlock x:Name="ErrorMsg" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                   Foreground="Red"/>
+        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                    Margin="0,8,0,0"
+                    Orientation="Horizontal" HorizontalAlignment="Right">
+            <WindowParts:SimpleButton x:Name="OkButton" Click="OkButton_Click"
+                                      Margin="4,0" Width="72" Height="24"
+                                      Text="OK" IsCustomEnabled="False" />
+            <WindowParts:SimpleButton x:Name="CancelButton" Click="CancelButton_Click"
+                                      Margin="4,0" Width="72" Height="24"
+                                      Text="Cancel" />
+        </StackPanel>
+    </Grid>
+</Window>

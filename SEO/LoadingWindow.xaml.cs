@@ -73,16 +73,17 @@ namespace Seo
             {
                 // 表示开始初始化
                 case ProgressState.Start:
-                    CurrentState = ProgressState.ReadLanguage;
-                    NormalState = CurrentState;
-                    break;
-                case ProgressState.ReadLanguage:
-                    CultureInfo currentCultureInfo = CultureInfo.CurrentCulture;
-                    Seo.Language.LoadLanguage(currentCultureInfo.Name);
+                    bool iro = CommonOperation.IsReadonlyMode;  // 获取只读字段, 尽快占用文件资源, 确保只有一个程序可操作.
                     CurrentState = ProgressState.ReadConfigs;
                     NormalState = CurrentState;
                     break;
                 case ProgressState.ReadConfigs:
+                    Configs.Read();
+                    CurrentState = ProgressState.ReadLanguage;
+                    NormalState = CurrentState;
+                    break;
+                case ProgressState.ReadLanguage:
+                    Seo.Language.LoadLanguage(Configs.Local);
                     CurrentState = ProgressState.GetSimsDir;
                     NormalState = CurrentState;
                     break;
@@ -112,7 +113,7 @@ namespace Seo
         // 当一个异步已经完成 (这里的状态代表下一步的状态)
         void LoadingWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (e.Error != null) MessageBox.Show("An error occored when loading the program.", "error");
+            if (e.Error != null) { MessageBox.Show("An error occored when starting the program.", "error"); this.Close(); return; }
             // 只在有特殊操作时才 case, 否则直接执行下一步.
             switch (CurrentState)
             {
@@ -134,6 +135,7 @@ namespace Seo
                     {
                         FilesDirs.SimsFolder = sdf.SimsDir;
                         Configs.SimsFolder = sdf.SimsDir;
+                        sdf.Dispose();
                         CurrentState = NormalState;
                         CreateNewWorker();
                         LoadingWorker.RunWorkerAsync();

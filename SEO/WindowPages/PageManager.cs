@@ -6,14 +6,14 @@ using System.Windows.Controls;
 
 namespace Seo.WindowPages
 {
-    public class PageManager : ILanguage
+    public class PageManager : ILanguage, IDisposable
     {
         public PageManager()
         {
             Seo.Language.Register(this, Priority.High);
         }
 
-        ~PageManager()
+        public void Dispose()
         {
             Seo.Language.UnRegister(this);
         }
@@ -49,6 +49,7 @@ namespace Seo.WindowPages
         private Page[] Pages = new Page[Count];
         public Page GetPageByIndex(int index)
         {
+            if (index < 0 || index >= Count) return null;
             if (Pages[index] != null) return Pages[index];
             else
             {
@@ -116,7 +117,7 @@ namespace Seo.WindowPages
                     if (aboutPage_chs == null) { aboutPage_chs = new AboutPage_chs(); }
                     return aboutPage_chs;
                 }
-                else if (Language.Local.Equals("zh-HK") || Language.Local.Equals("zh-MO") || Language.Local.Equals("zh-TW"))
+                else if (Language.Local.Equals("zh-HK") || Language.Local.Equals("zh-MO") || Language.Local.Equals("zh-TW") || Language.Local.Equals("zh-SG"))
                 {
                     if (aboutPage_cht == null) { aboutPage_cht = new AboutPage_cht(); }
                     return aboutPage_cht;

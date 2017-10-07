@@ -5,7 +5,17 @@
         Width="860" Height="600" MinHeight="600" MinWidth="860"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded" Closing="Window_Closing">
+    <Window.Resources>
+        <Storyboard x:Key="ShowUpdateStory">
+            <DoubleAnimation Storyboard.TargetName="UpdatePanel" Storyboard.TargetProperty="Opacity"
+                             To="1.0" Duration="0:0:2" />
+        </Storyboard>
+        <Storyboard x:Key="HideUpdateStory" Completed="Storyboard_Completed">
+            <DoubleAnimation Storyboard.TargetName="UpdatePanel" Storyboard.TargetProperty="Opacity"
+                             To="0.0" Duration="0:0:2" />
+        </Storyboard>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -23,9 +33,31 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             
-            <StackPanel>
-                <WindowParts:NavigationTabPanel x:Name="NaviTabPanel" Margin="0,180,0,0" NavigationTabSelected="NavigationTab_Selected" />
-            </StackPanel>
+            <Image Grid.Column="0" VerticalAlignment="Top" Width="128" Source="Light.png" />
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Image Grid.Row="0" VerticalAlignment="Top" Margin="0,50,0,0" Source="Logo.png" Height="128" Width="128" Stretch="Fill" />
+                <WindowParts:NavigationTabPanel x:Name="NaviTabPanel" Grid.Row="1"
+                                                NavigationTabSelected="NavigationTab_Selected" />
+                <StackPanel x:Name="UpdatePanel" Grid.Row="2"
+                            VerticalAlignment="Bottom" Margin="4" Opacity="0.0">
+                    <TextBlock x:Name="UpdateTitleText" HorizontalAlignment="Center"
+                               Text="New Version" Foreground="White" FontSize="14" />
+                    <TextBlock x:Name="UpdateVersionText" HorizontalAlignment="Center"
+                               Text="New Version" Foreground="White" FontSize="12" />
+                    <TextBlock x:Name="UpdateContentText" HorizontalAlignment="Center"
+                               TextWrapping="WrapWithOverflow"
+                               Foreground="White" />
+                    <WindowParts:SimpleButton x:Name="UpdateButton"
+                                              Text="Update" Margin="0,4,0,0"
+                                              Width="72" Height="24"
+                                              Click="UpdateButton_Click" />
+                </StackPanel>
+            </Grid>
             
             <Frame x:Name="PageFrame" Grid.Column="1"
                    NavigationUIVisibility="Hidden" />

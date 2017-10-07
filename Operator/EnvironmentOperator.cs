@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -9,6 +10,25 @@ using Microsoft.Win32;
 
 namespace Seo
 {
+    public delegate void OnSaveCompleted(object sender, OperatorArgs e);
+
+    public class OperatorArgs : EventArgs
+    {
+        public readonly bool IsSuccess;
+        public readonly Exception Error;
+        public OperatorArgs()
+        {
+            IsSuccess = true;
+            Error = null;
+        }
+        public OperatorArgs(Exception ex)
+        {
+            if (ex == null) IsSuccess = true;
+            else IsSuccess = false;
+            Error = ex;
+        }
+    }
+
     public class EnvironmentOperator
     {
         #region IsReady
@@ -30,8 +50,8 @@ namespace Seo
         /// </summary>
         public bool IsEditing
         {
-            get;
-            set;
+            get { return isEditing; }
+            set { isEditing = value; }
         }
         #endregion
 
@@ -87,7 +107,7 @@ namespace Seo
         /// <summary>
         /// 检查所有要读取的文件, 并初始化对象
         /// </summary>
-        public bool CheckWeathers()
+        public bool CheckForRead()
         {
             try { Weather.Initialize(); return true; }
             catch { return false; }
@@ -95,10 +115,19 @@ namespace Seo
         /// <summary>
         /// 根据初始化的对象读取相应的文件
         /// </summary>
-        public bool ReadWeathers()
+        public bool Read()
         {
-            try { foreach (Weather weather in Weather.AllWeathers) weather.Read(); IsReady = true; return true; }
-            catch { return false; }
+            // 对外表现为读取文件, 然而实质上是置所有的对象为未读. (以便真正要使用时才去读.)
+            // 这样做是为了把整块的读取时间分散到各个小块.
+            foreach (Weather weather in Weather.AllWeathers)
+            {
+                foreach (SkyColor color in weather.SkyColors)
+                {
+                    color.IsReady = false;
+                }
+            }
+            IsReady = true;
+            return true;
         }
         /// <summary>
         /// 准备好以便不影响工作
@@ -106,7 +135,7 @@ namespace Seo
         public bool Prepare()
         {
             bool success = false;
-            if (CheckWeathers()) success = ReadWeathers();
+            if (CheckForRead()) success = Read();
             return success;
         }
         #endregion
@@ -118,6 +147,7 @@ namespace Seo
             Weather weather = GetWeather(w);
             if (!weather.IsError) color = weather.GetSkyColor(c);
             if (color == null) color = new SkyColor(true, c);
+            else if (!color.IsReady) color.Prepare();
             return color;
         }
         public Weather GetWeather(Weathers w)
@@ -129,16 +159,118 @@ namespace Seo
         #endregion
 
         #region 获取数据
+        double[] Weights = new double[5];
+        bool IsWeightsReady = false;
+        public double[] GetWeatherWeights()
+        {
+            if (!IsWeightsReady)
+            {
+                Weather.ReadWeight();
+                for (int i = 0; i < Weights.Length; i++)
+                    Weights[i] = Weather.AllWeathers[i].WeatherWeight;
+                IsWeightsReady = true;
+            }
+            return Weights;
+        }
         #endregion
 
         #region 设置数据
-        public void SetTimeColorValue(TimeColor tc, Color c)
+        public void SetTimeColorValue(SkyColor color, TimeColor tc, Color c)
         {
+            color.IsModified = true;
             tc.ColorValue = c;
+            IsModified = true;
         }
-        public void SetDayTimeColor(DayColor day, List<TimeColor> colors)
+        public void SetWeatherWeights(double[] weights)
         {
-            day.ColorList = colors;
+            Weights = weights;
+            for (int i = 0; i < weights.Length; i++)
+                Weather.AllWeathers[i].WeatherWeight = weights[i];
+            IsModified = true;
+        }
+        // 接受通知, 已经应用了一个环境.
+        public void EnviFileApplied()
+        {
+            if (Configs.LockWeights)
+            {
+                // 重新写入刚刚的权值
+                SetWeatherWeights(Weights);
+            }
+            else
+            {
+                // 读取新的权值并要求重绘权值图
+                IsWeightsReady = false;
+                GetWeatherWeights();
+            }
+        }
+        #endregion
+
+        #region 全局操作
+        private bool IsDoing = false;
+        private bool isModified = false;
+        public bool IsModified
+        {
+            get { return isModified; }
+            private set { isModified = value; }
+        }
+        public void RecheckModified()
+        {
+            bool mo = false;
+            foreach (Weather weather in Weather.AllWeathers)
+            {
+                foreach (SkyColor color in weather.SkyColors)
+                {
+                    if (color.IsModified) { mo = true; break; }
+                }
+                if (mo) break;
+            }
+            IsModified = mo;
+        }
+        public bool Save()
+        {
+            if (!IsModified) return true;
+            try { foreach (Weather weather in Weather.AllWeathers) weather.Save(); IsModified = false; return true; }
+            catch { return false; }
+        }
+        public event OnSaveCompleted SaveCompleted;
+        public void SaveAsync()
+        {
+            BackgroundWorker saveWorker = new BackgroundWorker();
+            saveWorker.DoWork += saveWorker_DoWork;
+            saveWorker.RunWorkerCompleted += saveWorker_RunWorkerCompleted;
+            saveWorker.RunWorkerAsync();
+        }
+        void saveWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (!IsModified) return;
+            if (IsDoing) throw new InvalidOperationException("Another operation is working.");
+            IsDoing = true;
+            foreach (Weather weather in Weather.AllWeathers) weather.Save();
+            IsModified = false;
+        }
+        void saveWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (SaveCompleted != null)
+            {
+                if (e.Error == null) SaveCompleted(this, new OperatorArgs());
+                else SaveCompleted(this, new OperatorArgs(e.Error));
+            }
+            IsDoing = false;
+        }
+        public bool SetToDefault(Weathers w, ColorAssemblies c)
+        {
+            try
+            {
+                SkyColor color = GetSkyColor(w, c);
+                if (color.IsError) return false;
+                File.Copy(EnviFile.GetDefaultFile(color.ColorFileName + ".ini"), color.ColorFile, true);
+                color.IsReady = false;
+                color.IsModified = false;
+                SetWeatherWeights(Weights);
+                RecheckModified();
+                return true;
+            }
+            catch { return false; }
         }
         #endregion
     }

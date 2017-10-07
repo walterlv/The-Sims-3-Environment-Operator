@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <Language>
+    <Name>繁體中文 (台灣)</Name>
+    <Version>2.0.51.42</Version>
+  </Language>
+
+  <Window>
+    <ReadonlyMode>
+      <Name>唯讀模式</Name>
+      <Tip>另一個程式正在編輯模擬市民3的環境，所以只能以唯讀模式運行。</Tip>
+    </ReadonlyMode>
+    <Navigation>
+      <FrontPage>首頁</FrontPage>
+      <EnvironmentPage>選擇環境</EnvironmentPage>
+      <OperatorPage>編輯環境</OperatorPage>
+      <SettingsPage>設置</SettingsPage>
+      <AboutPage>關於</AboutPage>
+    </Navigation>
+    <Update>
+      <NewVersion>
+        <Title>發現新版本</Title>
+        <Content>模擬市民3：編輯環境工具有新版本，點擊下載按鈕即可下載使用。</Content>
+        <Button>下載</Button>
+      </NewVersion>
+    </Update>
+    <Front>
+      <Description>我要親手創造一個多彩的世界！</Description>
+    </Front>
+    <Worlds>
+      <List>以下是“模擬市民3：編輯環境工具”能夠支持的所有城鎮。</List>
+      <Crack>破解</Crack>
+      <Restore>恢復</Restore>
+      <NotExisted>不存在</NotExisted>
+      <Existed>需要破解</Existed>
+      <Cracking>破解中</Cracking>
+      <Cracked>已破解，可編輯</Cracked>
+      <Restoring>恢復中</Restoring>
+      <Supported>原生支持</Supported>
+      <Unknow>獲取中</Unknow>
+    </Worlds>
+    <Environment>
+      <Select>已安裝的模擬市民3環境</Select>
+      <NotSelectedTip>還沒有選擇一個環境</NotSelectedTip>
+      <Apply>應用...</Apply>
+      <Delete>刪除...</Delete>
+      <ProtectedTip>這是受保護的環境，請不要刪除。</ProtectedTip>
+      <Import>添加...</Import>
+      <Download>下載</Download>
+      <Export>匯出</Export>
+      <ExportTitle>匯出我的環境</ExportTitle>
+      <ExportName>名稱：</ExportName>
+      <ExportCreator>作者：</ExportCreator>
+      <ExportImage>圖片：</ExportImage>
+      <ExportDescription>描述：</ExportDescription>
+      <ExportSaveTo>匯出到：</ExportSaveTo>
+      <RestartForLanguage>需要重新開機應用程式才能使用新的語言顯示這些環境</RestartForLanguage>
+    </Environment>
+    <Operator>
+      <WeatherExpander>高級</WeatherExpander>
+      <ChangeWeather>切換編輯的天氣</ChangeWeather>
+      <WeatherDescription>這些天氣只是代表著天氣類型，每一種都有冰雹、雨、雪、霧的天氣變換。（例如：你對晴天的修改，可能會在雨天、雪天看到同樣的效果。）</WeatherDescription>
+      <SetWeatherWeight>修改天氣比例</SetWeatherWeight>
+      <LockWeatherWeight>鎖定天氣比例 (選擇新的環境後不修改比例)</LockWeatherWeight>
+      <Save>應用</Save>
+      <Default>默認...</Default>
+      <Undo>撤銷</Undo>
+      <Redo>重做</Redo>
+    </Operator>
+    <Settings>
+      <SelectLanguage>選擇顯示的語言：</SelectLanguage>
+      <Program>軟體選項</Program>
+      <AutoUpdate>自動檢查更新</AutoUpdate>
+      <Visual>視覺效果</Visual>
+      <AeroGlass>開啟毛玻璃效果（僅支持 Windows Vista/7）</AeroGlass>
+      <Background>使用背景圖片...</Background>
+    </Settings>
+    <Dialog>
+      <Basic>
+        <OK>確定</OK>
+        <Cancel>取消</Cancel>
+        <Yes>是</Yes>
+        <No>否</No>
+      </Basic>
+      <MultiDocuments>
+        <Title>多個存檔</Title>
+        <Content>你的文檔中包含多個存檔，請選擇你正在使用的一個：</Content>
+      </MultiDocuments>
+      <SimsDir>
+        <Title>獲取安裝路徑</Title>
+        <Content>
+          我們無法獲取到《模擬市民3》原版的安裝路徑，你可能需要手動來指定它。<br/>請選擇《模擬市民3》原版的根目錄：
+        </Content>
+        <Invalid>這不是正確的《模擬市民3》原版根目錄。</Invalid>
+      </SimsDir>
+      <OpenImage>
+        <Title>選擇圖片</Title>
+        <AllPicture>所有圖片</AllPicture>
+        <AllFile>所有檔</AllFile>
+      </OpenImage>
+      <ExportEnvironment>
+        <Title>匯出環境</Title>
+      </ExportEnvironment>
+      <OpenEnvironment>
+        <Title>選擇環境檔</Title>
+      </OpenEnvironment>
+    </Dialog>
+  </Window>
+
+  <Information>
+    <CloseSave>
+      <Title>保存修改</Title>
+      <Content>你已經修改了環境，是否需要保存？</Content>
+    </CloseSave>
+    <Worlds>
+      <Cracking>正在破解 {0}...</Cracking>
+      <Cracked>{0} 破解完成，現在你對環境的修改將會對它生效。</Cracked>
+      <Restoring>正在恢復 {0}...</Restoring>
+      <Restored>{0} 已經恢復，將使用它預設的環境配置。</Restored>
+    </Worlds>
+    <ReadEnvironment>
+      <Reading>正在讀取安裝的環境...</Reading>
+      <Completed>總共安裝有 {0} 個環境。</Completed>
+    </ReadEnvironment>
+    <ReadEnvironmentError>
+      <Title>添加環境出錯</Title>
+      <Content>一個或多個環境沒有被正確添加：</Content>
+      <ExistedError>已經安裝了一個相同的環境。</ExistedError>
+      <InvalidError>這並不是一個有效的模擬市民3環境。</InvalidError>
+      <UnknownError>我們無法獲知這個環境的具體資訊，導致無法安裝。</UnknownError>
+    </ReadEnvironmentError>
+    <ApplyEnvironment>
+      <Title>應用環境</Title>
+      <Content>要為模擬市民3遊戲應用“{0}”嗎？</Content>
+      <Okay>成功應用“{0}”環境。</Okay>
+    </ApplyEnvironment>
+    <DeleteEnvironment>
+      <Title>刪除環境</Title>
+      <Content>你確定要刪除“{0}”嗎？</Content>
+      <Error>刪除環境時出現問題</Error>
+    </DeleteEnvironment>
+    <ImportEnvironment>
+      <Importing>正在添加新的環境...</Importing>
+      <Completed>成功添加了 {0} 個新的環境。</Completed>
+    </ImportEnvironment>
+    <ExportEnvironment>
+      <EmptyName>沒有填寫名稱</EmptyName>
+      <InvalidName>名稱中不應包含這些字元：{0}</InvalidName>
+      <EmptyCreator>沒有填寫作者</EmptyCreator>
+      <InvalidCreator>作者中不應包含這些字元：{0}</InvalidCreator>
+      <InvalidImage>這並不是一個有效的圖片檔</InvalidImage>
+      <EmptyPath>沒有指定匯出的檔案名</EmptyPath>
+      <CustomPathForbidden>不能添加到程式所在的資料夾內</CustomPathForbidden>
+      <InvalidPath>找不到或者沒有許可權訪問這個位置</InvalidPath>
+      <Okay>匯出環境成功。</Okay>
+      <Failed>匯出環境時出現問題，匯出失敗。</Failed>
+    </ExportEnvironment>
+    <SaveEnvironment>
+      <Saving>正在應用您對環境的修改...</Saving>
+      <Okay>成功應用這個環境，你可以立即在遊戲中體驗它。</Okay>
+      <Failed>應用環境失敗，可能是模擬市民3遊戲正在使用它。你可以再次嘗試應用。</Failed>
+    </SaveEnvironment>
+    <DefaultEnvironment>
+      <Title>恢復默認</Title>
+      <Content>要恢復 {0} 的 {1} 到默認嗎？</Content>
+      <Okay>已經恢復 {0} 的 {1} 到默認設置。</Okay>
+      <Failed>無法恢復 {0} 的 {1} 到默認設置，可能是因為預先安裝的默認環境已經丟失。</Failed>
+    </DefaultEnvironment>
+  </Information>
+
+  <Environment>
+    <File>模擬市民3環境檔</File>
+    <Weather>
+      <Clear>晴天</Clear>
+      <PartlyCloudy>多雲</PartlyCloudy>
+      <Overcast>陰天</Overcast>
+      <Stormy>暴風</Stormy>
+      <Custom>自訂</Custom>
+    </Weather>
+    <Format>
+      <Name>{0}</Name>
+      <Creator>作者：{0}</Creator>
+      <Description>{0}</Description>
+    </Format>
+    <Backup>
+      <Name>備份</Name>
+      <Creator>自動</Creator>
+      <Description>這是自動生成的備份環境, 生成時間：{0}。</Description>
+    </Backup>
+  </Environment>
+
+  <World>
+    <O>日落溪穀</O>
+    <EP011>中國模海</EP011>
+    <EP012>埃及模哈拉</EP012>
+    <EP013>法國模榭麗舍</EP013>
+    <EP02>雙子溪</EP02>
+    <EP03>橋港</EP03>
+    <EP05>阿帕魯薩平原</EP05>
+    <EP06>星光海岸</EP06>
+    <EP07>月光瀑布</EP07>
+  </World>
+
+  <Sky_Sky>
+    <Name>天空</Name>
+    <Description>改變天空的顏色：太陽、天空、地平線。</Description>
+    <SunColor>
+      <Name>太陽 - 基礎顏色</Name>
+      <Description>太陽光包括兩個部分，一個是太陽自己，一個是它的光暈。</Description>
+    </SunColor>
+    <HaloColor>
+      <Name>太陽 - 光暈顏色</Name>
+      <Description>這裡是設置太陽光光暈的顏色。</Description>
+    </HaloColor>
+    <SkyDark>
+      <Name>天空 - 暗色</Name>
+      <Description>未被太陽照射的半個天空顏色。</Description>
+    </SkyDark>
+    <SkyLight>
+      <Name>天空 - 亮色</Name>
+      <Description>被太陽照射的半個天空顏色。</Description>
+    </SkyLight>
+    <HorizonLight>
+      <Name>地平線 - 亮色</Name>
+      <Description>有陽光照射的地平線部分顏色。</Description>
+    </HorizonLight>
+    <HorizonDark>
+      <Name>地平線 - 暗色</Name>
+      <Description>無陽光照射的地平線部分顏色。</Description>
+    </HorizonDark>
+  </Sky_Sky>
+  <Sky_Sea>
+    <Name>海洋</Name>
+    <Description>改變水（包括海洋、河流、湖泊、池塘）的顏色。</Description>
+    <WaterColor>
+      <Name>基礎顏色</Name>
+      <Description></Description>
+    </WaterColor>
+    <SunMoonColor>
+      <Name>倒影顏色</Name>
+      <Description></Description>
+    </SunMoonColor>
+  </Sky_Sea>
+  <Sky_1>
+    <Name>雲 A</Name>
+    <Description>改變雲的顏色</Description>
+    <ColorWRTSunDark>
+      <Name>雲 - 未照射</Name>
+      <Description>未被太陽照射的雲的顏色。</Description>
+    </ColorWRTSunDark>
+    <ColorWRTSunLight>
+      <Name>雲 - 照射</Name>
+      <Description>被太陽照射的雲的顏色。</Description>
+    </ColorWRTSunLight>
+    <ColorWRTHorizonDark>
+      <Name>雲 - 地平線 - 暗色</Name>
+      <Description>無陽光照射的地平線雲部分顏色。</Description>
+    </ColorWRTHorizonDark>
+    <ColorWRTHorizonLight>
+      <Name>雲 - 地平線 - 亮色</Name>
+      <Description>陽光照射的地平線雲部分顏色。</Description>
+    </ColorWRTHorizonLight>
+    <ColorWRTShadow>
+      <Name>雲影</Name>
+      <Description>雲的陰影顏色</Description>
+    </ColorWRTShadow>
+  </Sky_1>
+  <Sky_2>
+    <Name>雲 B</Name>
+    <Description>改變雲的顏色</Description>
+    <ColorWRTSunDark>
+      <Name>雲 - 未照射</Name>
+      <Description>未被太陽照射的雲的顏色。</Description>
+    </ColorWRTSunDark>
+    <ColorWRTSunLight>
+      <Name>雲 - 照射</Name>
+      <Description>被太陽照射的雲的顏色。</Description>
+    </ColorWRTSunLight>
+    <ColorWRTHorizonDark>
+      <Name>雲 - 地平線 - 暗色</Name>
+      <Description>無陽光照射的地平線雲部分顏色。</Description>
+    </ColorWRTHorizonDark>
+    <ColorWRTHorizonLight>
+      <Name>雲 - 地平線 - 亮色</Name>
+      <Description>陽光照射的地平線雲部分顏色。</Description>
+    </ColorWRTHorizonLight>
+    <ColorWRTShadow>
+      <Name>雲影</Name>
+      <Description>雲的陰影顏色</Description>
+    </ColorWRTShadow>
+  </Sky_2>
+  <Sky_Light>
+    <Name>亮光</Name>
+    <Description>改變遊戲裡太陽光和月光（同時改變）</Description>
+    <SunMoonLight>
+      <Name>光色</Name>
+      <Description>月光和太陽光的顏色</Description>
+    </SunMoonLight>
+    <AmbientSkyTop>
+      <Name>物體頂部反光顏色</Name>
+      <Description>在晚上物體頂部反光的顏色</Description>
+    </AmbientSkyTop>
+    <AmbientSkyBottom>
+      <Name>物體底部反光顏色</Name>
+      <Description>在晚上物體底部反光的顏色</Description>
+    </AmbientSkyBottom>
+  </Sky_Light>
+</root>
+

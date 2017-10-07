@@ -8,10 +8,10 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Seo.Actions;
 using Seo.WindowParts;
 
 namespace Seo.WindowPages
@@ -19,23 +19,23 @@ namespace Seo.WindowPages
     /// <summary>
     /// OperatorPage.xaml 的交互逻辑
     /// </summary>
-    public partial class OperatorPage : Page, PageNavigation, ILanguage
+    public partial class OperatorPage : Page, PageNavigation, ILanguage, IDisposable
     {
         public OperatorPage()
         {
             InitializeComponent();
             foreach (ColorAssemblies color in SkyColor.ColorAssemblyArray) PartTabsPanel.AddChild(SkyColor.ColorAssemblyToString(color));
-            Seo.Language.Register(this, Priority.Lowest, false);
+            Seo.Language.Register(this, Priority.Lowest);
         }
 
-        ~OperatorPage()
+        public void Dispose()
         {
             Seo.Language.UnRegister(this);
         }
 
         public bool NavigationIn()
         {
-            if (!EnvironmentOperator.Instance.IsEditing) LoadContent();
+            LoadContent();
             return true;
         }
 
@@ -46,29 +46,30 @@ namespace Seo.WindowPages
 
         private void LoadContent()
         {
-            if (EnvironmentOperator.Instance.IsReady)
+            EnvironmentOperator.Instance.IsEditing = true;
+            if (EnvironmentOperator.Instance.GetWeather(EditingWeather).IsError)
             {
-                EnvironmentOperator.Instance.IsEditing = true;
-                if (EnvironmentOperator.Instance.GetWeather(EditingWeather).IsError)
-                {
-                    WErrorMsgText.Visibility = System.Windows.Visibility.Visible;
-                    PartTabsPanel.SelectedIndex = -1;
-                }
-                else
-                {
-                    if (PartTabsPanel.SelectedIndex < 0) PartTabsPanel.SelectedIndex = 0;
-                }
+                WErrorMsgText.Visibility = System.Windows.Visibility.Visible;
+                PartTabsPanel.SelectedIndex = 0;
             }
+            else
+            {
+                if (PartTabsPanel.SelectedIndex < 0) PartTabsPanel.SelectedIndex = 0;
+            }
+            EditingColor = editingColor;
+            Selector.UpdateWeights();
         }
 
         public void LoadLanguage()
         {
             this.Title = Seo.Languages.Window.OperatorPage;
+            ApplyButton.Text = Seo.Languages.Window.Save;
+            DefaultButton.Text = Seo.Languages.Window.Default;
             for (int i = 0; i < SkyColor.ColorAssemblyArray.Length; i++)
                 PartTabsPanel.Children[i].Text = SkyColor.ColorAssemblyToString(SkyColor.ColorAssemblyArray[i]);
         }
 
-        BarListAndAction BarActionList;
+        List<DayColorBar> BarList;
 
         private Weathers editingWeather = Weather.WeatherArray[0];
         private Weathers EditingWeather
@@ -78,7 +79,6 @@ namespace Seo.WindowPages
             {
                 editingWeather = value;
                 LoadContent();
-                EditingColor = EditingColor;
             }
         }
         private ColorAssemblies editingColor = SkyColor.ColorAssemblyArray[0];
@@ -96,10 +96,15 @@ namespace Seo.WindowPages
                 }
                 else
                 {
-                    if (!skyColor.IsReady) skyColor.Prepare();
-                    BarActionList = GetBarList(skyColor);
+                    DescriptionText.Text = skyColor.ColorDescription;
+                    BarList = GetBarList(skyColor);
                     DayColorBarPanel.Children.Clear();
-                    foreach (DayColorBar bar in BarActionList.BarList) DayColorBarPanel.Children.Add(bar);
+                    foreach (DayColorBar bar in BarList) DayColorBarPanel.Children.Add(bar);
+                    if (skyColor.IsUpdateNeeded)
+                    {
+                        skyColor.IsUpdateNeeded = false;
+                        foreach (DayColorBar bar in BarList) bar.Draw();
+                    }
                     CErrorMsgText.Visibility = System.Windows.Visibility.Collapsed;
                 }
             }
@@ -108,11 +113,13 @@ namespace Seo.WindowPages
         private void WeatherSelector_Selected(object sender, WeatherPickArgs e)
         {
             EditingWeather = e.Selected;
+            DayColorScroll.ScrollToHome();
         }
 
         private void PartTab_Selected(object sender, WindowParts.PartTabArgs e)
         {
             EditingColor = SkyColor.ColorAssemblyArray[e.SelectedIndex];
+            DayColorScroll.ScrollToHome();
         }
 
         private void bar_ColorChanged(object sender, ColorBarArgs e)
@@ -120,16 +127,16 @@ namespace Seo.WindowPages
         }
 
         #region 绑定颜色组与颜色条列表
-        private Dictionary<SkyColor, BarListAndAction> SkyColorBarKeyValue = new Dictionary<SkyColor, BarListAndAction>();
-        public BarListAndAction GetBarList(SkyColor skyColor)
+        private Dictionary<SkyColor, List<DayColorBar>> SkyColorBarKeyValue = new Dictionary<SkyColor, List<DayColorBar>>();
+        public List<DayColorBar> GetBarList(SkyColor skyColor)
         {
-            BarListAndAction barList = new BarListAndAction();
+            List<DayColorBar> barList = new List<DayColorBar>();
             if (SkyColorBarKeyValue.ContainsKey(skyColor))
             {
                 bool success = SkyColorBarKeyValue.TryGetValue(skyColor, out barList);
                 if (success) return barList;
             }
-            barList.BarList = new List<DayColorBar>();
+            barList = new List<DayColorBar>();
             DayColorBar bar;
             foreach (DayColor dayColor in skyColor.DayColors)
             {
@@ -140,17 +147,46 @@ namespace Seo.WindowPages
                 bar.Title = dayColor.ColorName;
                 bar.Description = dayColor.ColorDescription;
                 bar.ColorChanged += bar_ColorChanged;
-                barList.BarList.Add(bar);
+                barList.Add(bar);
             }
-            barList.Action = new DayColorAction();
             SkyColorBarKeyValue.Add(skyColor, barList);
             return barList;
         }
-        public class BarListAndAction
-        {
-            public DayColorAction Action;
-            public List<DayColorBar> BarList;
-        }
         #endregion
+
+        private void ApplyButton_Click(object sender, SimpleButtonArgs e)
+        {
+            ApplyButton.IsCustomEnabled = false;
+            DefaultButton.IsCustomEnabled = false;
+            StatusBar.Show(Status.Progress, Seo.Languages.Information.SaveingEnvironment);
+            EnvironmentOperator.Instance.SaveCompleted += Instance_SaveCompleted;
+            EnvironmentOperator.Instance.SaveAsync();
+        }
+
+        private void Instance_SaveCompleted(object sender, OperatorArgs e)
+        {
+            ApplyButton.IsCustomEnabled = true;
+            DefaultButton.IsCustomEnabled = true;
+            if (e.IsSuccess) StatusBar.Show(Status.Success, Seo.Languages.Information.SaveEnvironmentOkay, 3000);
+            else StatusBar.Show(Status.Error, Seo.Languages.Information.SaveEnvironmentFailed, 5000);
+        }
+
+        private void DefaultButton_Click(object sender, SimpleButtonArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show(String.Format(Seo.Languages.Information.DefaultEnvironmentContent,
+                    Weather.WeatherToString(EditingWeather), SkyColor.ColorAssemblyToString(EditingColor)),
+                    Seo.Languages.Information.DefaultEnvironmentTitle, MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.No) return;
+            bool success = EnvironmentOperator.Instance.SetToDefault(EditingWeather, EditingColor);
+            if (success)
+            {
+                StatusBar.Show(Status.Success, String.Format(Seo.Languages.Information.DefaultEnvironmentOkay,
+                    Weather.WeatherToString(EditingWeather), SkyColor.ColorAssemblyToString(EditingColor)), 5000);
+                EditingColor = EditingColor;
+            }
+            else
+                StatusBar.Show(Status.Error, String.Format(Seo.Languages.Information.DefaultEnvironmentFailed,
+                    Weather.WeatherToName(EditingWeather), SkyColor.ColorAssemblyToName(EditingColor)), 8000);
+        }
     }
 }

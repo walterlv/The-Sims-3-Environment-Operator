@@ -4,15 +4,90 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" Background="White"
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="600" d:DesignWidth="700"
 	  Title="FrontPage">
+    <Page.Resources>
+        <Storyboard x:Key="LoadStory" Completed="Storyboard_Completed">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CollRect0" Storyboard.TargetProperty="Height">
+                <LinearDoubleKeyFrame KeyTime="0:0:0.0" Value="400" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.3" Value="400" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.6" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CollRect0" Storyboard.TargetProperty="Opacity">
+                <LinearDoubleKeyFrame KeyTime="0:0:0.0" Value="0" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.4" Value="0.2" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.6" Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="TitleText" Storyboard.TargetProperty="Opacity">
+                <LinearDoubleKeyFrame KeyTime="0:0:0.0" Value="0" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.3" Value="0" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.6" Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CollRect1" Storyboard.TargetProperty="Height">
+                <LinearDoubleKeyFrame KeyTime="0:0:0.0" Value="200" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.4" Value="200" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.7" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DescriptionText" Storyboard.TargetProperty="Opacity">
+                <LinearDoubleKeyFrame KeyTime="0:0:0.0" Value="0" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.4" Value="0" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.7" Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CollRect2" Storyboard.TargetProperty="Height">
+                <LinearDoubleKeyFrame KeyTime="0:0:0.0" Value="200" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.5" Value="200" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.8" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DescriptionText" Storyboard.TargetProperty="Opacity">
+                <LinearDoubleKeyFrame KeyTime="0:0:0.0" Value="0" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.8" Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CollRect3" Storyboard.TargetProperty="Height">
+                <LinearDoubleKeyFrame KeyTime="0:0:0.0" Value="100" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.6" Value="100" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.9" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="WorldScroll" Storyboard.TargetProperty="Opacity">
+                <LinearDoubleKeyFrame KeyTime="0:0:0.0" Value="0" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.6" Value="0" />
+                <LinearDoubleKeyFrame KeyTime="0:0:0.9" Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Page.Resources>
 
-    <Grid>
-        <TextBlock Text="首页" FontSize="72" Foreground="SteelBlue"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <TextBox x:Name="CustomFolderText" Text="自定义路径" Width="500" Height="24" Margin="0,220,0,0" />
-        <WindowParts:SimpleButton Width="200" Height="32" Margin="0,300,0,0"
-                                  Text="使用默认环境配置开始"
-                                  Click="StartButton_Click"/>
+    <Grid x:Name="ContentPanel">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <Rectangle x:Name="CollRect0" Grid.Row="0" Fill="SteelBlue" Height="0" />
+        <TextBlock x:Name="TitleText" Grid.Row="1"
+                   Text="Sims Environment Operator"
+                   FontSize="44" Padding="0,16"
+                   TextAlignment="Center"
+                   Foreground="White" Background="SteelBlue" />
+        <Rectangle x:Name="CollRect1" Grid.Row="2" Height="0" />
+        <TextBlock x:Name="DescriptionText" Grid.Row="3" Margin="0,8"
+                   Text="Let your imagination fly!"
+                   FontSize="16" Foreground="SteelBlue"
+                   TextWrapping="WrapWithOverflow"
+                   HorizontalAlignment="Center" />
+        <Rectangle x:Name="CollRect2" Grid.Row="4" Height="0" />
+        <TextBlock x:Name="WorldListText" Grid.Row="5" Margin="8,8"
+                   TextWrapping="WrapWithOverflow"
+                   Text="These are the worlds Sims Environment Operator can work with:"
+                   FontSize="14" />
+        <Rectangle x:Name="CollRect3" Grid.Row="6" Height="0" />
+        <ScrollViewer x:Name="WorldScroll" Grid.Row="7">
+            <StackPanel x:Name="WorldPanel" Margin="16,0" />
+        </ScrollViewer>
     </Grid>
 </Page>

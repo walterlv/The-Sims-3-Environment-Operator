@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <Language>
+    <Name>English</Name>
+    <Version>2.0.51.42</Version>
+  </Language>
+
+  <Window>
+    <ReadonlyMode>
+      <Name>Readonly Mode</Name>
+      <Tip>Another program is using the Environment files. So this program run in readonly mode.</Tip>
+    </ReadonlyMode>
+    <Navigation>
+      <FrontPage>Front Page</FrontPage>
+      <EnvironmentPage>Front Page</EnvironmentPage>
+      <OperatorPage>Edit Environment</OperatorPage>
+      <SettingsPage>Preference</SettingsPage>
+      <AboutPage>About</AboutPage>
+    </Navigation>
+    <Update>
+      <NewVersion>
+        <Title>New Version</Title>
+        <Content>New version is now available for Sims Environment Operator. Click on Update Button to update.</Content>
+        <Button>Update</Button>
+      </NewVersion>
+    </Update>
+    <Front>
+      <Description>Let your imagination fly!</Description>
+    </Front>
+    <Worlds>
+      <List>These are all the worlds this program can work with:</List>
+      <Crack>Crack</Crack>
+      <Restore>Restore</Restore>
+      <NotExisted>Not Existed</NotExisted>
+      <Existed>Need Cracking</Existed>
+      <Cracking>Cracking</Cracking>
+      <Cracked>Available</Cracked>
+      <Restoring>Restoring</Restoring>
+      <Supported>Available</Supported>
+      <Unknow>Fetching</Unknow>
+    </Worlds>
+    <Environment>
+      <Select>All Installed Environment</Select>
+      <NotSelectedTip>You didn't select any environment.</NotSelectedTip>
+      <Apply>Apply...</Apply>
+      <Delete>Delete...</Delete>
+      <ProtectedTip>It's a protected environment, please do not delete it!</ProtectedTip>
+      <Import>Add...</Import>
+      <Download>Download</Download>
+      <Export>Share</Export>
+      <ExportTitle>Share My Environment</ExportTitle>
+      <ExportName>Name:</ExportName>
+      <ExportCreator>Creator:</ExportCreator>
+      <ExportImage>Image:</ExportImage>
+      <ExportDescription>Description:</ExportDescription>
+      <ExportSaveTo>Share Here:</ExportSaveTo>
+      <RestartForLanguage>You need to restart this program to show these environments in new language.</RestartForLanguage>
+    </Environment>
+    <Operator>
+      <WeatherExpander>Advance Edit</WeatherExpander>
+      <ChangeWeather>Choose a weather</ChangeWeather>
+      <WeatherDescription>All Weathers has the instances of Fogy, Rainy, Snowy...</WeatherDescription>
+      <SetWeatherWeight>Set the weather weights</SetWeatherWeight>
+      <LockWeatherWeight>Lock the weather weights</LockWeatherWeight>
+      <Save>Apply...</Save>
+      <Default>Default...</Default>
+      <Undo>Undo</Undo>
+      <Redo>Redo</Redo>
+    </Operator>
+    <Settings>
+      <SelectLanguage>Choose a Language:</SelectLanguage>
+      <Program>Program</Program>
+      <AutoUpdate>Automatic Update Check</AutoUpdate>
+      <Visual>Visual Style</Visual>
+      <AeroGlass>Aero Glass Window（Windows Vista/7 only）</AeroGlass>
+      <Background>Set Background with an Image...</Background>
+    </Settings>
+    <Dialog>
+      <Basic>
+        <OK>OK</OK>
+        <Cancel>Cancel</Cancel>
+        <Yes>Yes</Yes>
+        <No>No</No>
+      </Basic>
+      <MultiDocuments>
+        <Title>Documents</Title>
+        <Content>More than one saves are in your document. Choose the one you are playing:</Content>
+      </MultiDocuments>
+      <SimsDir>
+        <Title>Sims Folder</Title>
+        <Content>Sorry but we could not get The Sims 3 folder. You may have to set it manually.<br/>Please Select the root folder of The Sims 3:</Content>
+        <Invalid>It is not the correct folder of The Sims 3.</Invalid>
+      </SimsDir>
+      <OpenImage>
+        <Title>Select Preview Image</Title>
+        <AllPicture>All Image Format</AllPicture>
+        <AllFile>All File Format</AllFile>
+      </OpenImage>
+      <ExportEnvironment>
+        <Title>Share My Environment Here</Title>
+      </ExportEnvironment>
+      <OpenEnvironment>
+        <Title>Select Environment files</Title>
+      </OpenEnvironment>
+    </Dialog>
+  </Window>
+
+  <Information>
+    <CloseSave>
+      <Title>Save Changes</Title>
+      <Content>You have changed the environment. Would you like to save them?</Content>
+    </CloseSave>
+    <Worlds>
+      <Cracking>Cracking {0}...</Cracking>
+      <Cracked>{0} Cracked.</Cracked>
+      <Restoring>Restoring {0}...</Restoring>
+      <Restored>{0} Restored.</Restored>
+    </Worlds>
+    <ReadEnvironment>
+      <Reading>Reading installed environment...</Reading>
+      <Completed>{0} Environments are installed.</Completed>
+    </ReadEnvironment>
+    <ReadEnvironmentError>
+      <Title>Adding Failed</Title>
+      <Content>One or more environments are not been added:</Content>
+      <ExistedError>A same environment has been installed, we cannot install it again.</ExistedError>
+      <InvalidError>It's not a valid environment file.</InvalidError>
+      <UnknownError>Sorry, we could not read this file correctly. Installation is canceled.</UnknownError>
+    </ReadEnvironmentError>
+    <ApplyEnvironment>
+      <Title>Apply</Title>
+      <Content>Apply {0} for your game?</Content>
+      <Okay>{0} is applied.</Okay>
+    </ApplyEnvironment>
+    <DeleteEnvironment>
+      <Title>Delete</Title>
+      <Content>Delete {0}?</Content>
+      <Error>An error occured when deleting environment.</Error>
+    </DeleteEnvironment>
+    <ImportEnvironment>
+      <Importing>Adding new environments...</Importing>
+      <Completed>{0} new environments are installed.</Completed>
+    </ImportEnvironment>
+    <ExportEnvironment>
+      <EmptyName>You have not typed the name.</EmptyName>
+      <InvalidName>These ({0}) should not be in a name.</InvalidName>
+      <EmptyCreator>You have not typed the creator.</EmptyCreator>
+      <InvalidCreator>These ({0}) should not be in a creator name.</InvalidCreator>
+      <InvalidImage>It's not a valid picture.</InvalidImage>
+      <EmptyPath>You have not set a path to share you environment.</EmptyPath>
+      <CustomPathForbidden>You cannot set your share in the program folder.</CustomPathForbidden>
+      <InvalidPath>We could not find this path.</InvalidPath>
+      <Okay>Okay</Okay>
+      <Failed>Share failed.</Failed>
+    </ExportEnvironment>
+    <SaveEnvironment>
+      <Saving>Applying changes...</Saving>
+      <Okay>Okay</Okay>
+      <Failed>Applying failed.</Failed>
+    </SaveEnvironment>
+    <DefaultEnvironment>
+      <Title>Default</Title>
+      <Content>Set {1} of {0} to default?</Content>
+      <Okay>{1} of {0} has been set to default.</Okay>
+      <Failed>{1} of {0} cannot be set to default. The preinstalled environment may be lost.</Failed>
+    </DefaultEnvironment>
+  </Information>
+
+  <Environment>
+    <File>Sims Environment File</File>
+    <Weather>
+      <Clear>Sunny</Clear>
+      <PartlyCloudy>Cloudy</PartlyCloudy>
+      <Overcast>Overcast</Overcast>
+      <Stormy>Stormy</Stormy>
+      <Custom>Custom</Custom>
+    </Weather>
+    <Format>
+      <Name>{0}</Name>
+      <Creator>Created by {0}</Creator>
+      <Description>{0}</Description>
+    </Format>
+    <Backup>
+      <Name>Backup</Name>
+      <Creator>this program</Creator>
+      <Description>This is a backup environment, and it is created in {0}. <br/>It will be auto-deleted when the program close.</Description>
+    </Backup>
+  </Environment>
+
+  <World>
+    <O>Sunset Valley</O>
+    <EP011>China</EP011>
+    <EP012>Egypt</EP012>
+    <EP013>France</EP013>
+    <EP02>Twinbrook</EP02>
+    <EP03>Bridgeport</EP03>
+    <EP05>Appaloosa Plains</EP05>
+    <EP06>Starlight Shores</EP06>
+    <EP07>Moonlight Falls</EP07>
+  </World>
+
+  <Sky_Sky>
+    <Name>Sky</Name>
+    <Description>You can change the color of the sun, sky, and horizon here.</Description>
+    <SunColor>
+      <Name>Sun Color</Name>
+      <Description>The color of sun contains two parts: the sun itself, and the halo.</Description>
+    </SunColor>
+    <HaloColor>
+      <Name>Halo Color</Name>
+      <Description>You can cahnge the color of halo here.</Description>
+    </HaloColor>
+    <SkyDark>
+      <Name>Sky - Dark</Name>
+      <Description>Semisphere without Light</Description>
+    </SkyDark>
+    <SkyLight>
+      <Name>Sky - Light</Name>
+      <Description>Semisphere with Light</Description>
+    </SkyLight>
+    <HorizonLight>
+      <Name>Horizon - Light</Name>
+      <Description>Horizon with Light</Description>
+    </HorizonLight>
+    <HorizonDark>
+      <Name>Horizon - Dark</Name>
+      <Description>Horizon without Light</Description>
+    </HorizonDark>
+  </Sky_Sky>
+  <Sky_Sea>
+    <Name>Sea</Name>
+    <Description>You can change the color of water (sea, river,lake and pool) here.</Description>
+    <WaterColor>
+      <Name>Water Color</Name>
+      <Description>The basic color of water</Description>
+    </WaterColor>
+    <SunMoonColor>
+      <Name>Water Reflection Color</Name>
+      <Description>Water color reflected from the light from the sun and moon</Description>
+    </SunMoonColor>
+  </Sky_Sea>
+  <Sky_1>
+    <Name>Cloud A</Name>
+    <Description>You can change the color of Cloud A here.</Description>
+    <ColorWRTSunDark>
+      <Name>Cloud1 without Sunlight</Name>
+      <Description>The the color of cloud without sunlight</Description>
+    </ColorWRTSunDark>
+    <ColorWRTSunLight>
+      <Name>Cloud with Sunlight</Name>
+      <Description>The the color of cloud with sunlight</Description>
+    </ColorWRTSunLight>
+    <ColorWRTHorizonDark>
+      <Name>Cloud at Horizon without Sunlight</Name>
+      <Description>The color of cloud1 at horizon without sunlight</Description>
+    </ColorWRTHorizonDark>
+    <ColorWRTHorizonLight>
+      <Name>Cloud at Horizon with Sunlight</Name>
+      <Description>The color of cloud1 at horizon with sunlight</Description>
+    </ColorWRTHorizonLight>
+    <ColorWRTShadow>
+      <Name>Cloud1 Shadow</Name>
+      <Description>The color of the cloud's shadow</Description>
+    </ColorWRTShadow>
+  </Sky_1>
+  <Sky_2>
+    <Name>Cloud B</Name>
+    <Description>You can change the color of Cloud B here.</Description>
+    <ColorWRTSunDark>
+      <Name>Cloud1 without Sunlight</Name>
+      <Description>The the color of cloud without sunlight</Description>
+    </ColorWRTSunDark>
+    <ColorWRTSunLight>
+      <Name>Cloud with Sunlight</Name>
+      <Description>The the color of cloud with sunlight</Description>
+    </ColorWRTSunLight>
+    <ColorWRTHorizonDark>
+      <Name>Cloud at Horizon without Sunlight</Name>
+      <Description>The color of cloud1 at horizon without sunlight</Description>
+    </ColorWRTHorizonDark>
+    <ColorWRTHorizonLight>
+      <Name>Cloud at Horizon with Sunlight</Name>
+      <Description>The color of cloud1 at horizon with sunlight</Description>
+    </ColorWRTHorizonLight>
+    <ColorWRTShadow>
+      <Name>Cloud1 Shadow</Name>
+      <Description>The color of the cloud's shadow</Description>
+    </ColorWRTShadow>
+  </Sky_2>
+  <Sky_Light>
+    <Name>Light</Name>
+    <Description>The light's color of both sun and moon.</Description>
+    <SunMoonLight>
+      <Name>Sun and Moon Light</Name>
+      <Description>The color of sunlght and moonlight</Description>
+    </SunMoonLight>
+    <AmbientSkyTop>
+      <Name>Ambient Sky Top</Name>
+      <Description>The color of reflection on the top in night</Description>
+    </AmbientSkyTop>
+    <AmbientSkyBottom>
+      <Name>Ambient Sky Bottom</Name>
+      <Description>The color of reflection at the bottom in night</Description>
+    </AmbientSkyBottom>
+  </Sky_Light>
+</root>
+

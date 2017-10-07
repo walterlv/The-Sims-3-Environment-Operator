@@ -8,12 +8,7 @@
 	  Title="SettingPage"
       Loaded="Page_Loaded">
 
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-
+    <StackPanel Margin="10">
         <Grid Grid.Row="0" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -27,5 +22,16 @@
                       VerticalContentAlignment="Center"
                       SelectionChanged="LanguageBox_SelectionChanged"/>
         </Grid>
-    </Grid>
+        <GroupBox x:Name="ProgramHeader" Header="Visual Style" Margin="0,16,0,0">
+            <StackPanel>
+                <CheckBox x:Name="AutoUpdateCheckBox" Margin="4,8,4,4" Checked="AutoUpdateCheckBox_Checked" Unchecked="AutoUpdateCheckBox_Checked" Content="Automatic Update Check" />
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="VisualHeader" Header="Visual Style" Margin="0,16,0,0">
+            <StackPanel>
+                <CheckBox x:Name="AeroGlassCheckBox" Margin="4,8,4,4" Checked="AeroGlassCheckBox_Checked" Unchecked="AeroGlassCheckBox_Checked" Content="Use Aero Glass Window (Windows 7/Vista)" />
+                <CheckBox x:Name="BackgroundImageCheckBox" Margin="4" Checked="BackgroundImageCheckBox_Checked" Unchecked="BackgroundImageCheckBox_Checked" Content="Use Background Image..." />
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
 </Page>
