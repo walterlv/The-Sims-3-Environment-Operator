@@ -16,6 +16,42 @@ namespace TS3Sky
 
     public class SkyColor
     {
+        #region 获取或设置颜色组的名字
+        private string colorName;
+        /// <summary>
+        /// 获取或设置颜色组的名字
+        /// </summary>
+        public string ColorName
+        {
+            get
+            {
+                return colorName;
+            }
+            private set
+            {
+                colorName = value;
+            }
+        }
+        #endregion
+
+        #region 获取或设置颜色组的描述
+        private string colorDescription;
+        /// <summary>
+        /// 获取或设置颜色组的描述
+        /// </summary>
+        public string ColorDescription
+        {
+            get
+            {
+                return colorDescription;
+            }
+            private set
+            {
+                colorDescription = value;
+            }
+        }
+        #endregion
+
         #region 是否已经成功读取了颜色配置文件
         private bool isRead = false;
         /// <summary>
@@ -30,6 +66,24 @@ namespace TS3Sky
             private set
             {
                 isRead = value;
+            }
+        }
+        #endregion
+
+        #region 颜色配置文件的名称 (即颜色类型)
+        private ColorAssembly colorType;
+        /// <summary>
+        /// 颜色配置文件的名称 (即颜色类型)
+        /// </summary>
+        public ColorAssembly ColorType
+        {
+            get
+            {
+                return colorType;
+            }
+            private set
+            {
+                colorType = value;
             }
         }
         #endregion
@@ -52,14 +106,55 @@ namespace TS3Sky
         }
         #endregion
 
-        public SkyColor()
+        /// <summary>
+        /// 一天中的所有颜色的种类
+        /// </summary>
+        public List<DayColor> DayColors = new List<DayColor>();
+
+        protected SkyColor()
         {
         }
 
-        public bool ReadColor(ColorAssembly colorName)
+        public static SkyColor FromColorAssembly(ColorAssembly colorName)
         {
-            colorPath = getColorPath(colorName);
-            return false;
+            SkyColor skyColor;
+            switch (colorName)
+            {
+                case ColorAssembly.Sky_CustomSky:
+                    skyColor = new Sky_CustomSky();
+                    skyColor.colorName = "天空";
+                    skyColor.colorDescription = "改变天空的颜色：太阳、月亮、天空、地平线。";
+                    break;
+                case ColorAssembly.Sky_ClearSea:
+                    skyColor = new Sky_ClearSea();
+                    skyColor.colorName = "海洋";
+                    skyColor.colorDescription = "改变晴天时海洋的颜色。";
+                    break;
+                case ColorAssembly.Sky_OvercastSea:
+                    skyColor = new Sky_OvercastSea();
+                    skyColor.colorName = "海洋（阴天）";
+                    skyColor.colorDescription = "当乌云密布不见日月，这时候的海洋颜色就在这里设置。";
+                    break;
+                default:
+                    return null;
+            }
+            skyColor.colorType = colorName;
+            skyColor.colorPath = skyColor.getColorPath(colorName);
+            if (skyColor.colorPath == null) return null;
+            foreach (DayColor color in skyColor.DayColors)
+            {
+                BasicColor temp;
+                int i = 1;
+                while (true)
+                {
+                    temp = skyColor.ReadColor(color.ColorSection, i);
+                    i++;
+                    if (temp.IsValid) color.ColorList.Add(temp);
+                    else break;
+                }
+            }
+            skyColor.isRead = true;
+            return skyColor;
         }
 
         private string getColorPath(ColorAssembly colorName)
@@ -71,21 +166,34 @@ namespace TS3Sky
             key = key.OpenSubKey("Sims",true);
             key = key.OpenSubKey("The Sims 3",true);
             simsPath = key.GetValue("Install Dir").ToString();
+            if (simsPath.EndsWith("\\")) simsPath.Substring(0, simsPath.Length - 1);
             switch (colorName)
             {
                 case ColorAssembly.Sky_CustomSky:
-                    iniPath = @"GameData\Shared\NonPackaged\Ini\Sky_CustomSky.ini";
+                    iniPath = @"\GameData\Shared\NonPackaged\Ini\Sky_CustomSky.ini";
                     break;
                 case ColorAssembly.Sky_ClearSea:
-                    iniPath = @"GameData\Shared\NonPackaged\Ini\Sky_ClearSea.ini";
+                    iniPath = @"\GameData\Shared\NonPackaged\Ini\Sky_ClearSea.ini";
                     break;
                 case ColorAssembly.Sky_OvercastSea:
-                    iniPath = @"GameData\Shared\NonPackaged\Ini\Sky_OvercastSea.ini";
+                    iniPath = @"\GameData\Shared\NonPackaged\Ini\Sky_OvercastSea.ini";
                     break;
                 default:
                     return null;
             }
             return simsPath + iniPath;
+        }
+
+        protected BasicColor ReadColor(string colorSection, int index)
+        {
+            IniFiles iniFile = new IniFiles(colorPath);
+            int red = iniFile.ReadInteger(colorSection + index, "red", 0);
+            int green = iniFile.ReadInteger(colorSection + index, "green", 0);
+            int blue = iniFile.ReadInteger(colorSection + index, "blue", 0);
+            double timeOfDay = iniFile.ReadDouble(colorSection + index, "timeOfDay", -1.0);
+            BasicColor color = new BasicColor(red, green, blue, timeOfDay);
+            if (timeOfDay < 0) color.IsValid = false;
+            return color;
         }
     }
 }

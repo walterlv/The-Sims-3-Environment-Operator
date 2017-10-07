@@ -70,15 +70,34 @@ namespace TS3Sky
             {
                 return Convert.ToInt32(intStr);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex.Message);
                 return Default;
             }
         }
 
         //写整数 
         public void WriteInteger(string Section, string Ident, int Value)
+        {
+            WriteString(Section, Ident, Value.ToString());
+        }
+
+        //读小数
+        public double ReadDouble(string Section, string Ident, double Default)
+        {
+            string intStr = ReadString(Section, Ident, Convert.ToString(Default));
+            try
+            {
+                return Convert.ToDouble(intStr);
+            }
+            catch (Exception)
+            {
+                return Default;
+            }
+        }
+
+        //写小数
+        public void WriteDouble(string Section, string Ident, double Value)
         {
             WriteString(Section, Ident, Value.ToString());
         }
@@ -90,9 +109,8 @@ namespace TS3Sky
             {
                 return Convert.ToBoolean(ReadString(Section, Ident, Convert.ToString(Default)));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex.Message);
                 return Default;
             }
         }
