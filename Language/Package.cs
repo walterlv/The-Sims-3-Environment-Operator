@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TS3Sky.Language
+namespace Seo.Language
 {
     public class Package
     {
@@ -16,7 +16,7 @@ namespace TS3Sky.Language
         public static string ImportUnknowPackage = "This seo file contains an invalid ID.";
         public static string BackupPackageName = "Backup";
         public static string BackupPackageCreator = "Auto";
-        public static string BackupPackageDescription = "Backup time: {0}\n";
+        public static string BackupPackageDescription = "Backup time: {0}\nThis backup package will be deleted automatically.";
 
         private const string Section = "Package";
         public static void Initialize(LanguageReader lr)

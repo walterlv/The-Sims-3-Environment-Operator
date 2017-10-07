@@ -1,0 +1,20 @@
+﻿<Window x:Class="Seo.SetInstallDirWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Set Install Directory" Width="400" SizeToContent="Height" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Icon="icon.ico">
+    <StackPanel Margin="10">
+        <TextBlock x:Name="SetDirLabel" Margin="0,0,0,10" TextWrapping="Wrap" />
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" x:Name="SetDirText" IsReadOnly="True" />
+            <Button Grid.Column="1"
+                    x:Name="SetDirButton" Click="SetDirButton_Click"
+                    Width="30" Content="..." />
+        </Grid>
+        <TextBlock x:Name="ErrorMsg" Foreground="Red" Margin="0,0,0,10" TextWrapping="Wrap"/>
+        <Button x:Name="OKButton" Height="32" Width="160" IsEnabled="False" IsDefault="True" Click="OKButton_Click" />
+    </StackPanel>
+</Window>

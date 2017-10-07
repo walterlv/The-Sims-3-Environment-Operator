@@ -5,7 +5,7 @@ using System.Text;
 using System.Collections;
 using System.Collections.Specialized;
 
-namespace TS3Sky
+namespace Seo
 {
     /**/
     /// <summary> 
@@ -58,7 +58,7 @@ namespace TS3Sky
             if (!WritePrivateProfileString(Section, Ident, Value.Trim().Replace(Environment.NewLine, "\\n").Replace("\n", "\\n"), FileName))
             {
                 // Todo:抛出自定义的异常 
-                throw (new ApplicationException(TS3Sky.Language.Dialog.WriteEnvironmentFileFailed));
+                throw (new ApplicationException(Seo.Language.Dialog.WriteEnvironmentFileFailed));
             }
         }
 

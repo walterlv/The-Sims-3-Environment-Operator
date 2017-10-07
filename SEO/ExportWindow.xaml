@@ -1,0 +1,81 @@
+﻿<Window x:Class="Seo.ExportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="导出环境配置包" Icon="icon.ico"
+        ResizeMode="NoResize" ShowInTaskbar="False"
+        FontSize="14" FontFamily="Microsoft YaHei" Background="AliceBlue"
+        SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner" Loaded="Window_Loaded">
+    <Grid Margin="10" Width="400">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="110" />
+        </Grid.ColumnDefinitions>
+        
+        <Label Grid.Row="0" x:Name="NameLabel" />
+        <TextBox Grid.Row="1" x:Name="NameText"
+                 TextChanged="TextBox_TextChanged" />
+
+        <Label Grid.Row="2" x:Name="CreatorLabel" />
+        <TextBox Grid.Row="3" x:Name="CreatorText"
+                 TextChanged="TextBox_TextChanged" />
+
+        <Label Grid.Row="4" x:Name="ImageLabel" />
+        <Image Grid.Row="0" Grid.RowSpan="5" Grid.Column="1"
+               x:Name="PreviewImage"
+               Width="100" Height="100" HorizontalAlignment="Right" />
+        <Grid  Grid.Row="5" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" x:Name="ImagePathText" IsReadOnly="True" />
+            <Button Grid.Column="1"
+                    x:Name="ImagePathButton" Click="ImagePathButton_Click"
+                    Width="30" Content="..." />
+        </Grid>
+
+        <Label Grid.Row="6" Grid.ColumnSpan="2" x:Name="DescriptionLabel" />
+        <TextBox Grid.Row="7" Grid.ColumnSpan="2"
+                 x:Name="DescriptionText" TextChanged="TextBox_TextChanged"
+                 TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                 MaxLength="140" UndoLimit="10" MaxLines="3" />
+
+        <Label Grid.Row="8" Grid.ColumnSpan="2" x:Name="SaveToLabel" />
+        <Grid Grid.Row="9" Grid.ColumnSpan="2" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" x:Name="SaveToText"
+                     TextChanged="TextBox_TextChanged" IsReadOnly="True" />
+            <Button Grid.Column="1"
+                    x:Name="SaveToButton" Click="SaveToButton_Click"
+                    Width="30" Content="..." />
+        </Grid>
+
+        <Label Grid.Row="10" Grid.ColumnSpan="2"
+               x:Name="ErrorText" Foreground="Red" Content=" " />
+        
+        <StackPanel Grid.Row="11" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="ExportButton" Click="ExportButton_Click"
+                    Width="96" Height="30" Margin="10,0"
+                    IsEnabled="False" IsDefault="True"/>
+            <Button x:Name="CancelButton" Click="CancelButton_Click"
+                    Width="96" Height="30" Margin="10,0" />
+        </StackPanel>
+    </Grid>
+</Window>

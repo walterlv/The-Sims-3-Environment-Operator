@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TS3Sky.Language
+namespace Seo.Language
 {
     public class Application
     {
         // 程序基本信息
         public static string Name = "The Sims 3: Environment Operator";
         public static string Description = "Enter an iridescent game-world from this program!\nProgram by Waterlv; Solutions by Kuree. 3DM-M3 groups.";
-        public static string Version = "1.2.2.47";
-        public static string ShowVersion = "1.2 (47)";
+        public static string Version = "1.3.0.48";
+        public static string ShowVersion = "1.3 (48)";
         public static string Developer = "walterlv (UI Designer, Developer)\nKuree (Solution Provider)";
         public static string Copyright = "Copyright © walterlv kuree 2012, All Rights Reserved.";
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TS3Sky.Language
+namespace Seo.Language
 {
     public class Operation
     {

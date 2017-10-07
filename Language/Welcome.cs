@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace TS3Sky.Language
+namespace Seo.Language
 {
     public class Welcome
     {

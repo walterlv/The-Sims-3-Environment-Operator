@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}</ProjectGuid>
+    <ProjectGuid>{D064B238-8217-48F8-AA2F-60B8FD253CBD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Seo.Language</RootNamespace>
-    <AssemblyName>Language</AssemblyName>
+    <RootNamespace>Seo</RootNamespace>
+    <AssemblyName>EnviOperator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,33 +31,36 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="About.cs" />
-    <Compile Include="Application.cs" />
-    <Compile Include="ColorPickBar.cs" />
-    <Compile Include="Dialog.cs" />
-    <Compile Include="LanguageReader.cs" />
-    <Compile Include="LanguageManager.cs" />
-    <Compile Include="Navigation.cs" />
-    <Compile Include="Operation.cs" />
+    <Compile Include="Assembly.cs" />
+    <Compile Include="BasicColor.cs" />
+    <Compile Include="DayColor.cs" />
     <Compile Include="Package.cs" />
+    <Compile Include="SkyColor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkyColors\Sky_1.cs" />
     <Compile Include="SkyColors\Sky_2.cs" />
     <Compile Include="SkyColors\Sky_Light.cs" />
     <Compile Include="SkyColors\Sky_Sea.cs" />
     <Compile Include="SkyColors\Sky_Sky.cs" />
-    <Compile Include="Weather.cs" />
-    <Compile Include="Welcome.cs" />
+    <Compile Include="WeatherSky.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Language\Language.csproj">
+      <Project>{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}</Project>
+      <Name>Language</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SeoLog\SeoLog.csproj">
       <Project>{98fcc9ac-0af1-4077-9dd6-eb428cde410a}</Project>
       <Name>SeoLog</Name>

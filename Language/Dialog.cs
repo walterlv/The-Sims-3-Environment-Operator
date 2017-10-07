@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TS3Sky.Language
+namespace Seo.Language
 {
     public class Dialog
     {
         // 未知错误
         public static string UnknownErrorTitle = "Unknow Error";
-        public static string UnknownErrorContent = "An error occured but we don't know why it happened. You might know something from this message:\n\n{0}";
+        public static string UnknownErrorContent = "An error occured but we don't know why it happened.";
         // 初始化
         public static string InitialFailedTitle = "The Sims 3: Environment Operator";
-        public static string InitialFailedContent = "Initial failed.\n\nDescriptions:\n{0}";
-        public static string ReadEnvironmentFileFailedTitle = "Program failed when reading config files";
-        public static string ReadEnvironmentFileFailedContent = "Descriptions:\n{0}";
+        public static string InitialFailedContent = "We are sorry but we can't start this program. Some vital errors happened.";
+        public static string ReadEnvironmentFileFailedTitle = "Failed when reading seo files";
+        public static string ReadEnvironmentFileFailedContent = "One or more seo files are not loaded correctly.";
         public static string CannotFindInstallDirException = "Cannot find the sims 3 install directory.";
         public static string CannotFindInstallDirTitle = "Select Base Game folder";
-        public static string CannotFindInstallDirLabel = "Sorry but we can't find your Sims path. So SEO cannot run normally. Please select your base game root folder.";
+        public static string CannotFindInstallDirLabel = "Sorry but we can't find your Sims path. So Seo cannot run normally. Please select your base game root folder.";
         public static string NotTheRightInstallDirMsg = "It seems that this is not the right base game folder. Please select again!";
         // 编辑配置文件
         public static string EnvironmentFileNotFound = "Cannot find the environment files from The Sims files.";
@@ -31,14 +31,14 @@ namespace TS3Sky.Language
         public static string ApplyPackageSuccessfullyTitle = "Applied Successfully";
         public static string ApplyPackageSuccessfullyContent = "{0} has been successfully applied";
         public static string ApplyPackageFailedTitle = "Failed to Apply";
-        public static string ApplyPackageFailedContent = "Desciption:\n{0}";
+        public static string ApplyPackageFailedContent = "An error occured so that we can't apply this package.";
         public static string DeletePackageTitle = "Delete";
         public static string DeletePackageContent = "Delete {0}? If it's down, you cannot retrive it.";
         public static string DeletePackageFailedTitle = "Cannot Delete";
-        public static string DeletePackageFailedContent = "Desciption:\n{0}";
+        public static string DeletePackageFailedContent = "An error occured so that we can't delete this package.";
         public static string ImportPackageTitle = "Open an Environment File";
         public static string ImportPackageFailedTitle = "Import Error";
-        public static string ImportPackageFailedContent = "Desciption:\n{0}";
+        public static string ImportPackageFailedContent = "An error occured so that we can't import this package.";
         public static string ExportPackageButNotSavedTitle = "Save";
         public static string ExportPackageButNotSavedContent = "You need to save your environment first to share it. Continue?";
         // 导出
@@ -53,16 +53,16 @@ namespace TS3Sky.Language
         public static string ExportToCustomForbidden = "Cannot export to this folder!";
         public static string ExportPackageTitle = "Save Export File";
         public static string ExportPackageFailedTitle = "Export Failed";
-        public static string ExportPackageFailedContent = "{0}";
+        public static string ExportPackageFailedContent = "An error occured so that we can't export this environment config.";
         // 保存, 恢复文件
         public static string SaveSingleTitle = "Save";
         public static string SaveSingleContent = "Save all changes of {0}?";
         public static string SaveRetryTitle = "Save failed";
-        public static string SaveRetryContent = "{0}\n\nRetry？";
+        public static string SaveRetryContent = "Save this environment failed. The Sims 3 game may be using the files. Would you like to retry?";
         public static string SetToDefaultTitle = "Set to Default";
         public static string SetToDefaultContent = "Set the color of {0} to EA default?";
         public static string SetToDefaultFailedTitle = "Set to Default Failed";
-        public static string SetToDefaultFailedContent = "The backup files might be lost, or The Sims game is using the files we are trying to recover.\nIf it is because of latter, you can retry it later.\n{0}";
+        public static string SetToDefaultFailedContent = "The backup files might be lost, or The Sims game is using the files we are trying to recover.\nIf it is because of latter, you can retry it later.";
 
 
         // 读取语言文件

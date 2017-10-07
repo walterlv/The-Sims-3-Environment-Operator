@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace TS3Sky.Language
+namespace Seo.Language
 {
     public class LanguageManager
     {
-        private static string LocalPath = Environment.CurrentDirectory + @"\Config.ini";
-        private static string LanguagePath = Environment.CurrentDirectory + @"\Languages";
+        private static string LocalPath = Seo.Log.File.ConfigFile;
+        private static string LanguagePath = Seo.Log.Directory.Language;
         private static string LanguageFile;
         private const string Section = "Local";
         private const string Ident = "Language";
@@ -71,16 +71,17 @@ namespace TS3Sky.Language
         {
             // 初始化本地语言名
             LanguageReader llr = new LanguageReader(LocalPath);
-            string local = llr.Read(Section, Ident, "zh-cn");
+            string local = llr.Read(Section, Ident, "en-us");
             LocalLanguage = local;
             LanguageFile = LanguagePath + "\\" + local + ".ini";
-            if (!File.Exists(LanguageFile)) throw new Exception("Cannot find the language file. Program is stopped.");
-
-            // 初始化最基本的语言
-            Application.Initialize(local);
+            if (File.Exists(LanguageFile)) Application.Initialize(local);
         }
         public static void ReadExternalLanguage()
         {
+            // 如果不存在语言文件, 则使用内置语言
+            LanguageFile = LanguagePath + "\\" + LocalLanguage + ".ini";
+            if (!File.Exists(LanguageFile)) throw new Seo.Exceptions.LanguageFileNotFoundException(LocalLanguage);
+
             LanguageReader lr = new LanguageReader(LanguageFile);
 
             Welcome.Initialize(lr);
