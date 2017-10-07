@@ -15,12 +15,14 @@ using System.IO;
 
 namespace TS3Sky
 {
+    #region 枚举类型 - 三种可能的页
     enum TS3SkyPage
     {
         Welcome,
         Content,
         About
     }
+    #endregion
 
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
@@ -31,22 +33,26 @@ namespace TS3Sky
         {
             InitializeComponent();
 
+            #region 最原始的初始化 (语言)
             // 初始化语言 (如果要读取外部语言,填写true,如果读取内置语言,填写false)
-            try { TS3Sky.Language.LanguageManager.Initialize(true); }
+            try { TS3Sky.Language.LanguageManager.Initialize(false); }
             catch { }
+            #endregion
         }
 
         /// <summary>
-        /// 要修改的颜色列表，目前共有三组：天空，海洋，阴天海洋。
+        /// 所有可使用的环境配置包
         /// </summary>
-        private List<SkyColor> SkyColorList = new List<SkyColor>();
+        List<Package> Packages;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // 初始化应用程序资源路径
+            #region 初始化应用程序资源路径
             string BackgroundPath = Environment.CurrentDirectory + @"\Images\Background.jpg";
             string WelcomePath = Environment.CurrentDirectory + @"\Images\Welcome.png";
-            // 初始化应用程序界面风格
+            #endregion
+
+            #region 初始化应用程序界面风格
             try
             {
                 if (File.Exists(BackgroundPath))
@@ -58,9 +64,11 @@ namespace TS3Sky
                 }
             }
             catch { }
-            // 初始化应用程序界面内容
+            #endregion
+
+            #region 初始化应用程序界面内容
             // 全局窗口
-            this.Title = TS3Sky.Language.Application.Name;
+            this.Title = TS3Sky.Language.Application.Name + " (内部测试版, 仅供制作预设方案)";
             // 初始化导航按钮
             SkyColorWelcome.Content = TS3Sky.Language.Navigation.Welcome;
             SkyColorAbout.Content = TS3Sky.Language.Navigation.About;
@@ -71,40 +79,30 @@ namespace TS3Sky
                 SkyColor Sky_ClearLight = SkyColor.FromColorAssembly(ColorAssembly.Sky_ClearLight);
                 SkyColor Sky_ClearSky = SkyColor.FromColorAssembly(ColorAssembly.Sky_ClearSky);
                 SkyColor Sky_ClearSea = SkyColor.FromColorAssembly(ColorAssembly.Sky_ClearSea);
-                SkyColorList.Add(Sky_Clear1);
-                SkyColorList.Add(Sky_Clear2);
-                SkyColorList.Add(Sky_ClearLight);
-                SkyColorList.Add(Sky_ClearSky);
-                SkyColorList.Add(Sky_ClearSea);
-                SkyColorButton0.Content = SkyColorList[0].ColorName;
-                SkyColorButton1.Content = SkyColorList[1].ColorName;
-                SkyColorButton2.Content = SkyColorList[2].ColorName;
-                SkyColorButton3.Content = SkyColorList[3].ColorName;
-                SkyColorButton4.Content = SkyColorList[4].ColorName;
+                //SkyColorList.Add(Sky_Clear1);
+                //SkyColorList.Add(Sky_Clear2);
+                //SkyColorList.Add(Sky_ClearLight);
+                //SkyColorList.Add(Sky_ClearSky);
+                //SkyColorList.Add(Sky_ClearSea);
+                SkyColorButton0.Content = SkyColor.AllSkyColors[0].ColorName;
+                SkyColorButton1.Content = SkyColor.AllSkyColors[1].ColorName;
+                SkyColorButton2.Content = SkyColor.AllSkyColors[2].ColorName;
+                SkyColorButton3.Content = SkyColor.AllSkyColors[3].ColorName;
+                SkyColorButton4.Content = SkyColor.AllSkyColors[4].ColorName;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("初始化时出现了一些问题，导致程序不能正常运行。问题描述如下：\n" + ex.Message, TS3Sky.Language.Application.Name, MessageBoxButton.OK, MessageBoxImage.Stop);
-                this.Close();
+                MessageBox.Show(String.Format(TS3Sky.Language.Dialog.InitialFailedContent, ex.Message), TS3Sky.Language.Dialog.InitialFailedTitle, MessageBoxButton.OK, MessageBoxImage.Stop);
             }
+            // 初始化欢迎页面
+            AboutButton.Content = TS3Sky.Language.Navigation.About;
             // 初始化操作按钮
+            DownloadWorldButton.Content = TS3Sky.Language.Operation.DownloadWorld;
             SaveButton.Content = TS3Sky.Language.Operation.Save;
             RevokeButton.Content = TS3Sky.Language.Operation.Revoke;
             SetToDefaultButton.Content = TS3Sky.Language.Operation.SetToDefault;
             // 初始化导航标签文字
             LabelText.Text = TS3Sky.Language.Navigation.Label;
-            // 初始化欢迎画面
-            try
-            {
-                if (File.Exists(WelcomePath))
-                {
-                    Uri uri = new Uri(WelcomePath);
-                    BitmapImage bitmap = new BitmapImage(uri);
-                    WelcomeImage.Source = bitmap;
-                    WelcomeText.Visibility = Visibility.Collapsed;
-                }
-            }
-            catch { }
             // 初始化关于画面
             AboutInfomation.Text = String.Format("{0}:\n{1}\n\n{2}: {3}\n\n{4}: {5}\n{6}",
                                     TS3Sky.Language.About.Author,
@@ -114,48 +112,93 @@ namespace TS3Sky
                                     TS3Sky.Language.About.Publish,
                                     TS3Sky.Language.About.PublishText,
                                     TS3Sky.Language.About.Contact);
+            ContactUsButton.Content = TS3Sky.Language.About.ContactUs;
             CopyrightInfomation.Text = TS3Sky.Language.About.Copyright;
+            #endregion
+
+            #region 初始化预设方案列表
+            try
+            {
+                Packages = Package.OpenAll();
+                foreach (Package p in Packages)
+                {
+                    PackageListItem pli = new PackageListItem();
+                    pli.ShowPackage = p;
+                    PackageListBox.Items.Add(pli);
+                }
+                
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message + "\n\n" + ex.StackTrace, ex.Message); }
+            #endregion
         }
 
+        #region 点击导航按钮按钮 (包括在欢迎页中的其它导航按钮)
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string uid = ((Button)sender).Uid;
-            if (uid.Equals("TS3NW"))
+            string name = (string)((Button)sender).Content;
+            if (name.Equals(TS3Sky.Language.Navigation.Welcome))
             {
                 showPage(TS3SkyPage.Welcome);
             }
-            else if (uid.Equals("TS3NA"))
+            else if (name.Equals(TS3Sky.Language.Navigation.About))
             {
                 showPage(TS3SkyPage.About);
             }
-            else if (uid.Equals("TS3N0"))
+            else if (name.Equals(TS3Sky.Language.Sky_Clear1.DayColorName))
             {
-                showPage(SkyColorList[0]);
+                showPage(SkyColor.AllSkyColors[0]);
             }
-            else if (uid.Equals("TS3N1"))
+            else if (name.Equals(TS3Sky.Language.Sky_Clear2.DayColorName))
             {
-                showPage(SkyColorList[1]);
+                showPage(SkyColor.AllSkyColors[1]);
             }
-            else if (uid.Equals("TS3N2"))
+            else if (name.Equals(TS3Sky.Language.Sky_ClearLight.DayColorName))
             {
-                showPage(SkyColorList[2]);
+                showPage(SkyColor.AllSkyColors[2]);
             }
-            else if (uid.Equals("TS3N3"))
+            else if (name.Equals(TS3Sky.Language.Sky_ClearSky.DayColorName))
             {
-                showPage(SkyColorList[3]);
+                showPage(SkyColor.AllSkyColors[3]);
             }
-            else if (uid.Equals("TS3N4"))
+            else if (name.Equals(TS3Sky.Language.Sky_ClearSea.DayColorName))
             {
-                showPage(SkyColorList[4]);
+                showPage(SkyColor.AllSkyColors[4]);
             }
             else
             {
             }
         }
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        #endregion
+
+        // 当选择一个方案时
+        private void PackageListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string uid = ((Button)sender).Uid;
-            if (uid.Equals("TS3O1"))
+            int index = PackageListBox.SelectedIndex;
+            if (index < 0 || index >= PackageListBox.Items.Count)
+            {
+                ApplyPackageButton.IsEnabled = false;
+                DeletePackageButton.IsEnabled = false;
+            }
+            else
+            {
+                ApplyPackageButton.IsEnabled = true;
+                if (Packages[index].IsProtected)
+                {
+                    DeletePackageButton.IsEnabled = false;
+                }
+                else
+                {
+                    DeletePackageButton.IsEnabled = true;
+                }
+            }
+        }
+
+        #region 点击功能按钮
+        // 保存, 撤销, 恢复
+        private void OperationButton_Click(object sender, RoutedEventArgs e)
+        {
+            string name = (string)((Button)sender).Content;
+            if (name.Equals(TS3Sky.Language.Operation.Save))
             {
                 if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SaveContent, currentShow.ColorName), TS3Sky.Language.Dialog.SaveTitle, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                 {
@@ -164,14 +207,14 @@ namespace TS3Sky
                         try { currentShow.Save(); break; }
                         catch (Exception ex)
                         {
-                            if (MessageBox.Show(ex.Message + "\n\n要再次尝试保存吗？", "保存失败",
+                            if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SaveRetryContent, ex.Message), TS3Sky.Language.Dialog.SaveRetryTitle,
                                 MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes) continue;
                             else break;
                         }
                     }
                 }
             }
-            else if (uid.Equals("TS3O2"))
+            else if (name.Equals(TS3Sky.Language.Operation.Revoke))
             {
                 if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.RevokeContent, currentShow.ColorName), TS3Sky.Language.Dialog.RevokeTitle, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                 {
@@ -179,7 +222,7 @@ namespace TS3Sky
                     RefreshPage(currentShow);
                 }
             }
-            else if (uid.Equals("TS3O3"))
+            else if (name.Equals(TS3Sky.Language.Operation.SetToDefault))
             {
                 if (MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SetToDefaultContent, currentShow.ColorName), TS3Sky.Language.Dialog.SetToDefaultTitle, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                 {
@@ -191,7 +234,7 @@ namespace TS3Sky
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("无法恢复到默认的颜色配置！可能是备份的颜色方案丢失，也可能是《模拟人生3》正在使用需要恢复的文件。\n\n如果是后者，你可以尝试再次恢复。\n\n" + ex.Message, "无法恢复", MessageBoxButton.OK, MessageBoxImage.Stop);
+                        MessageBox.Show(String.Format(TS3Sky.Language.Dialog.SetToDefaultFailedContent, ex.Message), TS3Sky.Language.Dialog.SetToDefaultFailedTitle, MessageBoxButton.OK, MessageBoxImage.Stop);
                     }
                 }
             }
@@ -200,16 +243,55 @@ namespace TS3Sky
             }
         }
 
-        // 访问帖子
-        private void VisitUsButton_Click(object sender, RoutedEventArgs e)
+        // 执行操作后需要刷新颜色页
+        private void RefreshPage(SkyColor skyColor)
         {
-            System.Diagnostics.Process.Start(TS3Sky.Language.About.ContactUs);
+            int index = colorPickBarLink.SkyColorListAsIndex.IndexOf(skyColor);
+            if (index >= 0)
+            {
+                for (int i = 0; i < colorPickBarLink.ColorPickBarList[index].Count; i++)
+                {
+                    colorPickBarLink.ColorPickBarList[index][i].Refresh();
+                }
+            }
         }
+
+        // 导出
+        private void ExportPackageButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show("如果要导出你自定义的方案，你需要先保存你所有的配色。\n\n保存后继续吗？", "需要保存才能继续", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    foreach (SkyColor color in SkyColor.AllSkyColors)
+                    {
+                        color.Save();
+                    }
+                    ExportWindow ew = new ExportWindow();
+                    ew.Owner = this;
+                    ew.ShowDialog();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.StackTrace, ex.Message);
+            }
+        }
+
+        // 访问帖子 - 联系我们
+        private void ContactUsButton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(TS3Sky.Language.About.ContactSite);
+        }
+        // 访问帖子 - 下载世界
         private void DownloadWorldButton_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start(TS3Sky.Language.About.WorldDownload);
         }
+        #endregion
 
+        #region 导航到页面
+        #region 颜色页
         int ColorBarStartIndex = -1;
         ColorPickBarLink colorPickBarLink = new ColorPickBarLink();
         SkyColor currentShow = null;
@@ -261,7 +343,7 @@ namespace TS3Sky
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + Environment.NewLine + ex.StackTrace, "读取配置文件时出现了问题", MessageBoxButton.OK, MessageBoxImage.Stop);
+                MessageBox.Show(String.Format(TS3Sky.Language.Dialog.ReadEnvironmentFileFailedContent, ex.Message), TS3Sky.Language.Dialog.ReadEnvironmentFileFailedTitle, MessageBoxButton.OK, MessageBoxImage.Stop);
             }
             // 确保只有颜色页显示
             if (ColorPageScroll.Visibility != Visibility.Visible)
@@ -274,12 +356,14 @@ namespace TS3Sky
             ColorPageScroll.ScrollToHome();
             currentShow = skyColor;
         }
-
+        #endregion
+        #region 布局页
         private void showPage(TS3SkyPage page)
         {
             switch (page)
             {
                 case TS3SkyPage.Welcome:
+                    PackageListBox.SelectedIndex = -1;
                     if (SkyWelcome.Visibility != Visibility.Visible)
                     {
                         SkyWelcome.Visibility = Visibility.Visible;
@@ -304,23 +388,71 @@ namespace TS3Sky
                     break;
             }
         }
+        #endregion
+        #endregion
 
-        private void RefreshPage(SkyColor skyColor)
+
+        private void ApplyPackageButton_Click(object sender, RoutedEventArgs e)
         {
-            int index = colorPickBarLink.SkyColorListAsIndex.IndexOf(skyColor);
-            if (index >= 0)
+            int index = PackageListBox.SelectedIndex;
+            if (MessageBox.Show(String.Format("应用方案 “{0}” 将会覆盖掉你现在正在使用的方案。\n\n是否继续？", Packages[index].Name), "应用方案", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                for (int i = 0; i < colorPickBarLink.ColorPickBarList[index].Count; i++)
+                try { Package.Apply(Packages[index]); MessageBox.Show(String.Format("已经成功应用 “{0}” 方案。", Packages[index].Name), "成功应用方案", MessageBoxButton.OK, MessageBoxImage.Information); }
+                catch (Exception ex)
                 {
-                    colorPickBarLink.ColorPickBarList[index][i].Refresh();
+                    MessageBox.Show(ex.Message, "应用方案时出现问题", MessageBoxButton.OK, MessageBoxImage.Stop);
                 }
             }
         }
+        private void DeletePackageButton_Click(object sender, RoutedEventArgs e)
+        {
+            int index = PackageListBox.SelectedIndex;
+            if (MessageBox.Show(String.Format("要删除环境配置方案 “{0}” 吗？", Packages[index].Name), "删除方案", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                ((PackageListItem)PackageListBox.Items[index]).PackageImage = null;
+                PackageListBox.Items.RemoveAt(index);
+                try
+                {
+                    Packages[index].Delete();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "删除不完全", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                Packages.RemoveAt(index);
+            }
+        }
+        private void ImportPackageButton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog open = new System.Windows.Forms.OpenFileDialog();
+            open.Title = "添加方案";
+            open.Filter = String.Format("{1}|*.{0}", Package.Extension, Package.ExtensionDescription);
+            open.AddExtension = true;
+            open.AutoUpgradeEnabled = true;
+            if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if (!Package.Exists(open.FileName))
+                {
+                    Package imp = Package.Import(open.FileName);
+                    Packages.Add(imp);
+                    PackageListItem pli = new PackageListItem();
+                    pli.ShowPackage = imp;
+                    PackageListBox.Items.Add(pli);
+                }
+                else
+                {
+                    MessageBox.Show("不能添加已经存在的方案。", "方案已经存在", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+        }
+
     }
 
+    #region 封装一个绑定后台颜色组和前台颜色条的类
     class ColorPickBarLink
     {
         public List<SkyColor> SkyColorListAsIndex = new List<SkyColor>();
         public List<List<ColorPickBar>> ColorPickBarList = new List<List<ColorPickBar>>();
     }
+    #endregion
 }

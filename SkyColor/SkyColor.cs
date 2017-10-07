@@ -110,7 +110,7 @@ namespace TS3Sky
         #endregion
 
         #region 颜色配置文件的路径
-        private String colorPath;
+        private string colorPath;
         /// <summary>
         /// 颜色配置文件的路径
         /// </summary>
@@ -127,11 +127,23 @@ namespace TS3Sky
         }
         #endregion
 
+        /// <summary>
+        /// 获取存放配置文件的文件夹
+        /// </summary>
+        public static string ColorDirectory { get; private set; }
+
         #region 一天中的所有颜色的种类
         /// <summary>
         /// 一天中的所有颜色的种类
         /// </summary>
         public List<DayColor> DayColors = new List<DayColor>();
+        #endregion
+
+        #region 所有颜色组的合集
+        /// <summary>
+        /// 获取所有颜色组的合集
+        /// </summary>
+        public static List<SkyColor> AllSkyColors = new List<SkyColor>();
         #endregion
 
         protected SkyColor()
@@ -165,6 +177,7 @@ namespace TS3Sky
             skyColor.colorPath = skyColor.getColorPath(colorName);
             if (skyColor.colorPath == null) return null;
             skyColor.Read();
+            AllSkyColors.Add(skyColor);
             return skyColor;
         }
 
@@ -202,6 +215,7 @@ namespace TS3Sky
 
         public void Save()
         {
+            // 保存颜色配置文件
             foreach (DayColor color in DayColors)
             {
                 for (int i = 0; i < color.ColorList.Count; i++)
@@ -209,10 +223,17 @@ namespace TS3Sky
 		            SaveColor(color.ColorSection, i + 1, color.ColorList[i]);
 	            }
             }
-            // 修改晴天出现的概率为非常大，以确保修改后又很大概率能生效
+            // 确保颜色配置文件后面没有额外的颜色
+            IniFiles iniFile = new IniFiles(colorPath);
+            if (iniFile.ValueExists(DayColors[DayColors.Count - 1].ColorSection, "red"))
+            {
+                iniFile.EraseSection(DayColors[DayColors.Count - 1].ColorSection);
+            }
+            iniFile.UpdateFile();
+            // 修改晴天出现的概率为非常大，以确保修改后有很大概率能生效
             if (colorType == ColorAssembly.Sky_ClearSky)
             {
-                IniFiles iniFile = new IniFiles(colorPath);
+                iniFile = new IniFiles(colorPath);
                 iniFile.WriteDouble("MiscParams", "ProbabilityWeight", 100);
                 iniFile.UpdateFile();
             }
@@ -229,17 +250,19 @@ namespace TS3Sky
         }
 
         private string getColorPath(ColorAssembly colorName)
-        { 
-            string simsPath;
-            string iniPath;
-            RegistryKey key = Registry.LocalMachine;
-            key = key.OpenSubKey("SOFTWARE",true);
-            key = key.OpenSubKey("Sims",true);
-            key = key.OpenSubKey("The Sims 3",true);
-            simsPath = key.GetValue("Install Dir").ToString();
-            if (simsPath.EndsWith("\\")) simsPath.Substring(0, simsPath.Length - 1);
-            iniPath = @"\GameData\Shared\NonPackaged\Ini\" + colorFileName + ".ini";
-            return simsPath + iniPath;
+        {
+            if (ColorDirectory == null)
+            {
+                string simsPath;
+                RegistryKey key = Registry.LocalMachine;
+                key = key.OpenSubKey("SOFTWARE", true);
+                key = key.OpenSubKey("Sims", true);
+                key = key.OpenSubKey("The Sims 3", true);
+                simsPath = key.GetValue("Install Dir").ToString();
+                if (simsPath.EndsWith("\\")) simsPath.Substring(0, simsPath.Length - 1);
+                ColorDirectory = simsPath + @"\GameData\Shared\NonPackaged\Ini";
+            }
+            return ColorDirectory + "\\" + colorFileName + ".ini";
         }
 
         protected BasicColor ReadColor(string colorSection, int index)

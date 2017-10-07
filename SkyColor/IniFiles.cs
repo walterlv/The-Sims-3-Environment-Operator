@@ -36,7 +36,7 @@ namespace TS3Sky
                 }
                 catch
                 {
-                    throw (new ApplicationException("无法找到《模拟人生3》的环境配置文件！"));
+                    throw (new ApplicationException(TS3Sky.Language.Dialog.EnvironmentFileNotFound));
                 }
             }
             //必须是完全路径，不能是相对路径 
@@ -48,7 +48,7 @@ namespace TS3Sky
             if (!WritePrivateProfileString(Section, Ident, Value, FileName))
             {
                 // Todo:抛出自定义的异常 
-                throw (new ApplicationException("写入《模拟人生3》的环境配置文件失败，可能是这些文件正在被打开的游戏占用。"));
+                throw (new ApplicationException(TS3Sky.Language.Dialog.WriteEnvironmentFileFailed));
             }
         }
         //读取INI文件指定 
@@ -59,7 +59,7 @@ namespace TS3Sky
             //必须设定0（系统默认的代码页）的编码方式，否则无法支持中文 
             string s = Encoding.GetEncoding(0).GetString(Buffer);
             s = s.Substring(0, bufLen);
-            return s.Trim();
+            return s.Trim().Replace("\0", "").Replace(@"\n", "\n");
         }
 
         //读整数 
@@ -177,7 +177,7 @@ namespace TS3Sky
             // 
             if (!WritePrivateProfileString(Section, null, null, FileName))
             {
-                throw (new ApplicationException("无法清除Ini文件中的Section"));
+                throw (new ApplicationException(TS3Sky.Language.Dialog.CannotDeleteColor));
             }
         }
         //删除某个Section下的键 
