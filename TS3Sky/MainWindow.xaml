@@ -1,0 +1,89 @@
+﻿<Window x:Class="TS3Sky.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TS3Sky" SizeToContent="WidthAndHeight" FontSize="12" xmlns:my="clr-namespace:TS3Sky">
+    <Window.Background>
+        <ImageBrush ImageSource="/TS3Sky;component/Images/DefaultBackground.jpg" />
+    </Window.Background>
+    <Window.Resources>
+        <Style x:Key="TS3NavigationButton" TargetType="Button">
+            <!--修改模板属性-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!--控件模板-->
+                    <ControlTemplate TargetType="Button">
+                        <!--只有Grid才能装下这么多Child-->
+                        <Grid>
+                            <Grid.Background>
+                                <ImageBrush ImageSource="/TS3Sky;component/Images/NaviButton_normal.png" />
+                            </Grid.Background>
+                            <Image x:Name="rollover" Opacity="0.0" Source="/TS3Sky;component/Images/NaviButton_rollover.png" />
+                            <Image x:Name="pressed" Opacity="0.0" Source="/TS3Sky;component/Images/NaviButton_pressed.png" />
+                            <!--按钮内容-->
+                            <Border>
+                                <TextBlock x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center" > <!-- Text="{TemplateBinding Content}">-->
+                                </TextBlock>
+                            </Border>
+                        </Grid>
+                        <!--触发器-->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation To="1.0" Duration="0:0:0.2" Storyboard.TargetName="rollover" Storyboard.TargetProperty="Opacity" />
+                                            <DoubleAnimation To="0.0" Duration="0:0:0.2" Storyboard.TargetName="pressed" Storyboard.TargetProperty="Opacity" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation To="0.0" Duration="0:0:0.8" Storyboard.TargetName="rollover" Storyboard.TargetProperty="Opacity" />
+                                            <DoubleAnimation To="0.0" Duration="0:0:0.8" Storyboard.TargetName="pressed" Storyboard.TargetProperty="Opacity" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Setter TargetName="rollover" Property="Opacity" Value="0.0" />
+                                <Setter TargetName="pressed" Property="Opacity" Value="1.0" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" Value="0.3" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
+    <!--这里开始定义界面-->
+    <Grid Width="800" Height="600">
+        <!--这里是背景与导航按钮-->
+        <Grid.Background>
+            <ImageBrush ImageSource="/TS3Sky;component/Images/MainFrame.png" />
+        </Grid.Background>
+        <Image Height="160" HorizontalAlignment="Left" Margin="30,60,0,0" Name="logoImage" Stretch="Fill" VerticalAlignment="Top" Width="160" Source="/TS3Sky;component/Images/DefaultLogo.png" />
+        <StackPanel HorizontalAlignment="Left" Margin="30,280,0,0" Name="grid1" VerticalAlignment="Top" Width="160">
+            <Button Style="{StaticResource TS3NavigationButton}" Content="欢迎" Margin="0,0,0,5"/>
+            <Button Style="{StaticResource TS3NavigationButton}" Content="天空" Margin="0,0,0,5"/>
+            <Button Style="{StaticResource TS3NavigationButton}" Content="海洋" Margin="0,0,0,5"/>
+            <Button Style="{StaticResource TS3NavigationButton}" Content="海洋(阴天)" Margin="0,0,0,5"/>
+            <Button Style="{StaticResource TS3NavigationButton}" Content="关于" Margin="0,0,0,56"/>
+            <TextBlock FontSize="18" Foreground="#093e69" Text="作者: walterlv">
+                <LineBreak/>
+                <Run  FontSize="12" Foreground="#23659b">发布于: 3DMGAME</Run>
+                <LineBreak/>
+                <Run FontSize="12" Foreground="#23659b">适用于“模拟人生3”的1.39版本</Run>
+            </TextBlock>
+        </StackPanel>
+        <!--这里是内容-->
+        <Grid Height="540" HorizontalAlignment="Left" Margin="240,30,0,0" VerticalAlignment="Top" Width="530">
+            <Label VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="debugText"></Label>
+            <my:ColorPickBar x:Name="colorPickBar" Width="482" Height="34" />
+        </Grid>
+    </Grid>
+</Window>
+    
