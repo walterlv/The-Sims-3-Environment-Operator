@@ -33,6 +33,8 @@ namespace Seo.WindowPages
                 if (pair.Key == Seo.Language.Local) LanguageBox.SelectedIndex = i;
                 i++;
             }
+            if (Configs.ForeColor != null) CustomColorCheckBox.IsChecked = true;
+            else CustomColorCheckBox.Visibility = System.Windows.Visibility.Collapsed;
             AutoUpdateCheckBox.IsChecked = Configs.AutoUpdate;
             AeroGlassCheckBox.IsChecked = Configs.GlassWindow;
             BackgroundImageCheckBox.IsChecked = Configs.UseBackgroundImage;
@@ -60,6 +62,7 @@ namespace Seo.WindowPages
             ProgramHeader.Header = Seo.Languages.Window.ProgramHeader;
             AutoUpdateCheckBox.Content = Seo.Languages.Window.AutoUpdate;
             VisualHeader.Header = Seo.Languages.Window.VisualHeader;
+            CustomColorCheckBox.Content = Seo.Languages.Window.CustomForeColor;
             AeroGlassCheckBox.Content = Seo.Languages.Window.AeroGlass;
             BackgroundImageCheckBox.Content = Seo.Languages.Window.BackgroundImage;
         }
@@ -122,6 +125,23 @@ namespace Seo.WindowPages
                 {
                     Configs.BackgroundImage = null;
                     MainWindow.Current.AeroGlass = false;
+                }
+            }
+        }
+
+        private void CustomColorCheckBox_Checked_1(object sender, RoutedEventArgs e)
+        {
+            if (isLoaded)
+            {
+                if (CustomColorCheckBox.IsChecked == true)
+                {
+                    System.Windows.Forms.ColorDialog cd = Seo.WindowParts.DayColorBar.colorDialog;
+                    if (cd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        Color c = Color.FromArgb(cd.Color.A, cd.Color.R, cd.Color.G, cd.Color.B);
+                        App.This.UpdateColors(c);
+                        Configs.SetForeColor(c.A, c.R, c.G, c.B);
+                    }
                 }
             }
         }

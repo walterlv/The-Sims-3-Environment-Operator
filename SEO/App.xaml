@@ -2,4 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <SolidColorBrush x:Key="ForeBrush" Color="#FF00A953" />
+        <SolidColorBrush x:Key="ForeDarkBrush" Color="#FF008933" />
+        <SolidColorBrush x:Key="ForeTransBrush" Color="#7F00A953" />
+        <Color x:Key="ForeColor" A="#FF" R="#00" G="#A9" B="#53" />
+        <Color x:Key="ForeTransColor" A="#7F" R="#00" G="#A9" B="#53" />
+    </Application.Resources>
 </Application>

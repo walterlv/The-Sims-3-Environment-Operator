@@ -25,7 +25,7 @@
       </NewVersion>
     </Update>
     <Front>
-      <Description>Let your imagination fly!</Description>
+      <Description>Colorful worlds come form my hands!</Description>
     </Front>
     <Worlds>
       <List>These are all the worlds this program can work with:</List>
@@ -72,6 +72,7 @@
       <Program>Program</Program>
       <AutoUpdate>Automatic Update Check</AutoUpdate>
       <Visual>Visual Style</Visual>
+      <CustomForeColor>Use custom foreground color...</CustomForeColor>
       <AeroGlass>Aero Glass Window（Windows Vista/7 only）</AeroGlass>
       <Background>Set Background with an Image...</Background>
     </Settings>

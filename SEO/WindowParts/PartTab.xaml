@@ -12,7 +12,7 @@
         </Storyboard>
         <Storyboard x:Key="UnselectStory">
             <ColorAnimation Storyboard.TargetName="BackgroundEle" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)"
-                            To="SteelBlue" Duration="0:0:0.3" />
+                            To="{DynamicResource ForeColor}" Duration="0:0:0.3" />
         </Storyboard>
         <Storyboard x:Key="HoverEnterStory">
             <ColorAnimation Storyboard.TargetName="BackgroundEle" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)"
@@ -20,12 +20,12 @@
         </Storyboard>
         <Storyboard x:Key="HoverLeaveStory">
             <ColorAnimation Storyboard.TargetName="BackgroundEle" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)"
-                            To="SteelBlue" Duration="0:0:0.3" />
+                            To="{DynamicResource ForeColor}" Duration="0:0:0.3" />
         </Storyboard>
     </UserControl.Resources>
-    <Grid Background="SteelBlue" Height="40"
+    <Grid Background="Transparent" Height="40"
           MouseEnter="BackgroundEle_MouseEnter" MouseLeave="BackgroundEle_MouseLeave">
-        <Rectangle x:Name="BackgroundEle" Fill="SteelBlue" Margin="1,1,1,0" />
+        <Rectangle x:Name="BackgroundEle" Fill="Transparent" Margin="1,1,1,0" />
         <TextBlock x:Name="ContentText" HorizontalAlignment="Center" VerticalAlignment="Center"
                    Foreground="White" FontSize="16" TextAlignment="Center" TextWrapping="WrapWithOverflow" />
     </Grid>

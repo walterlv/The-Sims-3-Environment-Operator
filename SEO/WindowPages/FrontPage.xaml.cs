@@ -62,18 +62,6 @@ namespace Seo.WindowPages
         WorldListItem[] WorldItems;
         private void LoadWorlds()
         {
-            // 检查我的文档文件夹
-            string doc = Configs.DocumentName;
-            if (doc == null)
-            {
-                if (Configs.HasMultiDocument == true)
-                {
-                    DocumentWindow dw = new DocumentWindow();
-                    dw.Owner = MainWindow.Current;
-                    dw.ShowDialog();
-                    Configs.DocumentName = dw.DocName;
-                }
-            }
             // 开始加载世界文件
             Worlds.Initialize();
             Worlds.WorldLoaded += Worlds_WorldLoaded;

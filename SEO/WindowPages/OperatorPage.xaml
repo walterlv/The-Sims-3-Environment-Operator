@@ -18,8 +18,8 @@
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            
-            <Grid Margin="4" Background="SteelBlue">
+
+            <Grid Margin="4" Background="{DynamicResource ForeBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition />

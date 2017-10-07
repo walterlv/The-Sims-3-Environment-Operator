@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using m3i.SimsDocument;
 
 namespace Seo
 {
@@ -23,14 +24,13 @@ namespace Seo
 
         #region FirstRun
         private static bool? firstRun = true;
-        private static bool firstRunModified = false;
         /// <summary>
         /// 获取或设置程序是否是第一次运行
         /// </summary>
         public static bool FirstRun
         {
             get { return firstRun == true; }
-            set { firstRunModified = true; firstRun = value; }
+            set { firstRun = value; }
         }
         #endregion
 
@@ -52,17 +52,7 @@ namespace Seo
         #endregion
 
         #region DocumentName
-        private static string documentName;
-        private static bool documentNameModified = false;
-        private static bool? hasMultiDocument;
-        /// <summary>
-        /// 获取是否存在多个文档
-        /// </summary>
-        public static bool? HasMultiDocument
-        {
-            get { return hasMultiDocument; }
-            private set { hasMultiDocument = value; }
-        }
+        private static string _documentName;
         /// <summary>
         /// 获取文档名
         /// </summary>
@@ -70,24 +60,11 @@ namespace Seo
         {
             get
             {
-                if (documentName == null)
-                {
-                    DirectoryInfo dirs = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Electronic Arts");
-                    int count = dirs.GetDirectories().Length;
-                    if (count == 1) documentName = dirs.GetDirectories()[0].Name;
-                    else if (count > 1) hasMultiDocument = true;
-                    else hasMultiDocument = false;
-                }
-                return documentName;
-            }
-            set
-            {
-                if (value == null || value.Trim().Length <= 0) return;
-                if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Electronic Arts\" + value))
-                { documentName = null; documentNameModified = false; }
-                else { documentNameModified = true; documentName = value; }
+                if (_documentName == null) GetNameAndPath();
+                return _documentName;
             }
         }
+        private static string _documentPath;
         /// <summary>
         /// 获取包括EA文件夹和模拟人生3文件夹在内的我的文档位置
         /// </summary>
@@ -95,9 +72,15 @@ namespace Seo
         {
             get
             {
-                if (DocumentName == null) return null;
-                else return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Electronic Arts\" + DocumentName;
+                if (_documentPath == null) GetNameAndPath();
+                return _documentPath;
             }
+        }
+        private static void GetNameAndPath()
+        {
+            Document doc = new Document();
+            _documentName = doc.Name;
+            _documentPath = doc.FullName;
         }
         #endregion
 
@@ -171,6 +154,23 @@ namespace Seo
         }
         #endregion
 
+        #region ForeColor
+        public class Color
+        {
+            public byte A,R,G,B;
+            public Color(byte a, byte r, byte g, byte b) { this.A = a; this.R = r; this.G = g; this.B = b; }
+        }
+        private static Color foreColor = null;
+        private static bool foreColorModified = false;
+        public static Color ForeColor { get { return foreColor; } }
+        public static void SetForeColor(byte a, byte r, byte g, byte b)
+        {
+            foreColorModified = true;
+            if (foreColor == null) foreColor = new Color(a, r, g, b);
+            else { foreColor.A = a; foreColor.R = r; foreColor.G = g; foreColor.B = b; }
+        }
+        #endregion
+
         #region CustomColors
         private static int[] customColors;
         private static bool customColorsModified = false;
@@ -232,11 +232,16 @@ namespace Seo
         {
             XmlFiles reader = new XmlFiles(ConfigFile);
             firstRun = reader.ReadBool(programNode, "FirstRun");
-            documentName = reader.Read(programNode, "Document");
             customCreator = reader.Read(userNode, "Name");
             lockWeights = reader.ReadBool(userNode, "LockWeights");
             local = reader.Read(userNode, "Local");
             autoUpdate = reader.ReadBool(programNode, "AutoUpdate");
+            int? a = reader.ReadInt(userNode, "ForeColor/A");
+            int? r = reader.ReadInt(userNode, "ForeColor/R");
+            int? g = reader.ReadInt(userNode, "ForeColor/G");
+            int? b = reader.ReadInt(userNode, "ForeColor/B");
+            if (a != null && r != null && g != null && b != null)
+                foreColor = new Color((byte)a, (byte)r, (byte)g, (byte)b);
             glassWindow = reader.ReadBool(userNode, "GlassWindow");
             backgroundImage = reader.Read(userNode, "BackgroundImage");
             customColors = reader.ReadIntArray(0, 16, "color", userNode, "CustomColors");
@@ -252,11 +257,17 @@ namespace Seo
             XmlFiles writer = new XmlFiles(ConfigFile, true);
             writer.InvalidFileOverwrite = true;
             writer.Write(false, programNode, "FirstRun");
-            if (documentNameModified) writer.Write(documentName, programNode, "Document");
             if (customCreatorModified) writer.Write(customCreator, userNode, "Name");
             if (lockWeightsModified) writer.Write(lockWeights == true, userNode, "LockWeights");
             if (localModified) writer.Write(Local, userNode, "Local");
             if (autoUpdateModified) writer.Write(autoUpdate == true, programNode, "AutoUpdate");
+            if (foreColorModified)
+            {
+                writer.Write((int)foreColor.A, userNode, "ForeColor", "A");
+                writer.Write((int)foreColor.R, userNode, "ForeColor", "R");
+                writer.Write((int)foreColor.G, userNode, "ForeColor", "G");
+                writer.Write((int)foreColor.B, userNode, "ForeColor", "B");
+            }
             if (glassWindowModified) writer.Write(glassWindow == true, userNode, "GlassWindow");
             if (backgroundImageModified) writer.Write(backgroundImage, userNode, "BackgroundImage");
             if (customColorsModified) writer.WriteArray(customColors, "color", userNode, "CustomColors");

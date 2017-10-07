@@ -43,6 +43,9 @@ namespace Seo
             // 如果是Win7, 则使窗口毛玻璃透明; 否则使用自定义窗口
             if (Configs.GlassWindow) { AeroGlass = true; }
             else { AeroGlass = false; }
+            // 如果自定义过颜色, 则显示自定义颜色
+            if (Configs.ForeColor != null)
+                App.This.UpdateColors(Color.FromArgb(Configs.ForeColor.A, Configs.ForeColor.R, Configs.ForeColor.G, Configs.ForeColor.B));
             // 设置选择第一个标签
             pageManager = new PageManager();
             foreach (string name in pageManager.PageNames) NaviTabPanel.AddChild(name);

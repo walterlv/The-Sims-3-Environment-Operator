@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{669204B8-8D5C-4399-99B1-1B049207187C}</ProjectGuid>
+    <ProjectGuid>{50559087-BF06-4B18-8270-8C5B5BA0A96C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Seo</RootNamespace>
-    <AssemblyName>Operator</AssemblyName>
+    <RootNamespace>m3i</RootNamespace>
+    <AssemblyName>m3i</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,54 +32,22 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ionic.Zip">
-      <HintPath>..\Library\Ionic.Zip.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DayColor.cs" />
-    <Compile Include="EnviFile.cs" />
-    <Compile Include="EnvironmentOperator.cs" />
-    <Compile Include="PackageFile.cs" />
-    <Compile Include="SkyColor.cs" />
-    <Compile Include="SkyColors\Sky_1.cs" />
-    <Compile Include="SkyColors\Sky_2.cs" />
-    <Compile Include="SkyColors\Sky_Light.cs" />
-    <Compile Include="SkyColors\Sky_Sea.cs" />
-    <Compile Include="SkyColors\Sky_Sky.cs" />
-    <Compile Include="TimeColor.cs" />
-    <Compile Include="Weather.cs" />
+    <Compile Include="Definitions\GamePack.cs" />
+    <Compile Include="Definitions\GamePackName.cs" />
+    <Compile Include="Definitions\GamePackType.cs" />
+    <Compile Include="Definitions\Locales.cs" />
+    <Compile Include="SimsDocument\Document.cs" />
+    <Compile Include="SimsDocument\Save.cs" />
+    <Compile Include="SimsDocument\SaveCollection.cs" />
+    <Compile Include="SimsRegistry\RegistryReadonlyException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WorldList.cs" />
+    <Compile Include="SimsRegistry\SimsRegistryInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Language\Language.csproj">
-      <Project>{67562995-3f80-442c-ae4c-53224da60358}</Project>
-      <Name>Language</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\m3i\m3i.csproj">
-      <Project>{50559087-bf06-4b18-8270-8c5b5ba0a96c}</Project>
-      <Name>m3i</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Package\Package.csproj">
-      <Project>{2e672ccd-5333-46fb-8329-054631ef6431}</Project>
-      <Name>Package</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sims\Sims.csproj">
-      <Project>{41f139a8-73a4-4658-8002-25dde9ba540b}</Project>
-      <Name>Sims</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Custom\0000-0000-0000-0000.seo" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Custom\0-Golden Dusk.seo">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

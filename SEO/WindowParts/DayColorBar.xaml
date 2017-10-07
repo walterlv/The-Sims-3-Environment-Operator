@@ -39,8 +39,8 @@
     
     <StackPanel Margin="20,10">
         <!--这里是标题-->
-        <TextBlock x:Name="TitleText" FontSize="20" Foreground="DarkBlue" />
-        <TextBlock x:Name="DescriptionText" FontSize="14" Foreground="SteelBlue" TextWrapping="WrapWithOverflow" />
+        <TextBlock x:Name="TitleText" FontSize="20" Foreground="Black" />
+        <TextBlock x:Name="DescriptionText" FontSize="14" Foreground="Black" TextWrapping="WrapWithOverflow" />
         <!--这里是时间轴-->
         <Grid>
             <TextBlock>0</TextBlock>
@@ -58,7 +58,7 @@
             <TextBlock HorizontalAlignment="Left" Margin="468,0,0,0">24</TextBlock>
         </Grid>
         <!--这里是颜色条-->
-        <Grid Background="#054587" Width="482" Height="34">
+        <Grid Background="DarkGray" Width="482" Height="34">
             <Rectangle x:Name="ColorPanel" Margin="1" Cursor="Hand"
                   MouseMove="ColorPanel_MouseMove" MouseLeftButtonDown="ColorPanel_MouseLeftButtonDown" MouseLeave="ColorPanel_MouseLeave" />
         </Grid>

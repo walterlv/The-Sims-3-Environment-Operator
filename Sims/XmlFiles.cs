@@ -236,6 +236,17 @@ namespace Seo
         }
 
         /// <summary>
+        /// 读取在 nodes 节点下的整数. 如果不存在或不是整数, 则返回 null.
+        /// </summary>
+        /// <param name="nodes">读取的层级结点</param>
+        public int? ReadInt(params string[] nodes)
+        {
+            if (!IsValid) return null;
+            try { int result = Int32.Parse(Read(nodes)); return result; }
+            catch { return null; }
+        }
+
+        /// <summary>
         /// 读取在 nodes 节点下的整数. 如果不存在或不是整数, 则返回 fail.
         /// </summary>
         /// <param name="fail">当读取失败时返回的值</param>
@@ -334,7 +345,7 @@ namespace Seo
         /// <param name="nodes">写入的层级结点</param>
         public void Write(string text, params string[] nodes)
         {
-            //if (!IsValid) throw new 
+            if (!IsValid) throw InvalidXmlException;
             if (IsReadOnly) throw ReadonlyException;
             this.Node = GetCreateNode(nodes);
             this.Node.InnerText = text;
@@ -346,6 +357,28 @@ namespace Seo
         /// <param name="text">要写入的布尔值</param>
         /// <param name="nodes">写入的层级结点</param>
         public void Write(bool text, params string[] nodes)
+        {
+            if (IsReadOnly) throw ReadonlyException;
+            Write(text.ToString(), nodes);
+        }
+
+        /// <summary>
+        /// 在 nodes 指定的结点下写下 text 整数.
+        /// </summary>
+        /// <param name="text">要写入的整数</param>
+        /// <param name="nodes">写入的层级结点</param>
+        public void Write(int text, params string[] nodes)
+        {
+            if (IsReadOnly) throw ReadonlyException;
+            Write(text.ToString(), nodes);
+        }
+
+        /// <summary>
+        /// 在 nodes 指定的结点下写下 text 小数.
+        /// </summary>
+        /// <param name="text">要写入的小数</param>
+        /// <param name="nodes">写入的层级结点</param>
+        public void Write(double text, params string[] nodes)
         {
             if (IsReadOnly) throw ReadonlyException;
             Write(text.ToString(), nodes);

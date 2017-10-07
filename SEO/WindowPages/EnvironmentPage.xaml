@@ -38,7 +38,7 @@
                    Margin="8,8,8,0"
                    FontSize="16"
                    Text="Sims Environments:" />
-        <Grid Grid.Row="1" Margin="4" Background="SteelBlue">
+        <Grid Grid.Row="1" Margin="4" Background="{DynamicResource ForeBrush}">
             <ScrollViewer x:Name="EnvironmentScroll" Margin="1" Background="White"
                           HorizontalScrollBarVisibility="Disabled"
                           VerticalScrollBarVisibility="Auto">
@@ -98,7 +98,7 @@
                        FontSize="24" Text="Share my Environment"
                        HorizontalAlignment="Center"
                        Margin="4"
-                       Foreground="SteelBlue" />
+                       Foreground="{DynamicResource ForeBrush}" />
 
             <TextBlock Grid.Row="1" x:Name="NameTitleText"
                        FontSize="14" Text="Name:" Margin="4,0,4,0"/>

@@ -8,7 +8,7 @@
     <UserControl.Resources>
         <Storyboard x:Key="SelectStory">
             <ColorAnimation Storyboard.TargetName="BackgroundEle" Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
-                            To="SteelBlue" Duration="0:0:0.3" />
+                            To="{DynamicResource ForeColor}" Duration="0:0:0.3" />
             <DoubleAnimation Storyboard.TargetName="TabEle" Storyboard.TargetProperty="Opacity"
                             To="1.0" Duration="0:0:0.3" />
         </Storyboard>
@@ -20,7 +20,7 @@
         </Storyboard>
         <Storyboard x:Key="HoverEnterStory">
             <ColorAnimation Storyboard.TargetName="BackgroundEle" Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
-                            To="#7F007FFF" Duration="0:0:0.3" />
+                            To="{DynamicResource ForeColor}" Duration="0:0:0.3" />
         </Storyboard>
         <Storyboard x:Key="HoverLeaveStory">
             <ColorAnimation Storyboard.TargetName="BackgroundEle" Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"

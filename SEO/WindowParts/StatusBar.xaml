@@ -14,19 +14,19 @@
         </Storyboard>
         <Storyboard x:Key="InformationStory">
             <ColorAnimation Storyboard.TargetName="StatusGrid" Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
-                            To="DarkOliveGreen" Duration="0:0:0.3" />
+                            To="SteelBlue" Duration="0:0:0.3" />
             <DoubleAnimation Storyboard.TargetName="StatusText" Storyboard.TargetProperty="Opacity"
                             To="1" Duration="0:0:0.3" />
         </Storyboard>
         <Storyboard x:Key="ProgressStory">
             <ColorAnimation Storyboard.TargetName="StatusGrid" Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
-                            To="SteelBlue" Duration="0:0:0.3" />
+                            To="{DynamicResource ForeLightColor}" Duration="0:0:0.3" />
             <DoubleAnimation Storyboard.TargetName="StatusText" Storyboard.TargetProperty="Opacity"
                             To="1" Duration="0:0:0.3" />
         </Storyboard>
         <Storyboard x:Key="SuccessStory">
             <ColorAnimation Storyboard.TargetName="StatusGrid" Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
-                            To="#FF007ACC" Duration="0:0:0.3" />
+                            To="{DynamicResource ForeColor}" Duration="0:0:0.3" />
             <DoubleAnimation Storyboard.TargetName="StatusText" Storyboard.TargetProperty="Opacity"
                             To="1" Duration="0:0:0.3" />
         </Storyboard>

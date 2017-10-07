@@ -69,6 +69,7 @@
         public static string ProgramHeader = null;
         public static string AutoUpdate = null;
         public static string VisualHeader = null;
+        public static string CustomForeColor = null;
         public static string AeroGlass = null;
         public static string BackgroundImage = null;
 
@@ -148,6 +149,7 @@
             ProgramHeader = reader.TryRead(ProgramHeader, Node, "Settings/Program");
             AutoUpdate = reader.TryRead(AutoUpdate, Node, "Settings/AutoUpdate");
             VisualHeader = reader.TryRead(VisualHeader, Node, "Settings/Visual");
+            CustomForeColor = reader.TryRead(CustomForeColor, Node, "Settings/CustomForeColor");
             AeroGlass = reader.TryRead(AeroGlass, Node, "Settings/AeroGlass");
             BackgroundImage = reader.TryRead(BackgroundImage, Node, "Settings/Background");
 

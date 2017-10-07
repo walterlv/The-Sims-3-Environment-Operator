@@ -8,7 +8,7 @@
     <UserControl.Resources>
         <Storyboard x:Key="EnterStory">
             <ColorAnimationUsingKeyFrames Storyboard.TargetName="InnerRect" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)" RepeatBehavior="Forever">
-                <LinearColorKeyFrame KeyTime="0:0:1.0" Value="#7F007FFF" />
+                <LinearColorKeyFrame KeyTime="0:0:1.0" Value="{DynamicResource ForeColor}" />
                 <LinearColorKeyFrame KeyTime="0:0:2.0" Value="White" />
             </ColorAnimationUsingKeyFrames>
         </Storyboard>
@@ -19,7 +19,7 @@
         </Storyboard>
         <Storyboard x:Key="DownStory">
             <ColorAnimationUsingKeyFrames Storyboard.TargetName="InnerRect" Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)">
-                <LinearColorKeyFrame KeyTime="0:0:0.15" Value="#7F007FFF" />
+                <LinearColorKeyFrame KeyTime="0:0:0.15" Value="{DynamicResource ForeColor}" />
             </ColorAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="UpStory">
@@ -43,7 +43,7 @@
         </Storyboard>
     </UserControl.Resources>
 
-    <Grid x:Name="ContentGrid" Background="SteelBlue"
+    <Grid x:Name="ContentGrid" Background="{DynamicResource ForeBrush}"
           MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"
           MouseLeftButtonDown="Button_MouseLeftButtonDown" MouseLeftButtonUp="Button_MouseLeftButtonUp">
         <Rectangle x:Name="InnerRect" Margin="1" Fill="White" />

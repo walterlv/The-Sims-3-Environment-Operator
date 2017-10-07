@@ -25,7 +25,7 @@
       </NewVersion>
     </Update>
     <Front>
-      <Description>我要亲手创造一个多彩的世界！</Description>
+      <Description>让我来设计自己的春夏秋冬！（3DM-M3小组walterlv开发）</Description>
     </Front>
     <Worlds>
       <List>以下是“模拟人生3：编辑环境工具”能够支持的所有城镇。</List>
@@ -72,6 +72,7 @@
       <Program>程序选项</Program>
       <AutoUpdate>自动检查更新</AutoUpdate>
       <Visual>视觉效果</Visual>
+      <CustomForeColor>使用自定义的前景颜色...</CustomForeColor>
       <AeroGlass>开启毛玻璃效果（仅支持 Windows Vista/7）</AeroGlass>
       <Background>使用背景图片...</Background>
     </Settings>

@@ -8,7 +8,7 @@
       d:DesignHeight="540" d:DesignWidth="530"
 	  Title="關於" Background="White">
 
-    <Grid Margin="4" Background="SteelBlue">
+    <Grid Margin="4" Background="{DynamicResource ForeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -29,7 +29,7 @@
             </Grid.ColumnDefinitions>
             <Image Grid.RowSpan="4" Grid.ColumnSpan="2" Source="/SEO;component/Logo.png" Opacity="0.3" />
             <TextBlock Grid.Row="0" Grid.Column="0" Margin="4" TextWrapping="WrapWithOverflow">
-                <Run Foreground="SteelBlue" FontSize="30" Text="編輯環境工具" />
+                <Run Foreground="{DynamicResource ForeBrush}" FontSize="30" Text="編輯環境工具" />
                 <LineBreak />
                 <Run Foreground="Red" FontSize="16" Text="版本：2.0.51.42" />
                 <Image Margin="4,0,0,0" Width="16" Height="16" Source="/SEO;component/icon.ico">
@@ -58,9 +58,9 @@
                 <Run Foreground="Black" FontSize="14" Text=")" />
             </TextBlock>
             <TextBlock Grid.Row="1" Grid.Column="0" Margin="4" TextWrapping="WrapWithOverflow">
-                <Run Foreground="SteelBlue" FontSize="30" Text="研發團隊" />
+                <Run Foreground="{DynamicResource ForeBrush}" FontSize="30" Text="研發團隊" />
                 <LineBreak />
-                <Run Foreground="DarkBlue" FontSize="16" Text="[3DM-M3小組]" />
+                <Run Foreground="{DynamicResource ForeDarkBrush}" FontSize="16" Text="[3DM-M3小組]" />
                 <LineBreak />
                 <Run Foreground="Red" FontSize="16" Text="主要開發者：walterlv" />
                 <LineBreak />
@@ -69,12 +69,12 @@
                 <Run Foreground="Black" FontSize="14" Text="製作圖片+設計環境+主要測試者：anteen" />
             </TextBlock>
             <TextBlock Grid.Row="0" Grid.Column="1" Margin="4" TextWrapping="WrapWithOverflow">
-                <Run Foreground="SteelBlue" FontSize="30" Text="感謝測試" />
+                <Run Foreground="{DynamicResource ForeBrush}" FontSize="30" Text="感謝測試" />
                     <LineBreak />
                     <Run Foreground="Black" FontSize="14" Text="anteen、MAIzhentao、迪克.CGD.蘭德古" />
             </TextBlock>
             <TextBlock Grid.Row="1" Grid.Column="1" Margin="4" TextWrapping="WrapWithOverflow">
-                <Run Foreground="SteelBlue" FontSize="30" Text="感謝開源" />
+                <Run Foreground="{DynamicResource ForeBrush}" FontSize="30" Text="感謝開源" />
                     <LineBreak />
                     <Run Foreground="Black" FontSize="14" Text="Ionic.Zip.Dll" />
                     <LineBreak />

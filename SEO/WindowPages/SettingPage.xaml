@@ -22,14 +22,15 @@
                       VerticalContentAlignment="Center"
                       SelectionChanged="LanguageBox_SelectionChanged"/>
         </Grid>
-        <GroupBox x:Name="ProgramHeader" Header="Visual Style" Margin="0,16,0,0">
+        <GroupBox x:Name="ProgramHeader" Header="Program" Margin="0,16,0,0">
             <StackPanel>
                 <CheckBox x:Name="AutoUpdateCheckBox" Margin="4,8,4,4" Checked="AutoUpdateCheckBox_Checked" Unchecked="AutoUpdateCheckBox_Checked" Content="Automatic Update Check" />
             </StackPanel>
         </GroupBox>
         <GroupBox x:Name="VisualHeader" Header="Visual Style" Margin="0,16,0,0">
             <StackPanel>
-                <CheckBox x:Name="AeroGlassCheckBox" Margin="4,8,4,4" Checked="AeroGlassCheckBox_Checked" Unchecked="AeroGlassCheckBox_Checked" Content="Use Aero Glass Window (Windows 7/Vista)" />
+                <CheckBox x:Name="CustomColorCheckBox" Margin="4" Checked="CustomColorCheckBox_Checked_1" Unchecked="CustomColorCheckBox_Checked_1" Content="Use Custom Foreground..." />
+                <CheckBox x:Name="AeroGlassCheckBox" Margin="4" Checked="AeroGlassCheckBox_Checked" Unchecked="AeroGlassCheckBox_Checked" Content="Use Aero Glass Window (Windows 7/Vista)" />
                 <CheckBox x:Name="BackgroundImageCheckBox" Margin="4" Checked="BackgroundImageCheckBox_Checked" Unchecked="BackgroundImageCheckBox_Checked" Content="Use Background Image..." />
             </StackPanel>
         </GroupBox>

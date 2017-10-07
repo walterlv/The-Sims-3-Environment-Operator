@@ -252,7 +252,7 @@ namespace Seo.WindowParts
         }
 
         private static System.Windows.Forms.ColorDialog _colorDialog;
-        private static System.Windows.Forms.ColorDialog colorDialog
+        public static System.Windows.Forms.ColorDialog colorDialog
         {
             get
             {

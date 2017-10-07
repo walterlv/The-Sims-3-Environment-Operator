@@ -72,6 +72,7 @@
       <Program>軟體選項</Program>
       <AutoUpdate>自動檢查更新</AutoUpdate>
       <Visual>視覺效果</Visual>
+      <CustomForeColor>使用自定義的前景色...</CustomForeColor>
       <AeroGlass>開啟毛玻璃效果（僅支持 Windows Vista/7）</AeroGlass>
       <Background>使用背景圖片...</Background>
     </Settings>
