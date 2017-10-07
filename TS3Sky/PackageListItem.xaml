@@ -17,18 +17,16 @@
         </Grid.ColumnDefinitions>
         
         <Image Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"
-               x:Name="PreviewImage" Width="100" />
+               x:Name="PreviewImage" Width="100" Height="100" />
         <TextBlock Grid.Row="0" Grid.Column="1"
-                   x:Name="PackageNameText"
-                   FontSize="20" Margin="10,0"
-                   Text="默认方案" />
+                   x:Name="PackageNameText" Foreground="Black"
+                   FontSize="20" Margin="10,0" />
         <TextBlock Grid.Row="1" Grid.Column="1"
-                   x:Name="PackageCreatorText"
-                   FontSize="14" Margin="10,0"
-                   Text="由 Electronic Arts 制作" />
+                   x:Name="PackageCreatorText" Foreground="Black"
+                   FontSize="14" Margin="10,0" />
         <TextBlock Grid.Row="2" Grid.Column="1"
-                   x:Name="PackageDescriptionText"
+                   x:Name="PackageDescriptionText" Foreground="Black"
                    FontSize="12" Margin="10,0" VerticalAlignment="Center"
-                   Text="如果你把环境方案改得天花乱坠，而又不想一个个再改回来的时候，请尝试使用这个方案恢复成默认环境。" TextWrapping="WrapWithOverflow" />
+                   TextWrapping="WrapWithOverflow" />
     </Grid>
 </UserControl>

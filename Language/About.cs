@@ -10,7 +10,7 @@ namespace TS3Sky.Language
         public static string Author = "软件作者";
         public static string AuthorName = "walterlv（视觉设计、开发程序）\nKuree（研究解决方案、提取游戏资源）";
         public static string Version = "版本";
-        public static string VersionText = "1.0.2.16";
+        public static string VersionText = "1.0.2.18";
         public static string Publish = "软件发布";
         public static string PublishText = "3DMGAME M3小组";
         public static string Contact = "如果您对软件有任何疑问或建议，欢迎点击这个按钮：";

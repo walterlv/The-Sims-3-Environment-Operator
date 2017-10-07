@@ -49,6 +49,24 @@ namespace TS3Sky
         }
         #endregion
 
+        #region 设置颜色组 (为了检查与设置是否被修改)
+        private SkyColor colorBarGroup;
+        /// <summary>
+        /// 获取或者设置颜色拾取条的预设颜色条
+        /// </summary>
+        public SkyColor ColorBarGroup
+        {
+            get
+            {
+                return colorBarGroup;
+            }
+            set
+            {
+                colorBarGroup = value;
+            }
+        }
+        #endregion
+
         #region 设置标题
         private string title;
         public string Title
@@ -197,6 +215,7 @@ namespace TS3Sky
                         colorBar.ColorList[CurrentPickIndex - 1].R, colorBar.ColorList[CurrentPickIndex - 1].G, colorBar.ColorList[CurrentPickIndex - 1].B));
                 }
                 pickColorRect.Fill = Brushes.Transparent;
+                colorBarGroup.Modified = true;
             }
         }
         private string doubleToTime(double time)

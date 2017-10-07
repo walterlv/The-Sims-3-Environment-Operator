@@ -35,9 +35,9 @@ namespace TS3Sky
             set
             {
                 showPackage = value;
-                PackageName = value.Name;
-                PackageCreator = value.Creator;
-                PackageDescription = value.Description;
+                PackageName = String.Format(TS3Sky.Language.Package.Name, value.Name);
+                PackageCreator = String.Format(TS3Sky.Language.Package.Creator, value.Creator);
+                PackageDescription = String.Format(TS3Sky.Language.Package.Description, value.Description);
                 PackageImage = value.ImageFile;
             }
         }

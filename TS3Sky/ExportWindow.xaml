@@ -25,40 +25,42 @@
             <ColumnDefinition Width="110" />
         </Grid.ColumnDefinitions>
         
-        <Label Grid.Row="0" x:Name="NameLabel">方案名：</Label>
+        <Label Grid.Row="0" x:Name="NameLabel" />
         <TextBox Grid.Row="1" x:Name="NameText"
                  TextChanged="TextBox_TextChanged" />
 
-        <Label Grid.Row="2" x:Name="CreatorLabel">作者：</Label>
+        <Label Grid.Row="2" x:Name="CreatorLabel" />
         <TextBox Grid.Row="3" x:Name="CreatorText"
                  TextChanged="TextBox_TextChanged" />
 
-        <Label Grid.Row="4" x:Name="ImageLabel">预览图：</Label>
+        <Label Grid.Row="4" x:Name="ImageLabel" />
         <Image Grid.Row="0" Grid.RowSpan="5" Grid.Column="1"
-               x:Name="previewImage"
+               x:Name="PreviewImage"
                Width="100" Height="100" HorizontalAlignment="Right" />
         <Grid  Grid.Row="5" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" x:Name="ImagePathText" />
+            <TextBox Grid.Column="0" x:Name="ImagePathText" IsReadOnly="True" />
             <Button Grid.Column="1"
                     x:Name="ImagePathButton" Click="ImagePathButton_Click"
                     Width="30" Content="..." />
         </Grid>
 
-        <Label Grid.Row="6" Grid.ColumnSpan="2" x:Name="DescriptionLabel">描述：</Label>
-        <TextBox Grid.Row="7" Grid.ColumnSpan="2" x:Name="DescriptionText" Height="100" />
+        <Label Grid.Row="6" Grid.ColumnSpan="2" x:Name="DescriptionLabel" />
+        <TextBox Grid.Row="7" Grid.ColumnSpan="2"
+                 x:Name="DescriptionText"
+                 TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" MaxLength="200" MaxLines="10" />
 
-        <Label Grid.Row="8" Grid.ColumnSpan="2" x:Name="SaveToLabel">保存到：</Label>
+        <Label Grid.Row="8" Grid.ColumnSpan="2" x:Name="SaveToLabel" />
         <Grid Grid.Row="9" Grid.ColumnSpan="2" Margin="0,0,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox Grid.Column="0" x:Name="SaveToText"
-                     TextChanged="TextBox_TextChanged" />
+                     TextChanged="TextBox_TextChanged" IsReadOnly="True" />
             <Button Grid.Column="1"
                     x:Name="SaveToButton" Click="SaveToButton_Click"
                     Width="30" Content="..." />
@@ -70,10 +72,9 @@
         <StackPanel Grid.Row="11" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="ExportButton" Click="ExportButton_Click"
                     Width="96" Height="30" Margin="10,0"
-                    Content="导出" IsEnabled="False" IsDefault="True"/>
+                    IsEnabled="False" IsDefault="True"/>
             <Button x:Name="CancelButton" Click="CancelButton_Click"
-                    Width="96" Height="30" Margin="10,0"
-                    Content="取消"/>
+                    Width="96" Height="30" Margin="10,0" />
         </StackPanel>
     </Grid>
 </Window>

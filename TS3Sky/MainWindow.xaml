@@ -4,7 +4,7 @@
         xmlns:my="clr-namespace:TS3Sky"
         Title="TS3Sky"
         SizeToContent="WidthAndHeight" FontSize="11" WindowStartupLocation="CenterScreen"
-        Loaded="Window_Loaded" FontFamily="Microsoft YaHei" Icon="/TS3Sky;component/Images/icon.ico">
+        Loaded="Window_Loaded" FontFamily="Microsoft YaHei" Icon="/TS3Sky;component/Images/icon.ico" Closing="Window_Closing">
     <Window.Background>
         <ImageBrush ImageSource="/TS3Sky;component/Images/DefaultBackground.jpg" />
     </Window.Background>
@@ -48,6 +48,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="ListBoxItem">
+            <Style.Resources>
+                <!--SelectedItem with focus-->
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="White" Opacity=".4"/>
+                <!--SelectedItem without focus-->
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="White" Opacity=".4"/>
+            </Style.Resources>
+        </Style>
     </Window.Resources>
     
     <!--这里开始定义界面-->
@@ -57,16 +65,19 @@
             <ImageBrush ImageSource="/TS3Sky;component/Images/MainFrame.png" />
         </Grid.Background>
         <Image Height="160" HorizontalAlignment="Left" Margin="30,50,0,0" Name="logoImage" Stretch="Fill" VerticalAlignment="Top" Width="160" Source="/TS3Sky;component/Images/DefaultLogo.png" />
-        <StackPanel HorizontalAlignment="Left" Margin="30,240,0,0" Name="grid1" VerticalAlignment="Top" Width="160">
+        <StackPanel HorizontalAlignment="Left" Margin="30,0,0,30" Name="grid1" VerticalAlignment="Bottom" Width="160">
+            <Label x:Name="WelcomeLabel" FontSize="16" Foreground="DarkBlue" />
             <Button x:Name="SkyColorWelcome" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
+            <Label x:Name="SettingsLabel" FontSize="16" Foreground="DarkBlue" />
             <Button x:Name="SkyColorButton3" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
             <Button x:Name="SkyColorButton0" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
             <Button x:Name="SkyColorButton1" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
             <Button x:Name="SkyColorButton2" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
             <Button x:Name="SkyColorButton4" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
+            <Label x:Name="OtherInfoLabel" FontSize="16" Foreground="DarkBlue" />
             <Button x:Name="SkyColorAbout" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
         </StackPanel>
-        <TextBlock x:Name="LabelText" Margin="30,0,610,30" FontSize="11" Foreground="SteelBlue" Text="By walterlv" VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" />
+        <!--TextBlock x:Name="LabelText" Margin="30,0,610,30" FontSize="11" Foreground="SteelBlue" Text="By walterlv" VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" /-->
         <!--这里是欢迎信息-->
         <Grid x:Name="SkyWelcome" Height="540" Width="530" Margin="240,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid.RowDefinitions>
@@ -87,18 +98,15 @@
             
             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
                        x:Name="WelcomeTitle"
-                       HorizontalAlignment="Center" Margin="0,10,0,10"
-                       FontSize="30" Foreground="DarkBlue"
-                       Text="模拟人生3：编辑环境工具" />
+                       HorizontalAlignment="Center" Margin="0,10,0,0"
+                       FontSize="30" Foreground="DarkBlue" />
             <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
                        x:Name="WelcomeDescription"
                        HorizontalAlignment="Center" Margin="0,0,0,10"
-                       FontSize="14" Foreground="SteelBlue" TextWrapping="WrapWithOverflow"
-                       Text="想让你的世界充满梦幻般的色彩吗？从这里开始。" />
+                       FontSize="14" Foreground="SteelBlue" TextWrapping="WrapWithOverflow" TextAlignment="Center" />
             <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
                        x:Name="PackageListBoxTitle"
-                       FontSize="14" TextWrapping="WrapWithOverflow"
-                       Text="选择一个你喜欢的环境配置方案：" />
+                       FontSize="14" TextWrapping="WrapWithOverflow" />
             <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
                      x:Name="PackageListBox"
                      Height="311" Background="Transparent"
@@ -107,34 +115,24 @@
             <Button Grid.Row="4" Grid.Column="0"
                     x:Name="ApplyPackageButton" IsEnabled="False"
                     Width="150" Height="32" Margin="5,3"
-                    Content="应用" Click="ApplyPackageButton_Click"/>
+                    Click="ApplyPackageButton_Click"/>
             <Button Grid.Row="4" Grid.Column="1"
                     x:Name="DeletePackageButton" IsEnabled="False"
                     Width="150" Height="32" Margin="5,3"
-                    Content="删除" Click="DeletePackageButton_Click"/>
+                    Click="DeletePackageButton_Click"/>
             <Button Grid.Row="4" Grid.Column="2"
                     x:Name="ImportPackageButton"
                     Width="150" Height="32" Margin="5,3"
-                    Content="添加" Click="ImportPackageButton_Click"/>
+                    Click="ImportPackageButton_Click"/>
             <Rectangle Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"
                        Height="1" Margin="0,7,0,0" Fill="SteelBlue" />
             <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3"
                        x:Name="PackageExportTitle" Margin="0,10,0,0"
-                       FontSize="14" TextWrapping="WrapWithOverflow"
-                       Text="你也可以导出自己的方案分享给朋友：" />
+                       FontSize="14" TextWrapping="WrapWithOverflow" />
             <Button Grid.Row="7" Grid.Column="0"
                     x:Name="ExportPackageButton"
                     Width="150" Height="32" Margin="5,3" VerticalAlignment="Top"
-                    Content="导出" Click="ExportPackageButton_Click"/>
-            <TextBlock Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3"
-                       x:Name="AboutButtonTitle" Margin="0,10,0,0"
-                       HorizontalAlignment="Center" TextWrapping="WrapWithOverflow"
-                       FontSize="14" Foreground="DarkBlue"
-                       Text="作者：walterlv，Kuree" />
-            <Button Grid.Row="7" Grid.Column="2"
-                    x:Name="AboutButton"
-                    Width="150" Height="32" Margin="5,3" VerticalAlignment="Top"
-                    Click="Button_Click" />
+                    Click="ExportPackageButton_Click"/>
         </Grid>
         <!--这里是内容-->
         <ScrollViewer x:Name="ColorPageScroll" VerticalScrollBarVisibility="Auto" Height="540" Width="530" Margin="240,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
@@ -155,7 +153,7 @@
             <StackPanel Margin="60,140,60,50" VerticalAlignment="Bottom">
                 <TextBlock x:Name="AboutInfomation" FontSize="12" TextWrapping="WrapWithOverflow" />
                 <Button x:Name="ContactUsButton" HorizontalAlignment="Left" Width="160" Height="32" Margin="0, 0, 0, 20" Click="ContactUsButton_Click" />
-                <Button x:Name="DownloadWorldButton" HorizontalAlignment="Left" Width="160" Height="32" Margin="0, 0, 0, 20" Click="DownloadWorldButton_Click" />
+                <Button Visibility="Collapsed" x:Name="DownloadWorldButton" HorizontalAlignment="Left" Width="160" Height="32" Margin="0, 0, 0, 20" Click="DownloadWorldButton_Click" />
                 <TextBlock x:Name="CopyrightInfomation" FontSize="12" VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" />
             </StackPanel>
         </Grid>

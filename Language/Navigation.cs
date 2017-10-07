@@ -7,16 +7,20 @@ namespace TS3Sky.Language
 {
     public class Navigation
     {
-        public static string Welcome = "欢迎";
+        public static string WelcomeLabel = "欢迎使用";
+        public static string Welcome = "快速设置";
+        public static string SettingsLabel = "高级设置";
+        public static string OtherInfoLabel = "其它信息";
         public static string About = "关于";
-        public static string Label = "作者：walterlv、Kuree\n发布：3DMGAME M3小组\n模拟人生3全版本通用";
 
         private const string Section = "Navigation";
         public static void Initialize(LanguageReader lr)
         {
+            WelcomeLabel = lr.Read(Section, "WelcomeLabel", WelcomeLabel);
             Welcome = lr.Read(Section, "Welcome", Welcome);
+            SettingsLabel = lr.Read(Section, "SettingsLabel", SettingsLabel);
+            OtherInfoLabel = lr.Read(Section, "OtherInfoLabel", OtherInfoLabel);
             About = lr.Read(Section, "About", About);
-            Label = lr.Read(Section, "Label", Label);
         }
     }
 }

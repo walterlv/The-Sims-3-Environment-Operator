@@ -47,12 +47,14 @@
     <Compile Include="LanguageManager.cs" />
     <Compile Include="Navigation.cs" />
     <Compile Include="Operation.cs" />
+    <Compile Include="Package.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkyColors\Sky_Clear1.cs" />
     <Compile Include="SkyColors\Sky_Clear2.cs" />
     <Compile Include="SkyColors\Sky_ClearLight.cs" />
     <Compile Include="SkyColors\Sky_ClearSea.cs" />
     <Compile Include="SkyColors\Sky_ClearSky.cs" />
+    <Compile Include="Welcome.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

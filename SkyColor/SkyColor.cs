@@ -19,6 +19,11 @@ namespace TS3Sky
 
     public class SkyColor
     {
+        /// <summary>
+        /// 指示颜色配置自上次保存后是否已经被修改
+        /// </summary>
+        public bool Modified = false;
+
         #region 获取或设置颜色组的名字
         private string colorName;
         /// <summary>
@@ -246,7 +251,7 @@ namespace TS3Sky
 
         public void SetToDefault()
         {
-            File.Copy(Environment.CurrentDirectory + @"\backups\" + colorType + ".ini", colorPath, true);
+            File.Copy(Package.CachePath + @"\0000-0000-0000-0000\" + colorType + ".ini", colorPath, true);
         }
 
         private string getColorPath(ColorAssembly colorName)
@@ -292,6 +297,7 @@ namespace TS3Sky
             iniFile.WriteInteger(section, "blue", color.B);
             iniFile.WriteDouble(section, "timeOfDay", color.TimeValue);
             iniFile.UpdateFile();
+            Modified = false;
         }
     }
 }

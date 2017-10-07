@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
+using System.IO;
 
 namespace TS3Sky
 {
@@ -28,6 +28,16 @@ namespace TS3Sky
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // 初始化语言
+            this.Title = TS3Sky.Language.Operation.ExportTitle;
+            NameLabel.Content = TS3Sky.Language.Operation.ExportName;
+            CreatorLabel.Content = TS3Sky.Language.Operation.ExportCreator;
+            ImageLabel.Content = TS3Sky.Language.Operation.ExportPreview;
+            DescriptionLabel.Content = TS3Sky.Language.Operation.ExportDescription;
+            SaveToLabel.Content = TS3Sky.Language.Operation.ExportTo;
+            ExportButton.Content = TS3Sky.Language.Operation.ExportOK;
+            CancelButton.Content = TS3Sky.Language.Operation.ExportCancel;
+            // 初始化界面
             NameText.Focus();
             CreatorText.Text = Environment.UserName;
         }
@@ -45,7 +55,7 @@ namespace TS3Sky
                 {
                     Uri uri = new Uri(open.FileName);
                     BitmapImage bitmap = new BitmapImage(uri);
-                    previewImage.Source = bitmap;
+                    PreviewImage.Source = bitmap;
                     ImagePathText.Text = open.FileName;
                 }
                 catch
@@ -71,14 +81,10 @@ namespace TS3Sky
             {
                 ErrorText.Content = @"作者名字不能包含“\n”";
             }
-            else if (((System.Windows.Controls.TextBox)sender) == SaveToText && !Regex.IsMatch(savePath, @"^[a-zA-Z]:(((\\(?! )[^/:*?<>\""|\\]+)+\\?)|(\\)?)\s*$"))
-            {
-                ErrorText.Content = "保存路径无效";
-            }
             else
             {
                 ErrorText.Content = String.Empty;
-                if (name.Length > 0 && creator.Length > 0)
+                if (name.Length > 0 && creator.Length > 0 && savePath.Length > 0)
                     ExportButton.IsEnabled = true;
             }
         }
