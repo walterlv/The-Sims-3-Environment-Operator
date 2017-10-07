@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 
 namespace Seo.WindowParts
 {
-    public delegate void NavigationTab_SelectionChanged(object sender, NavigationTabArgs e);
+    public delegate void OnNavigationTabSelected(object sender, NavigationTabArgs e);
 
     public class NavigationTabArgs : EventArgs
     {
@@ -37,9 +37,9 @@ namespace Seo.WindowParts
             InitializeComponent();
         }
 
-        public event NavigationTab_SelectionChanged OnNavigationTab_SelectionChanged;
+        public event OnNavigationTabSelected NavigationTabSelected;
 
-        private List<NavigationTab> Children = new List<NavigationTab>();
+        public List<NavigationTab> Children = new List<NavigationTab>();
         private int selectedIndex = -1;
         public int SelectedIndex
         {
@@ -61,8 +61,8 @@ namespace Seo.WindowParts
                 selectedIndex = Children.IndexOf(value);
                 foreach (NavigationTab tab in Children) tab.IsSelected = false;
                 value.IsSelected = true;
-                if (OnNavigationTab_SelectionChanged != null)
-                    OnNavigationTab_SelectionChanged(this, new NavigationTabArgs(Children.IndexOf(value), value));
+                if (NavigationTabSelected != null)
+                    NavigationTabSelected(this, new NavigationTabArgs(Children.IndexOf(value), value));
             }
         }
 

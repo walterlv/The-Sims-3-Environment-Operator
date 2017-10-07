@@ -8,7 +8,7 @@
     <UserControl.Resources>
         <Storyboard x:Key="SelectStory">
             <ColorAnimation Storyboard.TargetName="BackgroundEle" Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
-                            To="#FF007FFF" Duration="0:0:0.3" />
+                            To="SteelBlue" Duration="0:0:0.3" />
             <DoubleAnimation Storyboard.TargetName="TabEle" Storyboard.TargetProperty="Opacity"
                             To="1.0" Duration="0:0:0.3" />
         </Storyboard>
@@ -32,7 +32,7 @@
             <ColumnDefinition />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="ContentText" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+        <TextBlock x:Name="ContentText" Grid.Column="0" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center"
                    Foreground="White" FontSize="16" TextWrapping="WrapWithOverflow">
             <TextBlock.BitmapEffect>
                 <OuterGlowBitmapEffect GlowColor="Black" GlowSize="1" />

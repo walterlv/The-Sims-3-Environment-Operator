@@ -13,7 +13,7 @@ namespace Seo
     /// </summary> 
     public class IniFiles
     {
-        public string FileName; //INI文件名 
+        private string FileName; //INI文件名 
         //声明读写INI文件的API函数 
         [DllImport("kernel32")]
         private static extern bool WritePrivateProfileString(string section, string key, string val, string filePath);

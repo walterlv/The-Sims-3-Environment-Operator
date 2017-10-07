@@ -3,11 +3,29 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-	Title="SettingPage">
+      mc:Ignorable="d" Background="White"
+      d:DesignHeight="530" d:DesignWidth="540"
+	  Title="SettingPage"
+      Loaded="Page_Loaded">
 
-    <Grid>
-        
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" x:Name="SelectLanguageText"
+                       VerticalAlignment="Center"
+                       Margin="0,0,8,0" Text="Choose a language" />
+            <ComboBox Grid.Column="1" x:Name="LanguageBox"
+                      SelectedIndex="0" Padding="8,0,0,0" Height="32"
+                      VerticalContentAlignment="Center"
+                      SelectionChanged="LanguageBox_SelectionChanged"/>
+        </Grid>
     </Grid>
 </Page>

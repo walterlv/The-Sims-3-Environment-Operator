@@ -72,6 +72,18 @@ namespace Seo
         /// 使外部不可创建此对象
         /// </summary>
         private Weather() { }
+        private bool isError = false;
+        public bool IsError
+        {
+            get { return isError; }
+            private set { isError = value; }
+        }
+        internal Weather(bool error, Weathers w)
+        {
+            if (error) this.IsError = true;
+            else throw new Exception("Only error SkyColor object can be created");
+            this.Type = w;
+        }
 
         internal static void Initialize()
         {
@@ -80,23 +92,31 @@ namespace Seo
             {
                 weather = new Weather();
                 SkyColor Sky_1 = SkyColor.FromColorAssembly(ColorAssemblies.Sky_1, w);
-                weather.SkyColors.Add(Sky_1);
+                if (Sky_1 != null) weather.SkyColors.Add(Sky_1);
                 SkyColor Sky_2 = SkyColor.FromColorAssembly(ColorAssemblies.Sky_2, w);
-                weather.SkyColors.Add(Sky_2);
+                if (Sky_2 != null) weather.SkyColors.Add(Sky_2);
                 SkyColor Sky_Light = SkyColor.FromColorAssembly(ColorAssemblies.Sky_Light, w);
-                weather.SkyColors.Add(Sky_Light);
+                if (Sky_Light != null) weather.SkyColors.Add(Sky_Light);
                 SkyColor Sky_Sky = SkyColor.FromColorAssembly(ColorAssemblies.Sky_Sky, w);
-                weather.SkyColors.Add(Sky_Sky);
+                if (Sky_Sky != null) weather.SkyColors.Add(Sky_Sky);
                 SkyColor Sky_Sea = SkyColor.FromColorAssembly(ColorAssemblies.Sky_Sea, w);
-                weather.SkyColors.Add(Sky_Sea);
-                weather.WeatherWeightFile = Sky_Sky.ColorFile;
-                IniFiles ww = new IniFiles(weather.WeatherWeightFile);
-                weather.WeatherWeight = ww.ReadDouble(MiscParams, ProbabilityWeight, 0.0);
-                weather.Name = WeatherToString(w);
-                weather.Type = w;
-                AllWeathers.Add(weather);
+                if (Sky_Sea != null) weather.SkyColors.Add(Sky_Sea);
+                try
+                {
+                    weather.WeatherWeightFile = Sky_Sky.ColorFile;
+                    IniFiles ww = new IniFiles(weather.WeatherWeightFile);
+                    weather.WeatherWeight = ww.ReadDouble(MiscParams, ProbabilityWeight, 0.0);
+                    weather.Name = WeatherToString(w);
+                    weather.Type = w;
+                    AllWeathers.Add(weather);
+                }
+                catch
+                {
+                    AllWeathers.Add(new Weather(true, w));
+                }
             }
-            CurrentWeather = AllWeathers[0];
+            if (AllWeathers.Count > 0) CurrentWeather = AllWeathers[0];
+            else throw new Exception("Initialize Failed");
         }
 
         internal void Read()
@@ -104,20 +124,43 @@ namespace Seo
             foreach (SkyColor skyColor in SkyColors) skyColor.Read();
         }
 
+        public static Weather GetWeather(Weathers w)
+        {
+            foreach (Weather weather in AllWeathers)
+            {
+                if (weather.Type == w) return weather;
+            }
+            return null;
+        }
+
+        public SkyColor GetSkyColor(ColorAssemblies c)
+        {
+            foreach (SkyColor color in this.SkyColors)
+            {
+                if (color.ColorAssembly == c) return color;
+            }
+            return null;
+        }
+
+        public static string WeatherToName(Weathers w)
+        {
+            return Enum.GetName(typeof(Weathers), w);
+        }
+
         public static string WeatherToString(Weathers w)
         {
             switch (w)
             {
                 case Weathers.Clear:
-                    return "Clear";
+                    return Seo.Languages.Operator.Clear;
                 case Weathers.PartlyCloudy:
-                    return "PartlyCloudy";
+                    return Seo.Languages.Operator.PartlyCloudy;
                 case Weathers.Overcast:
-                    return "Overcast";
+                    return Seo.Languages.Operator.Overcast;
                 case Weathers.Stormy:
-                    return "Stormy";
+                    return Seo.Languages.Operator.Stormy;
                 case Weathers.Custom:
-                    return "Custom";
+                    return Seo.Languages.Operator.Custom;
                 default:
                     return null;
             }

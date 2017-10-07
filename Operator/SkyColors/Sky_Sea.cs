@@ -5,14 +5,28 @@ using System.Text;
 
 namespace Seo
 {
-    public class Sky_Sea : SkyColor
+    public class Sky_Sea : SkyColor,ILanguage
     {
         public Sky_Sea()
         {
-            ColorName = Seo.Language.Sky_Sea.DayColorName;
-            ColorDescription = Seo.Language.Sky_Sea.DayColorDescription;
-            DayColors.Add(new DayColor("WaterColor", Seo.Language.Sky_Sea.WaterColorName, Seo.Language.Sky_Sea.WaterColorDescription));
-            DayColors.Add(new DayColor("SunMoonColor", Seo.Language.Sky_Sea.SunMoonColorName, Seo.Language.Sky_Sea.SunMoonColorDescription));
+            ColorName = Seo.Languages.Sky_Sea.DayColorName;
+            ColorDescription = Seo.Languages.Sky_Sea.DayColorDescription;
+            DayColors.Add(new DayColor("WaterColor"));
+            DayColors.Add(new DayColor("SunMoonColor"));
+            Language.Register(this, Priority.Highest);
+        }
+
+        ~Sky_Sea()
+        {
+            Language.UnRegister(this);
+        }
+
+        public void LoadLanguage()
+        {
+            DayColors[0].ColorName = Seo.Languages.Sky_Sea.WaterColorName;
+            DayColors[0].ColorDescription = Seo.Languages.Sky_Sea.WaterColorDescription;
+            DayColors[1].ColorName = Seo.Languages.Sky_Sea.SunMoonColorName;
+            DayColors[1].ColorDescription = Seo.Languages.Sky_Sea.SunMoonColorDescription;
         }
     }
 }

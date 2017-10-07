@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Security;
 using System.Text;
@@ -26,8 +27,6 @@ namespace Seo
             InitializeComponent();
         }
 
-        int BCount = 0;
-
         #region 窗口界面操作
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         { this.DragMove(); }
@@ -52,12 +51,11 @@ namespace Seo
         {
             Empty = 0,
             Start = 1,
-            InitializeOperator = 2,
-            CheckEnvironmentFiles = 3,
-            ReadEnvironmentFiles = 4,
+            ReadLanguage = 2,
+            ReadConfigs = 3,
+            GetSimsDir = 4,
             AllLoaded = 50,
-            SimsDirectoryNotFound = 98,
-            SecurityUp = 99
+            SimsDirectoryNotFound = 99
         }
         ProgressState CurrentState = ProgressState.Start;
         ProgressState NormalState = ProgressState.Start;
@@ -71,38 +69,40 @@ namespace Seo
         // 执行异步操作 (这里的状态只正在执行的状态)
         void LoadingWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            BCount++;
             switch (CurrentState)
             {
                 // 表示开始初始化
                 case ProgressState.Start:
-                    CurrentState = ProgressState.InitializeOperator;
+                    CurrentState = ProgressState.ReadLanguage;
                     NormalState = CurrentState;
                     break;
-                // 初始化EnvironmentOperator实例
-                case ProgressState.InitializeOperator:
+                case ProgressState.ReadLanguage:
+                    CultureInfo currentCultureInfo = CultureInfo.CurrentCulture;
+                    Seo.Language.LoadLanguage(currentCultureInfo.Name);
+                    CurrentState = ProgressState.ReadConfigs;
+                    NormalState = CurrentState;
+                    break;
+                case ProgressState.ReadConfigs:
+                    CurrentState = ProgressState.GetSimsDir;
+                    NormalState = CurrentState;
+                    break;
+                case ProgressState.GetSimsDir:
                     try
                     {
-                        if (EnvironmentOperator.Instance.IsReady) CurrentState = ProgressState.CheckEnvironmentFiles;
-                    }
-                    catch (SecurityException)
-                    {
-                        CurrentState = ProgressState.SecurityUp;
+                        FilesDirs.SimsFolder = FilesDirs.GetSimsDirectoryByRegistry();
+                        CurrentState = ProgressState.AllLoaded;
+                        NormalState = CurrentState;
                     }
                     catch (Exception)
                     {
-                        CurrentState = ProgressState.SimsDirectoryNotFound;
+                        if (Configs.SimsFolder == null) CurrentState = ProgressState.SimsDirectoryNotFound;
+                        else
+                        {
+                            FilesDirs.SimsFolder = Configs.SimsFolder;
+                            CurrentState = ProgressState.AllLoaded;
+                            NormalState = CurrentState;
+                        }
                     }
-                    break;
-                case ProgressState.CheckEnvironmentFiles:
-                    EnvironmentOperator.Instance.CheckWeathers();
-                    CurrentState = ProgressState.ReadEnvironmentFiles;
-                    NormalState = CurrentState;
-                    break;
-                case ProgressState.ReadEnvironmentFiles:
-                    EnvironmentOperator.Instance.ReadWeathers();
-                    CurrentState = ProgressState.AllLoaded;
-                    NormalState = CurrentState;
                     break;
                 default:
                     break;
@@ -122,10 +122,8 @@ namespace Seo
                     this.Close();
                     break;
                 case ProgressState.SimsDirectoryNotFound:
-                case ProgressState.SecurityUp:
-                    SimsDirForm sdf = new SimsDirForm();
-                    if (CurrentState == ProgressState.SimsDirectoryNotFound)
-                        sdf.IsManual = true;
+                    SimsDirWindow sdf = new SimsDirWindow();
+                    sdf.Owner = this;
                     sdf.ShowDialog();
                     if (sdf.SimsDir == null)
                     {
@@ -134,6 +132,7 @@ namespace Seo
                     }
                     else
                     {
+                        FilesDirs.SimsFolder = sdf.SimsDir;
                         Configs.SimsFolder = sdf.SimsDir;
                         CurrentState = NormalState;
                         CreateNewWorker();

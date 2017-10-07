@@ -31,6 +31,9 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\SEO.old - 2012.11.02-22.13\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -41,8 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DayColor.cs" />
+    <Compile Include="EnviFile.cs" />
     <Compile Include="EnvironmentOperator.cs" />
     <Compile Include="Package.cs" />
+    <Compile Include="PackageFile.cs" />
     <Compile Include="SkyColor.cs" />
     <Compile Include="SkyColors\Sky_1.cs" />
     <Compile Include="SkyColors\Sky_2.cs" />
@@ -62,6 +67,16 @@
       <Project>{41f139a8-73a4-4658-8002-25dde9ba540b}</Project>
       <Name>Sims</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Custom\0-Default.seo">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Custom\0-Golden Dusk.seo">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

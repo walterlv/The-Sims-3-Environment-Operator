@@ -14,14 +14,27 @@ namespace Seo
         public bool IsValid { get; internal set; }
 
         /// <summary>
-        /// 读取或设置一个颜色值
+        /// 获取一个颜色值
         /// </summary>
         public Color ColorValue { get; internal set; }
 
         /// <summary>
-        /// 读取或设置这个颜色值对应的时间起点
+        /// 获取这个颜色值对应的时间起点
         /// </summary>
         public double TimeValue { get; internal set; }
+
+        /// <summary>
+        /// 获取这个时间点相对于1的偏移
+        /// </summary>
+        public double TimeOffset { get; internal set; }
+        /// <summary>
+        /// 获取这个时间点可以持续的时间长度
+        /// </summary>
+        public double TimeSpan { get; internal set; }
+        /// <summary>
+        /// 获取这个时间点在一天的范围内可以持续的时间长度
+        /// </summary>
+        public double TimeDaySpan { get; internal set; }
 
         /// <summary>
         /// 创建一个黑色, 零点的颜色时间对
@@ -38,6 +51,7 @@ namespace Seo
         {
             this.ColorValue = color;
             this.TimeValue = time;
+            this.TimeOffset = time / 24;
             if (this.TimeValue < 0 || this.TimeValue > 24) this.IsValid = false;
             else this.IsValid = true;
         }

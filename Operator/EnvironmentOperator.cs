@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Security;
@@ -22,15 +23,44 @@ namespace Seo
         }
         #endregion
 
+        #region IsEditing
+        private bool isEditing = false;
+        /// <summary>
+        /// 表示当前正在修改这个环境
+        /// </summary>
+        public bool IsEditing
+        {
+            get;
+            set;
+        }
+        #endregion
+
         #region WorkDirectory
-        private string workDirectory;
+        private string workDirectory = null;
         /// <summary>
         /// Sims 3 的环境文件目录
         /// </summary>
         public string WorkDirectory
         {
-            get { return workDirectory; }
-            private set { workDirectory = value; }
+            get
+            {
+                if (workDirectory == null)
+                {
+                    try
+                    {
+                        workDirectory = FilesDirs.SimsFolder + SimsDirectoryTail;
+                        if (!Directory.Exists(workDirectory))
+                            throw new FileNotFoundException("Not a valid Sims folder", workDirectory);
+                    }
+                    catch (Exception ex)
+                    {
+                        workDirectory = null;
+                        throw ex;
+                    }
+                }
+                return workDirectory;
+            }
+            set { workDirectory = value; }
         }
         #endregion
 
@@ -48,34 +78,68 @@ namespace Seo
         {
             get
             {
-                if (instance == null)
-                {
-                    try
-                    {
-                        instance = new EnvironmentOperator();
-                        // TODO 初始化
-                        instance.WorkDirectory = FilesDirs.GetSimsDirectoryByConfigs() + SimsDirectoryTail;
-                        if (instance.WorkDirectory == null || !Directory.Exists(instance.WorkDirectory))
-                            instance.WorkDirectory = FilesDirs.GetSimsDirectoryByRegistry() + "\\" + SimsDirectoryTail;
-                        instance.IsReady = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        instance = null;
-                        throw ex;
-                    }
-                }
+                if (instance == null) instance = new EnvironmentOperator();
                 return instance;
             }
         }
 
-        public void CheckWeathers()
+        #region 加载过程
+        /// <summary>
+        /// 检查所有要读取的文件, 并初始化对象
+        /// </summary>
+        public bool CheckWeathers()
         {
-            Weather.Initialize();
+            try { Weather.Initialize(); return true; }
+            catch { return false; }
         }
-        public void ReadWeathers()
+        /// <summary>
+        /// 根据初始化的对象读取相应的文件
+        /// </summary>
+        public bool ReadWeathers()
         {
-            foreach (Weather weather in Weather.AllWeathers) weather.Read();
+            try { foreach (Weather weather in Weather.AllWeathers) weather.Read(); IsReady = true; return true; }
+            catch { return false; }
         }
+        /// <summary>
+        /// 准备好以便不影响工作
+        /// </summary>
+        public bool Prepare()
+        {
+            bool success = false;
+            if (CheckWeathers()) success = ReadWeathers();
+            return success;
+        }
+        #endregion
+
+        #region 获取对象
+        public SkyColor GetSkyColor(Weathers w, ColorAssemblies c)
+        {
+            SkyColor color = null;
+            Weather weather = GetWeather(w);
+            if (!weather.IsError) color = weather.GetSkyColor(c);
+            if (color == null) color = new SkyColor(true, c);
+            return color;
+        }
+        public Weather GetWeather(Weathers w)
+        {
+            Weather weather = Weather.GetWeather(w);
+            if (weather == null) return new Weather(true, w);
+            else return weather;
+        }
+        #endregion
+
+        #region 获取数据
+        #endregion
+
+        #region 设置数据
+        public void SetTimeColorValue(TimeColor tc, Color c)
+        {
+            tc.ColorValue = c;
+        }
+        public void SetDayTimeColor(DayColor day, List<TimeColor> colors)
+        {
+            day.ColorList = colors;
+        }
+        #endregion
     }
 }

@@ -97,6 +97,27 @@ namespace Seo
         #endregion
 
         /// <summary>
+        /// 五种颜色组分别列出的数组
+        /// </summary>
+        public static readonly ColorAssemblies[] ColorAssemblyArray = new ColorAssemblies[5] { ColorAssemblies.Sky_Sky, ColorAssemblies.Sky_Light, ColorAssemblies.Sky_1, ColorAssemblies.Sky_2, ColorAssemblies.Sky_Sea };
+
+        #region 构造方法
+        public SkyColor() { }
+        private bool isError = false;
+        public bool IsError
+        {
+            get { return isError; }
+            private set { isError = value; }
+        }
+        internal SkyColor(bool error, ColorAssemblies colorAssembly)
+        {
+            if (error) this.IsError = true;
+            else throw new Exception("Only error SkyColor object can be created");
+            this.ColorAssembly = colorAssembly;
+        }
+        #endregion
+
+        /// <summary>
         /// 从颜色类型创建颜色组对象
         /// </summary>
         /// <param name="colorName">颜色类型</param>
@@ -109,31 +130,36 @@ namespace Seo
             {
                 case ColorAssemblies.Sky_1:
                     skyColor = new Sky_1();
-                    skyColor.ColorFileName = String.Format("Sky_{0}1", Weather.WeatherToString(weather));
+                    skyColor.ColorFileName = String.Format("Sky_{0}1", Weather.WeatherToName(weather));
                     break;
                 case ColorAssemblies.Sky_2:
                     skyColor = new Sky_2();
-                    skyColor.ColorFileName = String.Format("Sky_{0}2", Weather.WeatherToString(weather));
+                    skyColor.ColorFileName = String.Format("Sky_{0}2", Weather.WeatherToName(weather));
                     break;
                 case ColorAssemblies.Sky_Light:
                     skyColor = new Sky_Light();
-                    skyColor.ColorFileName = String.Format("Sky_{0}Light", Weather.WeatherToString(weather));
+                    skyColor.ColorFileName = String.Format("Sky_{0}Light", Weather.WeatherToName(weather));
                     break;
                 case ColorAssemblies.Sky_Sea:
                     skyColor = new Sky_Sea();
-                    skyColor.ColorFileName = String.Format("Sky_{0}Sea", Weather.WeatherToString(weather));
+                    skyColor.ColorFileName = String.Format("Sky_{0}Sea", Weather.WeatherToName(weather));
                     break;
                 case ColorAssemblies.Sky_Sky:
                     skyColor = new Sky_Sky();
-                    skyColor.ColorFileName = String.Format("Sky_{0}Sky", Weather.WeatherToString(weather));
+                    skyColor.ColorFileName = String.Format("Sky_{0}Sky", Weather.WeatherToName(weather));
                     break;
                 default:
                     return null;
             }
             skyColor.ColorAssembly = colorAssembly;
             skyColor.ColorFile = EnvironmentOperator.Instance.WorkDirectory + "\\" + skyColor.ColorFileName + ".ini";
-            if (!File.Exists(skyColor.ColorFile)) return null;
+            if (!File.Exists(skyColor.ColorFile)) skyColor = new SkyColor(true, colorAssembly);
             return skyColor;
+        }
+
+        public void Prepare()
+        {
+            Read();
         }
 
         internal void Read()
@@ -165,6 +191,15 @@ namespace Seo
                         }
                     }
                 }
+                // 设置时间段
+                for (i = 1; i < color.ColorList.Count; i++)
+                {
+                    color.ColorList[i - 1].TimeSpan = color.ColorList[i].TimeValue - color.ColorList[i - 1].TimeValue;
+                    color.ColorList[i - 1].TimeDaySpan = color.ColorList[i - 1].TimeSpan;
+                }
+                i--;
+                color.ColorList[i].TimeDaySpan = 24 - color.ColorList[i].TimeValue;
+                color.ColorList[i].TimeSpan = color.ColorList[i].TimeDaySpan + color.ColorList[0].TimeValue;
             }
             // 读取完成
             IsReady = true;
@@ -185,6 +220,30 @@ namespace Seo
             double timeOfDay = reader.ReadDouble(section, "timeOfDay", -1.0);
             TimeColor color = new TimeColor(red, green, blue, timeOfDay);
             return color;
+        }
+
+        private static string ColorAssemblyToName(ColorAssemblies color)
+        {
+            return Enum.GetName(typeof(ColorAssemblies), color);
+        }
+
+        public static string ColorAssemblyToString(ColorAssemblies color)
+        {
+            switch (color)
+            {
+                case ColorAssemblies.Sky_1:
+                    return Seo.Languages.Sky_1.DayColorName;
+                case ColorAssemblies.Sky_2:
+                    return Seo.Languages.Sky_2.DayColorName;
+                case ColorAssemblies.Sky_Light:
+                    return Seo.Languages.Sky_Light.DayColorName;
+                case ColorAssemblies.Sky_Sea:
+                    return Seo.Languages.Sky_Sea.DayColorName;
+                case ColorAssemblies.Sky_Sky:
+                    return Seo.Languages.Sky_Sky.DayColorName;
+                default:
+                    return null;
+            }
         }
     }
 }

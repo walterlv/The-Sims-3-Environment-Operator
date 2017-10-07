@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Seo.Language
+﻿namespace Seo.Languages
 {
     public class Sky_2
     {
@@ -19,5 +14,22 @@ namespace Seo.Language
         public static string ColorWRTHorizonLightDescription = "The color of cloud1 at horizon with sunlight";
         public static string ColorWRTShadowName = "Cloud2 Shadow";
         public static string ColorWRTShadowDescription = "The color of the cloud1's shadow";
+
+        private const string Section = "Sky_2";
+        public static void ReadFile(IniFiles reader)
+        {
+            DayColorName = reader.ReadString(Section, "Name", DayColorName);
+            DayColorDescription = reader.ReadString(Section, "Description", DayColorDescription);
+            ColorWRTSunDarkName = reader.ReadString(Section, "ColorWRTSunDarkName", ColorWRTSunDarkName);
+            ColorWRTSunDarkDescription = reader.ReadString(Section, "ColorWRTSunDarkDescription", ColorWRTSunDarkDescription);
+            ColorWRTSunLightName = reader.ReadString(Section, "ColorWRTSunLightName", ColorWRTSunLightName);
+            ColorWRTSunLightDescription = reader.ReadString(Section, "ColorWRTSunLightDescription", ColorWRTSunLightDescription);
+            ColorWRTHorizonDarkName = reader.ReadString(Section, "ColorWRTHorizonDarkName", ColorWRTHorizonDarkName);
+            ColorWRTHorizonDarkDescription = reader.ReadString(Section, "ColorWRTHorizonDarkDescription", ColorWRTHorizonDarkDescription);
+            ColorWRTHorizonLightName = reader.ReadString(Section, "ColorWRTHorizonLightName", ColorWRTHorizonLightName);
+            ColorWRTHorizonLightDescription = reader.ReadString(Section, "ColorWRTHorizonLightDescription", ColorWRTHorizonLightDescription);
+            ColorWRTShadowName = reader.ReadString(Section, "ColorWRTShadowName", ColorWRTShadowName);
+            ColorWRTShadowDescription = reader.ReadString(Section, "ColorWRTShadowDescription", ColorWRTShadowDescription);
+        }
     }
 }

@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("walterlv")]
 [assembly: AssemblyProduct("Sims Environment Operator")]
-[assembly: AssemblyCopyright("Copyright © walterlv 2012, All rights reserved!")]
+[assembly: AssemblyCopyright("Copyright © 3DM-M3 2012, All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

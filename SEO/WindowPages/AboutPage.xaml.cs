@@ -17,11 +17,31 @@ namespace Seo.WindowPages
     /// <summary>
     /// AboutPage.xaml 的交互逻辑
     /// </summary>
-    public partial class AboutPage : Page
+    public partial class AboutPage : Page, PageNavigation, ILanguage
     {
         public AboutPage()
         {
             InitializeComponent();
+        }
+
+        public bool NavigationIn()
+        {
+            return true;
+        }
+
+        public bool NavigationOut()
+        {
+            return true;
+        }
+
+        public void LoadLanguage()
+        {
+            this.Title = Seo.Languages.Window.AboutPage;
+        }
+
+        private void ForumSiteClick(object sender, MouseButtonEventArgs e)
+        {
+            CommonOperation.VisitSite("http://bbs.3dmgame.com/forum-402-1.html");
         }
     }
 }

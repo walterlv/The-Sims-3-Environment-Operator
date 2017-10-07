@@ -78,15 +78,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="SimsDirForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SimsDirForm.Designer.cs">
-      <DependentUpon>SimsDirForm.cs</DependentUpon>
+    <Compile Include="Actions\Action.cs" />
+    <Compile Include="Actions\DayColorAction.cs" />
+    <Compile Include="CommonOperation.cs" />
+    <Compile Include="SimsDirWindow.xaml.cs">
+      <DependentUpon>SimsDirWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowEffects\GlassHelper.cs" />
     <Compile Include="WindowPages\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowPages\AboutPage_chs.xaml.cs">
+      <DependentUpon>AboutPage_chs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowPages\AboutPage_cht.xaml.cs">
+      <DependentUpon>AboutPage_cht.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowPages\FrontPage.xaml.cs">
       <DependentUpon>FrontPage.xaml</DependentUpon>
@@ -94,12 +100,19 @@
     <Compile Include="WindowPages\OperatorPage.xaml.cs">
       <DependentUpon>OperatorPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WindowPages\PackagePage.xaml.cs">
-      <DependentUpon>PackagePage.xaml</DependentUpon>
+    <Compile Include="WindowPages\EnvironmentPage.xaml.cs">
+      <DependentUpon>EnvironmentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowPages\PageManager.cs" />
+    <Compile Include="WindowPages\PageNavigation.cs" />
     <Compile Include="WindowPages\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowParts\DayColorBar.xaml.cs">
+      <DependentUpon>DayColorBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowParts\EnviFileItem.xaml.cs">
+      <DependentUpon>EnviFileItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowParts\NavigationTab.xaml.cs">
       <DependentUpon>NavigationTab.xaml</DependentUpon>
@@ -107,8 +120,26 @@
     <Compile Include="WindowParts\NavigationTabPanel.xaml.cs">
       <DependentUpon>NavigationTabPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WindowParts\WindowControlBox.xaml.cs">
-      <DependentUpon>WindowControlBox.xaml</DependentUpon>
+    <Compile Include="WindowParts\PartTab.xaml.cs">
+      <DependentUpon>PartTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowParts\PartTabPanel.xaml.cs">
+      <DependentUpon>PartTabPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowParts\PercentSlider.xaml.cs">
+      <DependentUpon>PercentSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowParts\SimpleButton.xaml.cs">
+      <DependentUpon>SimpleButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowParts\StatusBar.xaml.cs">
+      <DependentUpon>StatusBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowParts\WeatherPickBar.xaml.cs">
+      <DependentUpon>WeatherPickBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowParts\WeatherSelector.xaml.cs">
+      <DependentUpon>WeatherSelector.xaml</DependentUpon>
     </Compile>
     <Page Include="LoadingWindow.xaml">
       <SubType>Designer</SubType>
@@ -129,7 +160,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SimsDirWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WindowPages\AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowPages\AboutPage_chs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowPages\AboutPage_cht.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -141,11 +184,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WindowPages\PackagePage.xaml">
+    <Page Include="WindowPages\EnvironmentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowPages\SettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowParts\DayColorBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowParts\EnviFileItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -157,7 +208,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WindowParts\WindowControlBox.xaml">
+    <Page Include="WindowParts\PartTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowParts\PartTabPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowParts\PercentSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowParts\SimpleButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowParts\StatusBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowParts\WeatherPickBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowParts\WeatherSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,9 +254,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SimsDirForm.resx">
-      <DependentUpon>SimsDirForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">

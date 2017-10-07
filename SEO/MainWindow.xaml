@@ -2,44 +2,32 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Sims Environment Operator" Icon="icon.ico"
-        SizeToContent="WidthAndHeight" Background="Transparent"
+        Width="860" Height="600" MinHeight="600" MinWidth="860"
+        Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
         Loaded="Window_Loaded">
-    <Grid MinWidth="800">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
-        <!--标题栏-->
-        <Grid x:Name="TitleGrid" Grid.Row="0" Height="24" MouseLeftButtonDown="TitleGrid_MouseLeftButtonDown">
-            <TextBlock VerticalAlignment="Center"
-                       Margin="8,0,0,0"
-                       Text="Sims Environment Operator">
-                <TextBlock.BitmapEffect>
-                    <OuterGlowBitmapEffect GlowColor="White" GlowSize="8" Opacity="0.75" />
-                </TextBlock.BitmapEffect>
-            </TextBlock>
-            <WindowParts:WindowControlBox x:Name="WindowTitleBox" HorizontalAlignment="Right" />
-        </Grid>
         <!--状态栏-->
-        <Grid x:Name="StatusGrid" Grid.Row="2" Height="24">
-
+        <Grid x:Name="StatusGrid" Grid.Row="1" Height="24">
+            <WindowParts:StatusBar />
         </Grid>
         <!--内容区-->
-        <Grid x:Name="ContentGrid" Grid.Row="1" MinHeight="600" Margin="4">
+        <Grid x:Name="ContentGrid" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="128" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             
             <StackPanel>
-                <WindowParts:NavigationTabPanel x:Name="NaviTabPanel" Margin="0,200,0,0" OnNavigationTab_SelectionChanged="NavigationTab_SelectionChanged" />
+                <WindowParts:NavigationTabPanel x:Name="NaviTabPanel" Margin="0,180,0,0" NavigationTabSelected="NavigationTab_Selected" />
             </StackPanel>
             
-            <Frame x:Name="PageFrame" Grid.Column="1" Background="White"
+            <Frame x:Name="PageFrame" Grid.Column="1"
                    NavigationUIVisibility="Hidden" />
         </Grid>
     </Grid>

@@ -21,11 +21,12 @@ namespace Seo
         /// </summary>
         public static string ErrorLogFile { get { return errorLogFile; } }
 
-        private static string languageDirectory = Environment.CurrentDirectory + @"\Languages";
+        public static string SimsFolder { get; set; }
+
         /// <summary>
-        /// 语言文件目录
+        /// 获取程序漫游路径
         /// </summary>
-        public static string LanguageDirectory { get { return languageDirectory; } }
+        public static string AppDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seo";
 
         /// <summary>
         /// 从注册表获取Sims3的路径
@@ -36,9 +37,9 @@ namespace Seo
             string simsDirectory = null;
             // 从注册表获取路径
             RegistryKey key = Registry.LocalMachine;
-            key = key.OpenSubKey("SOFTWARE", true);
-            key = key.OpenSubKey("Sims", true);
-            key = key.OpenSubKey("The Sims 3", true);
+            key = key.OpenSubKey("SOFTWARE");
+            key = key.OpenSubKey("Sims");
+            key = key.OpenSubKey("The Sims 3");
             simsDirectory = key.GetValue("Install Dir").ToString();
             // 如果路径不存在, 则抛出异常
             if (!Directory.Exists(simsDirectory)) throw new DirectoryNotFoundException();
