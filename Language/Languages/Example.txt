@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
+  <!--An example of your translation.-->
   <Language>
-    <Name>English</Name>
+    <Name>My Language</Name>
     <Version>2.0.54.42</Version>
   </Language>
 
@@ -11,7 +12,7 @@
       <Tip>Another program is editing The Sims 3 Environment. So this program will only run on read mode.</Tip>
     </ReadonlyMode>
     <Navigation>
-      <FrontPage>Sims World</FrontPage>
+      <FrontPage>Front Page</FrontPage>
       <EnvironmentPage>Choose Environment</EnvironmentPage>
       <OperatorPage>Edit Environment</OperatorPage>
       <SettingsPage>Preference</SettingsPage>
@@ -308,4 +309,3 @@
     </AmbientSkyBottom>
   </Sky_Light>
 </root>
-

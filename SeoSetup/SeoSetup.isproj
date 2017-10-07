@@ -1,0 +1,56 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+	<PropertyGroup>
+		<!-- Select a Product Configuration -->
+		<InstallShieldProductConfiguration>Express</InstallShieldProductConfiguration>
+		<!-- Select a Visual Studio Configuration / InstallShield Release -->
+		<Configuration>Debug</Configuration>
+		<InstallShieldRelease>$(Configuration)</InstallShieldRelease>
+	</PropertyGroup>
+	<ItemGroup>
+		<!-- The InstallShieldProject item selects the project to build -->
+		<InstallShieldProject Include="$(MSBuildProjectDirectory)\$(MSBuildProjectName).isl"/>
+		<!-- The InstallShieldReleaseFlags sets Release Flags -->
+		<!--<InstallShieldReleaseFlags Include=""/>-->
+		<!-- The InstallShieldMergeModulePath specifies what directories are
+		searched for Merge Modules -->
+		<!--<InstallShieldMergeModulePath Include=""/>-->
+	</ItemGroup>
+	<ItemGroup>
+		<!-- The ProjectReference items refer to any Visual Studio solutions you want to automatically probe for Project Output Groups.  -->
+	</ItemGroup>
+	<ItemGroup>
+		<!-- The TaggedOutputs items allow you to explicitly add extra files to output groups. Each item must include both Name and OutputGroup, as well as TargetPath metadata values. -->
+		<!--<TaggedOutputs Include="C:\My Test Exe.exe">
+			<Name>My Test Project</Name>
+			<OutputGroup>Primary output</OutputGroup>
+			<TargetPath>My Test Exe.exe</TargetPath>
+		</TaggedOutputs> -->
+	</ItemGroup>
+	<Import Project="$(MSBuildExtensionsPath32)\InstallShield\2012SpringLimited\InstallShield.targets"/>
+	<ItemGroup>
+		<ProjectReference Include="..\Language\Language.csproj">
+			<Name>Language</Name>
+			<Project>{67562995-3F80-442C-AE4C-53224DA60358}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\Operator\Operator.csproj">
+			<Name>Operator</Name>
+			<Project>{669204B8-8D5C-4399-99B1-1B049207187C}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\Package\Package.csproj">
+			<Name>Package</Name>
+			<Project>{2E672CCD-5333-46FB-8329-054631EF6431}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\SEO\SEO.csproj">
+			<Name>SEO</Name>
+			<Project>{D19A671D-C2EC-4664-88FF-DFEF24858AC6}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\Sims\Sims.csproj">
+			<Name>Sims</Name>
+			<Project>{41F139A8-73A4-4658-8002-25DDE9BA540B}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\m3i\m3i.csproj">
+			<Name>m3i</Name>
+			<Project>{50559087-BF06-4B18-8270-8C5B5BA0A96C}</Project>
+		</ProjectReference>
+	</ItemGroup>
+</Project>

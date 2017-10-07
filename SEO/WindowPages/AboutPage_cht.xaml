@@ -31,7 +31,7 @@
             <TextBlock Grid.Row="0" Grid.Column="0" Margin="4" TextWrapping="WrapWithOverflow">
                 <Run Foreground="{DynamicResource ForeBrush}" FontSize="30" Text="編輯環境工具" />
                 <LineBreak />
-                <Run Foreground="Red" FontSize="16" Text="版本：2.0.52.42" />
+                <Run Foreground="Red" FontSize="16" Text="版本：2.0.54.42" />
                 <Image Margin="4,0,0,0" Width="16" Height="16" Source="/SEO;component/icon.ico">
                     <Image.ToolTip>
                         <TextBlock>
@@ -62,11 +62,11 @@
                 <LineBreak />
                 <Run Foreground="{DynamicResource ForeDarkBrush}" FontSize="16" Text="[3DM-M3小組]" />
                 <LineBreak />
-                <Run Foreground="Red" FontSize="16" Text="主要開發者：walterlv" />
+                <Run Foreground="Red" FontSize="16" Text="主要開發者+視覺設計：walterlv" />
                 <LineBreak />
                 <Run Foreground="Black" FontSize="14" Text="提供環境修改方案：Kuree" />
                 <LineBreak />
-                <Run Foreground="Black" FontSize="14" Text="製作圖片+設計環境+主要測試者：anteen" />
+                <Run Foreground="Black" FontSize="14" Text="設計環境+主要測試者：anteen" />
             </TextBlock>
             <TextBlock Grid.Row="0" Grid.Column="1" Margin="4" TextWrapping="WrapWithOverflow">
                 <Run Foreground="{DynamicResource ForeBrush}" FontSize="30" Text="感謝測試" />

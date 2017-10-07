@@ -57,6 +57,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Languages\en-US.xml" />
     <EmbeddedResource Include="Languages\zh-CN.xml" />
+    <Content Include="Languages\Example.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Languages\zh-HK.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

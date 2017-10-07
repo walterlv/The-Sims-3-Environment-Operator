@@ -34,7 +34,7 @@
             <TextBlock Grid.Row="1" Grid.Column="0" Margin="4" TextWrapping="WrapWithOverflow">
                 <Run Foreground="{DynamicResource ForeBrush}" FontSize="24" Text="Sims Environment Operator" />
                 <LineBreak />
-                <Run Foreground="Red" FontSize="16" Text="Version：2.0.52.42" />
+                <Run Foreground="Red" FontSize="16" Text="Version：2.0.54.42" />
                 <Image Margin="4,0,0,0" Width="16" Height="16" Source="/SEO;component/icon.ico">
                     <Image.ToolTip>
                         <TextBlock>
@@ -63,13 +63,13 @@
                 <LineBreak />
                 <Run Foreground="{DynamicResource ForeDarkBrush}" FontSize="16" Text="[3DM-M3 Group]" />
                 <LineBreak />
-                <Run Foreground="Red" FontSize="16" Text="Main Developer: walterlv" />
+                <Run Foreground="Red" FontSize="16" Text="Main Developer" />
+                <LineBreak />
+                <Run Foreground="Red" FontSize="16" Text="+ UI Designer: walterlv" />
                 <LineBreak />
                 <Run Foreground="Black" FontSize="14" Text="Solution Provider: Kuree" />
                 <LineBreak />
-                <Run Foreground="Black" FontSize="14" Text="Logo Provider" />
-                <LineBreak />
-                <Run  Foreground="Black" FontSize="14" Text="+ The preinstalled environment Designer" />
+                <Run  Foreground="Black" FontSize="14" Text="The preinstalled environment Designer" />
                 <LineBreak />
                 <Run  Foreground="Black" FontSize="14" Text="+ Main Tester = anteen" />
             </TextBlock>
