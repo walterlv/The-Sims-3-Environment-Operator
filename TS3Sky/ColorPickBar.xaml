@@ -7,9 +7,7 @@
              d:DesignWidth="482" >
     <StackPanel>
         <!--这里是标题-->
-        <TextBlock x:Name="titleText" FontSize="20" Foreground="DarkBlue">
-            点击一个颜色块以更改颜色
-        </TextBlock>
+        <TextBlock x:Name="titleText" FontSize="20" Foreground="DarkBlue" />
         <TextBlock x:Name="descriptionText" FontSize="14" Foreground="SteelBlue" TextWrapping="WrapWithOverflow">
         </TextBlock>
         <!--这里是时间轴-->

@@ -44,26 +44,7 @@ namespace TS3Sky
             set
             {
                 colorBar = value;
-                // 这里设置颜色条的各项颜色属性
-                int colorCount = colorBar.ColorList.Count;
-                Rectangle colorRect = new Rectangle();
-                double timeSpan = colorBar.ColorList[0].TimeValue;
-                colorRect.Width = timeSpan * 20;
-                colorRect.Fill = new SolidColorBrush(Color.FromArgb(colorBar.ColorList[colorCount - 1].A,
-                    colorBar.ColorList[colorCount - 1].R, colorBar.ColorList[colorCount - 1].G, colorBar.ColorList[colorCount - 1].B));
-                colorPanel.Children.Add(colorRect);
-                colorRectList.Add(colorRect);
-                for (int i = 0; i < colorCount; i++)
-                {
-                    colorRect = new Rectangle();
-                    if (i < colorBar.ColorList.Count - 1) timeSpan = colorBar.ColorList[i + 1].TimeValue - colorBar.ColorList[i].TimeValue;
-                    else timeSpan = 24 - colorBar.ColorList[i].TimeValue;
-                    colorRect.Width = timeSpan * 20;
-                    colorRect.Fill = new SolidColorBrush(Color.FromArgb(colorBar.ColorList[i].A,
-                        colorBar.ColorList[i].R, colorBar.ColorList[i].G, colorBar.ColorList[i].B));
-                    colorPanel.Children.Add(colorRect);
-                    colorRectList.Add(colorRect);
-                }
+                Refresh();
             }
         }
         #endregion
@@ -96,9 +77,36 @@ namespace TS3Sky
             {
                 description = value;
                 descriptionText.Text = value;
+                if (value.Equals(String.Empty)) descriptionText.Visibility = Visibility.Collapsed;
             }
         }
         #endregion
+
+        public void Refresh()
+        {
+            colorPanel.Children.Clear();
+            colorRectList.Clear();
+            // 这里设置颜色条的各项颜色属性
+            int colorCount = colorBar.ColorList.Count;
+            Rectangle colorRect = new Rectangle();
+            double timeSpan = colorBar.ColorList[0].TimeValue;
+            colorRect.Width = timeSpan * 20;
+            colorRect.Fill = new SolidColorBrush(Color.FromArgb(colorBar.ColorList[colorCount - 1].A,
+                colorBar.ColorList[colorCount - 1].R, colorBar.ColorList[colorCount - 1].G, colorBar.ColorList[colorCount - 1].B));
+            colorPanel.Children.Add(colorRect);
+            colorRectList.Add(colorRect);
+            for (int i = 0; i < colorCount; i++)
+            {
+                colorRect = new Rectangle();
+                if (i < colorBar.ColorList.Count - 1) timeSpan = colorBar.ColorList[i + 1].TimeValue - colorBar.ColorList[i].TimeValue;
+                else timeSpan = 24 - colorBar.ColorList[i].TimeValue;
+                colorRect.Width = timeSpan * 20;
+                colorRect.Fill = new SolidColorBrush(Color.FromArgb(colorBar.ColorList[i].A,
+                    colorBar.ColorList[i].R, colorBar.ColorList[i].G, colorBar.ColorList[i].B));
+                colorPanel.Children.Add(colorRect);
+                colorRectList.Add(colorRect);
+            }
+        }
 
         private int CurrentPickIndex = -1;
         private bool PickIndexChanged = true;
@@ -116,13 +124,17 @@ namespace TS3Sky
             }
             if (CurrentPickIndex == pickIndex) PickIndexChanged = false;
             else { CurrentPickIndex = pickIndex; PickIndexChanged = true; }
+            pickColorRect.Fill = colorRectList[pickIndex].Fill;
+            pickColorRect.Width = colorRectList[pickIndex].ActualWidth;
+            colorDetailText.Text = String.Format("{0}: {1} - {2}, {3}: {4}",
+                                                TS3Sky.Language.ColorPickBar.TimeInterval,
+                                                doubleToTime(pickTime),
+                                                doubleToTime(colorBar.ColorList[pickIndex].TimeValue),
+                                                TS3Sky.Language.ColorPickBar.ColorValue,
+                                                brushToRGB(pickColorRect.Fill));
+
             if (PickIndexChanged)
             {
-                pickColorRect.Fill = colorRectList[pickIndex].Fill;
-                pickColorRect.Width = colorRectList[pickIndex].ActualWidth;
-                colorDetailText.Text = "时间段：" + doubleToTime(pickTime) + " - " + doubleToTime(colorBar.ColorList[pickIndex].TimeValue)
-                                     + "；颜色值：" + pickColorRect.Fill.ToString();
-
                 #region 这里隐藏未实现的动画
                 // 这里执行颜色条滚动的动画
                 //Storyboard storyboard = new Storyboard();//新建一个动画板  
@@ -192,10 +204,14 @@ namespace TS3Sky
             string timeString;
             int hour = (int)time;
             int minute = (int)((time - hour) * 60);
-            if (hour >= 24) timeString = "第二天0:00";
+            if (hour >= 24) timeString = String.Format(TS3Sky.Language.ColorPickBar.TheNextDay);
             else if (minute < 10) timeString = hour + ":0" + minute;
             else timeString = hour + ":" + minute;
             return timeString;
+        }
+        private string brushToRGB(Brush brush)
+        {
+            return "" + brush.ToString().Substring(3, 6);
         }
     }
 

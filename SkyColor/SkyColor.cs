@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using Microsoft.Win32;
+using System.IO;
 
 namespace TS3Sky
 {
@@ -106,10 +107,12 @@ namespace TS3Sky
         }
         #endregion
 
+        #region 一天中的所有颜色的种类
         /// <summary>
         /// 一天中的所有颜色的种类
         /// </summary>
         public List<DayColor> DayColors = new List<DayColor>();
+        #endregion
 
         protected SkyColor()
         {
@@ -122,18 +125,18 @@ namespace TS3Sky
             {
                 case ColorAssembly.Sky_CustomSky:
                     skyColor = new Sky_CustomSky();
-                    skyColor.colorName = "天空";
-                    skyColor.colorDescription = "改变天空的颜色：太阳、月亮、天空、地平线。";
+                    skyColor.colorName = TS3Sky.Language.Sky_CustomSky.DayColorName;
+                    skyColor.colorDescription = TS3Sky.Language.Sky_CustomSky.DayColorDescription;
                     break;
                 case ColorAssembly.Sky_ClearSea:
                     skyColor = new Sky_ClearSea();
-                    skyColor.colorName = "海洋";
-                    skyColor.colorDescription = "改变晴天时海洋的颜色。";
+                    skyColor.colorName = TS3Sky.Language.Sky_ClearSea.DayColorName;
+                    skyColor.colorDescription = TS3Sky.Language.Sky_ClearSea.DayColorDescription;
                     break;
                 case ColorAssembly.Sky_OvercastSea:
                     skyColor = new Sky_OvercastSea();
-                    skyColor.colorName = "海洋（阴天）";
-                    skyColor.colorDescription = "当乌云密布不见日月，这时候的海洋颜色就在这里设置。";
+                    skyColor.colorName = TS3Sky.Language.Sky_OvercastSea.DayColorName;
+                    skyColor.colorDescription = TS3Sky.Language.Sky_OvercastSea.DayColorDescription;
                     break;
                 default:
                     return null;
@@ -141,20 +144,47 @@ namespace TS3Sky
             skyColor.colorType = colorName;
             skyColor.colorPath = skyColor.getColorPath(colorName);
             if (skyColor.colorPath == null) return null;
-            foreach (DayColor color in skyColor.DayColors)
+            skyColor.Read();
+            return skyColor;
+        }
+
+        protected void Read()
+        {
+            foreach (DayColor color in DayColors)
             {
                 BasicColor temp;
                 int i = 1;
+                color.ColorList.Clear();
                 while (true)
                 {
-                    temp = skyColor.ReadColor(color.ColorSection, i);
+                    temp = ReadColor(color.ColorSection, i);
                     i++;
                     if (temp.IsValid) color.ColorList.Add(temp);
                     else break;
                 }
             }
-            skyColor.isRead = true;
-            return skyColor;
+            isRead = true;
+        }
+
+        public void Save()
+        {
+            foreach (DayColor color in DayColors)
+            {
+                for (int i = 0; i < color.ColorList.Count; i++)
+	            {
+		            SaveColor(color.ColorSection, i + 1, color.ColorList[i]);
+	            }
+            }
+        }
+
+        public void Revoke()
+        {
+            Read();
+        }
+
+        public void SetToDefault()
+        {
+            File.Copy(Environment.CurrentDirectory + @"\backups\" + colorType + ".ini", colorPath, true);
         }
 
         private string getColorPath(ColorAssembly colorName)
@@ -187,13 +217,24 @@ namespace TS3Sky
         protected BasicColor ReadColor(string colorSection, int index)
         {
             IniFiles iniFile = new IniFiles(colorPath);
-            int red = iniFile.ReadInteger(colorSection + index, "red", 0);
-            int green = iniFile.ReadInteger(colorSection + index, "green", 0);
-            int blue = iniFile.ReadInteger(colorSection + index, "blue", 0);
-            double timeOfDay = iniFile.ReadDouble(colorSection + index, "timeOfDay", -1.0);
+            string section = colorSection + index;
+            int red = iniFile.ReadInteger(section, "red", 0);
+            int green = iniFile.ReadInteger(section, "green", 0);
+            int blue = iniFile.ReadInteger(section, "blue", 0);
+            double timeOfDay = iniFile.ReadDouble(section, "timeOfDay", -1.0);
             BasicColor color = new BasicColor(red, green, blue, timeOfDay);
             if (timeOfDay < 0) color.IsValid = false;
             return color;
+        }
+        protected void SaveColor(string colorSection, int index, BasicColor color)
+        {
+            IniFiles iniFile = new IniFiles(colorPath);
+            string section = colorSection + index;
+            iniFile.WriteInteger(section, "red", color.R);
+            iniFile.WriteInteger(section, "green", color.G);
+            iniFile.WriteInteger(section, "blue", color.B);
+            iniFile.WriteDouble(section, "timeOfDay", color.TimeValue);
+            iniFile.UpdateFile();
         }
     }
 }

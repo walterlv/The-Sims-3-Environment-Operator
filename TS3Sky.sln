@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TS3Sky", "TS3Sky\TS3Sky.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyColor", "SkyColor\SkyColor.csproj", "{D064B238-8217-48F8-AA2F-60B8FD253CBD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Language", "Language\Language.csproj", "{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{D064B238-8217-48F8-AA2F-60B8FD253CBD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D064B238-8217-48F8-AA2F-60B8FD253CBD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D064B238-8217-48F8-AA2F-60B8FD253CBD}.Release|x86.ActiveCfg = Release|Any CPU
+		{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

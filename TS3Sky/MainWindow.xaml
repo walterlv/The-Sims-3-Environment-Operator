@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="clr-namespace:TS3Sky"
         Title="TS3Sky"
-        SizeToContent="WidthAndHeight" FontSize="12" WindowStartupLocation="CenterScreen"
-        Loaded="Window_Loaded">
+        SizeToContent="WidthAndHeight" FontSize="11" WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded" FontFamily="Microsoft YaHei" Icon="/TS3Sky;component/Images/icon.ico">
     <Window.Background>
         <ImageBrush ImageSource="/TS3Sky;component/Images/DefaultBackground.jpg" />
     </Window.Background>
     <Window.Resources>
         <Style TargetType="{x:Type Button}">
-            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontSize" Value="12" />
             <Setter Property="Background">
                 <Setter.Value>
                     <ImageBrush ImageSource="/TS3Sky;component/Images/NaviButton_normal.png" />
@@ -19,7 +19,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="border" CornerRadius="8"  Background="{TemplateBinding Background}">
+                        <Border Name="border" Background="{TemplateBinding Background}">
                             <ContentPresenter Name="content" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                               RecognizesAccessKey="True" 
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
@@ -58,36 +58,61 @@
         </Grid.Background>
         <Image Height="160" HorizontalAlignment="Left" Margin="30,60,0,0" Name="logoImage" Stretch="Fill" VerticalAlignment="Top" Width="160" Source="/TS3Sky;component/Images/DefaultLogo.png" />
         <StackPanel HorizontalAlignment="Left" Margin="30,280,0,0" Name="grid1" VerticalAlignment="Top" Width="160">
-            <Button x:Uid="TS3N0" Content="欢迎" Margin="0,0,0,5" Width="160" Height="32" MouseLeftButtonUp="Button_MouseLeftButtonUp" />
-            <Button x:Name="SkyColorButton0" x:Uid="TS3N1" Margin="0,0,0,5" Width="160" Height="32" MouseUp="Button_MouseUp" />
-            <Button x:Name="SkyColorButton1" x:Uid="TS3N2" Margin="0,0,0,5" Width="160" Height="32" MouseUp="Button_MouseUp" />
-            <Button x:Name="SkyColorButton2" x:Uid="TS3N3" Margin="0,0,0,5" Width="160" Height="32" MouseUp="Button_MouseUp" />
-            <Button x:Uid="TS3N4" Content="关于" Margin="0,0,0,56" Width="160" Height="32" MouseUp="Button_MouseUp" />
-            <TextBlock FontSize="18" Foreground="#093e69" Text="作者: walterlv">
+            <Button x:Name="SkyColorWelcome" x:Uid="TS3N0" Content="Welcome" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
+            <Button x:Name="SkyColorButton0" x:Uid="TS3N1" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
+            <Button x:Name="SkyColorButton1" x:Uid="TS3N2" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
+            <Button x:Name="SkyColorButton2" x:Uid="TS3N3" Margin="0,0,0,5" Width="160" Height="32" Click="Button_Click" />
+            <Button x:Name="SkyColorAbout" x:Uid="TS3N4" Content="About" Width="160" Height="32" Click="Button_Click" />
+        </StackPanel>
+        <TextBlock x:Name="LabelText" Margin="30,0,610,30" FontSize="11" Foreground="SteelBlue" Text="By walterlv" VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" />
+        <!--这里是欢迎信息-->
+        <StackPanel x:Name="SkyWelcome" Height="540" Width="530" Margin="240,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Image x:Name="WelcomeImage" Stretch="None" />
+            <TextBlock x:Name="WelcomeText" TextWrapping="WrapWithOverflow">
+                <Run  FontSize="36" Foreground="DarkBlue">模拟人生3：编辑环境工具</Run>
                 <LineBreak/>
-                <Run  FontSize="12" Foreground="#23659b">发布于: 3DMGAME</Run>
                 <LineBreak/>
-                <Run FontSize="12" Foreground="#23659b">“模拟人生3”全版本通用</Run>
+                <LineBreak/>
+                <Run FontSize="16" Foreground="Black">在这里，你可以创造属于你自己的天空、海洋、河流与湖泊，尽情地发挥你的想象把你的世界打造成一片完美的天地吧！</Run>
+                <LineBreak/>
+                <LineBreak/>
+                <Run FontSize="16" Foreground="Black">目前原生支持的城镇有：日落溪谷、河景镇、藤壶湾、密泉。</Run>
+                <LineBreak/>
+                <LineBreak/>
+                <Run FontSize="16" Foreground="Black">如果你要支持其它城镇，请到</Run>
+                <LineBreak/>
+                <Run FontSize="16" Foreground="Black">http://bbs.3dmgame.com/thread-3433574-1-1.html</Run>
+                <LineBreak/>
+                <Run FontSize="16" Foreground="Black">下载官方城镇的修改版本。</Run>
+                <LineBreak/>
+                <LineBreak/>
+                <LineBreak/>
+                <LineBreak/>
+                <LineBreak/>
+                <LineBreak/>
+                <LineBreak/>
+                <Run FontSize="26" Foreground="DarkBlue">点击左侧的按钮开始你的奇幻之旅吧！</Run>
             </TextBlock>
         </StackPanel>
-        <!--这里是欢迎信息-->
         <!--这里是内容-->
         <ScrollViewer VerticalScrollBarVisibility="Auto" Height="540" Width="530" Margin="240,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <StackPanel x:Name="SkyContent" Width="530">
-                <TextBlock x:Name="SkyTitleText" FontSize="40" HorizontalAlignment="Center" Foreground="DarkBlue">
-                    改变天气
-                </TextBlock>
+            <StackPanel x:Name="SkyContent" Width="530" Visibility="Collapsed">
+                <TextBlock x:Name="SkyTitleText" FontSize="40" HorizontalAlignment="Center" Foreground="DarkBlue" />
                 <TextBlock x:Name="SkyTitleDescription" HorizontalAlignment="Center" FontSize="14" Foreground="SteelBlue" TextWrapping="WrapWithOverflow">
                 </TextBlock>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 8, 0, 0">
-                    <Button x:Uid="TS3O1" Margin="10,0" Width="140" Height="32" MouseUp="Button_MouseUp">保存颜色设置</Button>
-                    <Button x:Uid="TS3O2" Margin="10,0" Width="140" Height="32" MouseUp="Button_MouseUp">撤销所有改变</Button>
-                    <Button x:Uid="TS3O2" Margin="10,0" Width="140" Height="32" MouseUp="Button_MouseUp">恢复默认设置</Button>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 8, 0, 8">
+                    <Button x:Name="SaveButton" x:Uid="TS3O1" Margin="10,0" Width="140" Height="32" Click="SaveButton_Click" />
+                    <Button x:Name="RevokeButton" x:Uid="TS3O2" Margin="10,0" Width="140" Height="32" Click="SaveButton_Click" />
+                    <Button x:Name="SetToDefaultButton" x:Uid="TS3O3" Margin="10,0" Width="140" Height="32" Click="SaveButton_Click" />
                 </StackPanel>
                 <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="debugText" TextWrapping="WrapWithOverflow" />
             </StackPanel>
         </ScrollViewer>
         <!--这里是关于信息-->
+        <Grid x:Name="SkyAbout" Height="540" Width="530" Margin="240,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+            <Image Stretch="None" Source="/TS3Sky;component/Images/AboutBackground.png" />
+            <TextBlock x:Name="AboutInfomation" Margin="60,140,60,50" FontSize="12" VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" />
+        </Grid>
     </Grid>
 </Window>
     

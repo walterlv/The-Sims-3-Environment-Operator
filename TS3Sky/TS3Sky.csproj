@@ -40,6 +40,9 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -62,10 +65,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ColorPickerDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -76,9 +75,6 @@
     </Compile>
     <Compile Include="ColorPickBar.xaml.cs">
       <DependentUpon>ColorPickBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ColorPickerDialog.xaml.cs">
-      <DependentUpon>ColorPickerDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -125,10 +121,23 @@
     <Resource Include="Images\NaviButton_rollover.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Language\Language.csproj">
+      <Project>{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}</Project>
+      <Name>Language</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SkyColor\SkyColor.csproj">
       <Project>{D064B238-8217-48F8-AA2F-60B8FD253CBD}</Project>
       <Name>SkyColor</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\AboutBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

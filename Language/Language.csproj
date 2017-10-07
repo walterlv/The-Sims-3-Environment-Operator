@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D064B238-8217-48F8-AA2F-60B8FD253CBD}</ProjectGuid>
+    <ProjectGuid>{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TS3Sky</RootNamespace>
-    <AssemblyName>SkyColor</AssemblyName>
+    <RootNamespace>TS3Sky.Language</RootNamespace>
+    <AssemblyName>Language</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,27 +33,24 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicColor.cs" />
-    <Compile Include="DayColor.cs" />
-    <Compile Include="IniFiles.cs" />
-    <Compile Include="SkyColor.cs" />
+    <Compile Include="About.cs" />
+    <Compile Include="Application.cs" />
+    <Compile Include="ColorPickBar.cs" />
+    <Compile Include="Dialog.cs" />
+    <Compile Include="LanguageReader.cs" />
+    <Compile Include="LanguageManager.cs" />
+    <Compile Include="Navigation.cs" />
+    <Compile Include="Operation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkyColors\Sky_ClearSea.cs" />
     <Compile Include="SkyColors\Sky_CustomSky.cs" />
     <Compile Include="SkyColors\Sky_OvercastSea.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Language\Language.csproj">
-      <Project>{055FEAC6-6563-4FFB-9799-5A841FD3C6F0}</Project>
-      <Name>Language</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
